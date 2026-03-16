@@ -50,7 +50,7 @@ export default async function DigitalArtsPage() {
       <Navbar />
       <main className="flex-1 max-w-7xl mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
         <header className="mb-8 text-center">
-          <h1 className="text-6xl font-display font-bold text-slate-900 dark:text-slate-100 mb-4 tracking-tight">Artes Digitales</h1>
+          <h1 className="text-6xl font-display font-bold text-slate-900 mb-4 tracking-tight">Artes Digitales</h1>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto font-body">
             Branding estratégico e identidades visuales para empresas con visión de futuro.
           </p>

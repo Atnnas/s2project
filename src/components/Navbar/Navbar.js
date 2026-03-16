@@ -81,7 +81,7 @@ export default function Navbar() {
             className={`flex items-center justify-between whitespace-nowrap px-6 md:px-20 py-4 fixed top-0 w-full z-50 transition-all duration-300 ${
               isMenuOpen 
                 ? 'bg-primary border-b border-white/10 shadow-none' 
-                : 'bg-[#396542]/10 dark:bg-[#396542]/5 backdrop-blur-2xl border-b border-[#396542]/20 shadow-[0_8px_32px_rgba(57,101,66,0.15)]'
+                : 'bg-[#396542]/10 backdrop-blur-2xl border-b border-[#396542]/20 shadow-[0_8px_32px_rgba(57,101,66,0.15)]'
             } group/navbar`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -94,7 +94,7 @@ export default function Navbar() {
             {/* Mobile Hamburger Button - Left Side */}
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden flex items-center justify-center w-10 h-10 text-slate-900 dark:text-white z-[70] relative"
+              className="md:hidden flex items-center justify-center w-10 h-10 text-slate-900 z-[70] relative"
               aria-label="Toggle Menu"
             >
               <div className="flex flex-col gap-1.5 w-6 items-start">
@@ -129,14 +129,14 @@ export default function Navbar() {
 
             {/* Logo placeholder or filler for centering if needed */}
             <div className="md:hidden flex-1 text-center">
-              <span className={`font-display font-black tracking-tighter text-xl transition-colors ${isMenuOpen ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
+              <span className={`font-display font-black tracking-tighter text-xl transition-colors ${isMenuOpen ? 'text-white' : 'text-slate-900'}`}>
                 S2 PROJECT
               </span>
             </div>
 
             <div className="flex flex-1 justify-end gap-10 items-center">
               {/* Desktop Nav - Unchanged md:flex */}
-              <nav className="hidden md:flex items-center gap-12 text-[#1d2729] dark:text-[#fdf9e1]">
+              <nav className="hidden md:flex items-center gap-12 text-[#1d2729]">
                 <NavbarLink href="/">Inicio</NavbarLink>
                 
                 {/* Servicios con Dropdown */}
@@ -166,13 +166,13 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute top-full right-0 mt-4 w-56 bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border border-primary/10 rounded-2xl shadow-2xl overflow-hidden py-3 z-[100]"
+                        className="absolute top-full right-0 mt-4 w-56 bg-white/90 backdrop-blur-xl border border-primary/10 rounded-2xl shadow-2xl overflow-hidden py-3 z-[100]"
                       >
                         {dropdownItems.map((item) => (
                           <Link
                             key={item.href}
                             href={item.href}
-                            className="flex items-center px-6 py-3 text-slate-700 dark:text-slate-200 hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors font-display font-semibold group/item"
+                            className="flex items-center px-6 py-3 text-slate-700 hover:bg-primary/5 transition-colors font-display font-semibold group/item"
                           >
                             <span className="flex-1">{item.label}</span>
                             <span className="material-symbols-outlined text-sm opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all">
@@ -337,7 +337,7 @@ function NavbarLink({ href, children, as = Link }) {
           {children}
         </span>
         <motion.span 
-          className="absolute inset-0 -z-0 bg-primary/5 dark:bg-primary/20 rounded-full scale-0 opacity-0 group-hover/link:scale-110 group-hover/link:opacity-100 transition-all duration-300 ease-out"
+          className="absolute inset-0 -z-0 bg-primary/5 rounded-full scale-0 opacity-0 group-hover/link:scale-110 group-hover/link:opacity-100 transition-all duration-300 ease-out"
           aria-hidden="true"
         />
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover/link:w-full" />

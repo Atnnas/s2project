@@ -11,9 +11,9 @@ export default function NosotrosPage() {
     <>
       <Navbar />
       <main className="flex-1 max-w-4xl mx-auto px-6 py-32 min-h-screen">
-        <h1 className="text-5xl font-display font-bold text-slate-900 dark:text-slate-100 mb-10">Sobre S2 Project</h1>
+        <h1 className="text-5xl font-display font-bold text-slate-900 mb-10">Sobre S2 Project</h1>
         
-        <div className="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed text-justify">
+        <div className="space-y-6 text-lg text-slate-600 leading-relaxed text-justify">
           <p>
             En <strong>S2 Project</strong> ayudamos a empresas y profesionales a elevar su imagen digital y convertir su presencia en resultados reales. Creemos que una imagen bien construida no solo se ve bien, sino que comunica, conecta y genera confianza.
           </p>

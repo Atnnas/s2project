@@ -51,7 +51,7 @@ export default async function PhotographyPage() {
       <Navbar />
       <main className="flex-1 max-w-7xl mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
         <header className="mb-8 text-center">
-          <h1 className="text-6xl font-display font-bold text-slate-900 dark:text-slate-100 mb-4 tracking-tight">Fotografía</h1>
+          <h1 className="text-6xl font-display font-bold text-slate-900 mb-4 tracking-tight">Fotografía</h1>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto font-body">
             Capturado con equipos de gama alta full-frame y graduación de color de precisión.
           </p>

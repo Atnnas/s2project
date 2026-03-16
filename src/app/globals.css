@@ -35,9 +35,12 @@
   --font-roundo: var(--font-roundo);
 }
 
+@custom-variant dark (&.dark);
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    color-scheme: light only;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-clash), sans-serif;

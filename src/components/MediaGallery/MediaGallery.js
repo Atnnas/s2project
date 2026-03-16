@@ -153,16 +153,16 @@ function GalleryContent({ projects }) {
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 pointer-events-none z-10">
         <button 
           onClick={() => scrollContainer('left')}
-          className="pointer-events-auto w-12 h-12 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-full shadow-2xl border border-primary/10 flex items-center justify-center opacity-0 group-hover/gallery:opacity-100 -translate-x-4 group-hover/gallery:translate-x-0 transition-all hover:scale-110 active:scale-95"
+          className="pointer-events-auto w-12 h-12 bg-white/90 backdrop-blur-md rounded-full shadow-2xl border border-primary/10 flex items-center justify-center opacity-0 group-hover/gallery:opacity-100 -translate-x-4 group-hover/gallery:translate-x-0 transition-all hover:scale-110 active:scale-95"
         >
-          <span className="material-symbols-outlined text-slate-600 dark:text-slate-300">chevron_left</span>
+          <span className="material-symbols-outlined text-slate-600">chevron_left</span>
         </button>
 
         <button 
           onClick={() => scrollContainer('right')}
-          className="pointer-events-auto w-12 h-12 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-full shadow-2xl border border-primary/10 flex items-center justify-center opacity-0 group-hover/gallery:opacity-100 translate-x-4 group-hover/gallery:translate-x-0 transition-all hover:scale-110 active:scale-95"
+          className="pointer-events-auto w-12 h-12 bg-white/90 backdrop-blur-md rounded-full shadow-2xl border border-primary/10 flex items-center justify-center opacity-0 group-hover/gallery:opacity-100 translate-x-4 group-hover/gallery:translate-x-0 transition-all hover:scale-110 active:scale-95"
         >
-          <span className="material-symbols-outlined text-slate-600 dark:text-slate-300">chevron_right</span>
+          <span className="material-symbols-outlined text-slate-600">chevron_right</span>
         </button>
       </div>
 

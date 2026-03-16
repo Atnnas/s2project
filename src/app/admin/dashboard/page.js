@@ -190,14 +190,14 @@ export default function AdminDashboard() {
             <motion.div 
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white dark:bg-slate-900 w-full max-m-md rounded-3xl p-8 shadow-2xl border border-primary/10"
+              className="bg-white w-full max-m-md rounded-3xl p-8 shadow-2xl border border-primary/10"
             >
               <div className="w-16 h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-6">
                 <span className="material-symbols-outlined text-3xl">warning</span>
               </div>
-              <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-slate-100 mb-2">¿Confirmar eliminación?</h3>
+              <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">¿Confirmar eliminación?</h3>
               <p className="text-slate-500 mb-8 leading-relaxed">
-                Estás a punto de borrar <span className="font-bold text-slate-900 dark:text-slate-100">"{itemToDelete?.title || itemToDelete?.name || itemToDelete?.email}"</span>. Esta acción no se puede deshacer.
+                Estás a punto de borrar <span className="font-bold text-slate-900">"{itemToDelete?.title || itemToDelete?.name || itemToDelete?.email}"</span>. Esta acción no se puede deshacer.
               </p>
               <div className="flex gap-3">
                 <button 
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
                 </button>
                 <button 
                   onClick={confirmDelete}
-                  className="flex-1 px-6 py-4 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-200 dark:shadow-none text-sm"
+                  className="flex-1 px-6 py-4 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-200 text-sm"
                 >
                   Eliminar ahora
                 </button>
@@ -227,15 +227,15 @@ export default function AdminDashboard() {
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
+              className="bg-white w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
             >
               <div className="flex items-center justify-between mb-8">
-                <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100">
+                <h3 className="text-3xl font-display font-bold text-slate-900">
                   {editingClient ? 'Editar Cliente' : 'Nuevo Cliente'}
                 </h3>
                 <button 
                   onClick={() => setShowClientModal(false)}
-                  className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-primary/5 flex items-center justify-center hover:bg-slate-100 transition-all"
+                  className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center hover:bg-slate-100 transition-all"
                 >
                   <span className="material-symbols-outlined text-slate-400">close</span>
                 </button>
@@ -259,9 +259,9 @@ export default function AdminDashboard() {
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl p-10 shadow-2xl border border-primary/10"
+              className="bg-white w-full max-w-lg rounded-3xl p-10 shadow-2xl border border-primary/10"
             >
-              <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100 mb-8">
+              <h3 className="text-3xl font-display font-bold text-slate-900 mb-8">
                 {editingUser ? 'Editar Usuario' : 'Nuevo Usuario'}
               </h3>
               <form onSubmit={handleUserSubmit} className="space-y-6">
@@ -273,7 +273,7 @@ export default function AdminDashboard() {
                     disabled={!!editingUser}
                     value={userFormData.email}
                     onChange={(e) => setUserFormData({ ...userFormData, email: e.target.value })}
-                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
                     placeholder="ejemplo@gmail.com"
                   />
                 </div>
@@ -283,7 +283,7 @@ export default function AdminDashboard() {
                     type="text"
                     value={userFormData.name}
                     onChange={(e) => setUserFormData({ ...userFormData, name: e.target.value })}
-                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
                     placeholder="Nombre del usuario"
                   />
                 </div>
@@ -332,10 +332,10 @@ export default function AdminDashboard() {
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
+              className="bg-white w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
             >
               <div className="flex items-center justify-between mb-8">
-                <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100">
+                <h3 className="text-3xl font-display font-bold text-slate-900">
                   {editingProject 
                     ? (activeTab === 'projects-reels' ? 'Editar Reel' : activeTab === 'projects-digital-arts' ? 'Editar Arte Digital' : activeTab === 'projects-photography' ? 'Editar Fotografía' : 'Editar Proyecto') 
                     : (activeTab === 'projects-reels' ? 'Nuevo Reel' : activeTab === 'projects-digital-arts' ? 'Nuevo Arte Digital' : activeTab === 'projects-photography' ? 'Nueva Fotografía' : 'Nuevo Proyecto')}
@@ -369,10 +369,10 @@ export default function AdminDashboard() {
 
       <main className="flex-1 max-w-7xl mx-auto px-6 py-32 min-h-screen w-full">
         <header className="mb-16 border-b border-primary/10 pb-12">
-          <h1 className="text-5xl font-display font-bold text-slate-900 dark:text-slate-100 mb-8 tracking-tight">Panel de Control</h1>
+          <h1 className="text-5xl font-display font-bold text-slate-900 mb-8 tracking-tight">Panel de Control</h1>
           
           <div className="flex flex-col items-start gap-6">
-            <div className="flex items-center gap-4 bg-white dark:bg-primary/5 p-4 pr-8 rounded-3xl border border-primary/10 shadow-sm">
+            <div className="flex items-center gap-4 bg-white p-4 pr-8 rounded-3xl border border-primary/10 shadow-sm">
               <div className="relative">
                 <img 
                   src={session?.user?.image || `https://ui-avatars.com/api/?name=${session?.user?.name || 'User'}&background=3b512f&color=fff`} 
@@ -383,7 +383,7 @@ export default function AdminDashboard() {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-slate-900 dark:text-slate-100 font-bold text-lg">{session?.user?.name || 'David'}</span>
+                  <span className="text-slate-900 font-bold text-lg">{session?.user?.name || 'David'}</span>
                   <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">
                     {session?.user?.role || 'Admin'}
                   </span>
@@ -394,7 +394,7 @@ export default function AdminDashboard() {
 
             <button 
               onClick={() => signOut({ callbackUrl: '/' })}
-              className="flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-slate-900 text-white hover:bg-primary transition-all font-bold text-sm shadow-xl shadow-slate-200 dark:shadow-none hover:scale-[1.02] active:scale-95 group"
+              className="flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-slate-900 text-white hover:bg-primary transition-all font-bold text-sm shadow-xl shadow-slate-200 hover:scale-[1.02] active:scale-95 group"
             >
               <span className="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">logout</span>
               Finalizar Sesión
@@ -408,7 +408,7 @@ export default function AdminDashboard() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 lg:flex-none flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap border-2 ${activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20 border-primary' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-primary/10 border-transparent'}`}
+                className={`flex-1 lg:flex-none flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap border-2 ${activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20 border-primary' : 'text-slate-500 hover:bg-slate-100 border-transparent'}`}
               >
                 <span className="material-symbols-outlined">{tab.icon}</span>
                 {tab.label}
@@ -425,7 +425,7 @@ export default function AdminDashboard() {
                   animate={{ opacity: 1, y: 0 }}
                   className="space-y-10"
                 >
-                  <section className="bg-white dark:bg-primary/5 p-8 rounded-3xl border border-primary/10">
+                  <section className="bg-white p-8 rounded-3xl border border-primary/10">
                      <div className="flex items-center justify-between mb-8">
                         <h2 className="text-2xl font-display font-bold flex items-center gap-3">
                           <span className="material-symbols-outlined text-primary">edit_square</span>
@@ -441,7 +441,7 @@ export default function AdminDashboard() {
                      </div>
                      
                      <div className="border-t border-primary/5 pt-8">
-                        <h3 className="text-xl font-display font-bold mb-6 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                        <h3 className="text-xl font-display font-bold mb-6 flex items-center gap-3 text-slate-700">
                           <span className="material-symbols-outlined text-primary/60">list_alt</span>
                           {activeTab === 'projects-reels' ? 'Reels Guardados' : activeTab === 'projects-digital-arts' ? 'Artes Guardados' : activeTab === 'projects-photography' ? 'Fotos Guardadas' : 'Registros Guardados'}
                         </h3>
@@ -478,7 +478,7 @@ export default function AdminDashboard() {
                                             style={{ backgroundImage: `url("${project.imageUrl}")` }} 
                                           />
                                           <div>
-                                            <p className="font-bold text-slate-800 dark:text-slate-200">{project.title}</p>
+                                            <p className="font-bold text-slate-800">{project.title}</p>
                                             <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">{project.client || 'S2 Project'}</p>
                                           </div>
                                         </div>
@@ -532,7 +532,7 @@ export default function AdminDashboard() {
                   exit={{ opacity: 0 }}
                   className="space-y-8"
                 >
-                  <section className="bg-white dark:bg-primary/5 p-8 rounded-3xl border border-primary/10">
+                  <section className="bg-white p-8 rounded-3xl border border-primary/10">
                     <div className="flex items-center justify-between mb-8">
                       <h2 className="text-2xl font-display font-bold flex items-center gap-3">
                         <span className="material-symbols-outlined text-primary">business_center</span>
@@ -566,11 +566,11 @@ export default function AdminDashboard() {
                             <tr key={client._id} className="group hover:bg-primary/5 transition-colors">
                               <td className="py-4 px-4">
                                 <div>
-                                  <p className="font-bold text-slate-800 dark:text-slate-200">{client.name}</p>
+                                  <p className="font-bold text-slate-800">{client.name}</p>
                                   <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">{client.industry || 'General'}</p>
                                 </div>
                               </td>
-                              <td className="py-4 px-4 text-slate-600 dark:text-slate-400 text-sm">{client.contactPerson || '-'}</td>
+                              <td className="py-4 px-4 text-slate-600 text-sm">{client.contactPerson || '-'}</td>
                               <td className="py-4 px-4">
                                 <p className="text-slate-500 text-xs font-body">{client.email}</p>
                                 <p className="text-slate-400 text-[10px] font-body">{client.phone}</p>
@@ -607,7 +607,7 @@ export default function AdminDashboard() {
                   exit={{ opacity: 0 }}
                   className="space-y-8"
                 >
-                  <section className="bg-white dark:bg-primary/5 p-8 rounded-3xl border border-primary/10">
+                  <section className="bg-white p-8 rounded-3xl border border-primary/10">
                     <div className="flex items-center justify-between mb-8">
                       <h2 className="text-2xl font-display font-bold flex items-center gap-3">
                         <span className="material-symbols-outlined text-primary">group</span>
@@ -646,7 +646,7 @@ export default function AdminDashboard() {
                                     alt={user.name} 
                                     className="w-10 h-10 rounded-full border border-primary/10 object-cover" 
                                   />
-                                  <span className="font-bold text-slate-800 dark:text-slate-200">{user.name || 'Pendiente...'}</span>
+                                  <span className="font-bold text-slate-800">{user.name || 'Pendiente...'}</span>
                                 </div>
                               </td>
                                <td className="py-4 px-4 text-slate-500 text-sm font-body">{user.email}</td>
@@ -689,7 +689,7 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className="bg-white dark:bg-primary/5 p-12 rounded-3xl border border-primary/10 text-center"
+                  className="bg-white p-12 rounded-3xl border border-primary/10 text-center"
                 >
                   <span className="material-symbols-outlined text-5xl text-slate-300 mb-4">insights</span>
                   <p className="text-slate-500">Métricas de visualización en desarrollo.</p>

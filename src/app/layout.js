@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
       <body
-        className={`${inter.variable} ${clashGrotesk.variable} ${roundo.variable} bg-background-light dark:bg-background-dark font-body text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden`}
+        className={`${inter.variable} ${clashGrotesk.variable} ${roundo.variable} bg-background-light font-body text-slate-900 antialiased overflow-x-hidden`}
       >
         <AuthProvider>
           <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">

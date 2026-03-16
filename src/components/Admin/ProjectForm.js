@@ -187,7 +187,7 @@ export default function ProjectForm({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 mt-2 uppercase tracking-wide">
+          <label className="block text-sm font-bold text-slate-700 mb-2 mt-2 uppercase tracking-wide">
             {mode === 'reels' ? 'Nombre del Reel' : 'Título'}
           </label>
           <input
@@ -195,19 +195,19 @@ export default function ProjectForm({
             type="text"
             value={formData.title}
             onChange={(e) => setFormData({...formData, title: e.target.value})}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-primary/20 bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all text-slate-900 dark:text-slate-100 placeholder:text-slate-300"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all text-slate-900 placeholder:text-slate-300"
             placeholder={mode === 'reels' ? 'Ej. Detrás de cámaras #01' : 'Título del proyecto'}
           />
         </div>
         <div className="relative">
-          <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 mt-2 uppercase tracking-wide">
+          <label className="block text-sm font-bold text-slate-700 mb-2 mt-2 uppercase tracking-wide">
             {mode === 'reels' ? 'Empresa / Marca' : 'Cliente'}
           </label>
           <div 
             onClick={() => setShowClientDropdown(!showClientDropdown)}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-primary/20 bg-transparent outline-none focus-within:ring-2 focus-within:ring-primary transition-all text-slate-900 dark:text-slate-100 flex items-center justify-between cursor-pointer group"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus-within:ring-2 focus-within:ring-primary transition-all text-slate-900 flex items-center justify-between cursor-pointer group"
           >
-            <span className={formData.client ? 'text-slate-900 dark:text-slate-100' : 'text-slate-300'}>
+            <span className={formData.client ? 'text-slate-900' : 'text-slate-300'}>
               {formData.client || (mode === 'reels' ? 'Seleccionar empresa' : 'Seleccionar cliente')}
             </span>
             <span className={`material-symbols-outlined transition-transform ${showClientDropdown ? 'rotate-180' : ''}`}>
@@ -226,7 +226,7 @@ export default function ProjectForm({
                   initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute z-20 top-full left-0 w-full mt-2 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-primary/10 overflow-hidden"
+                  className="absolute z-20 top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-2xl border border-primary/10 overflow-hidden"
                 >
                   <div className="p-3 border-b border-primary/5">
                     <div className="relative">
@@ -238,7 +238,7 @@ export default function ProjectForm({
                         onChange={(e) => setClientSearch(e.target.value)}
                         onClick={(e) => e.stopPropagation()}
                         placeholder="Buscar..."
-                        className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-primary/5 rounded-xl text-sm outline-none border border-transparent focus:border-primary/20 transition-all"
+                        className="w-full pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-sm outline-none border border-transparent focus:border-primary/20 transition-all"
                       />
                     </div>
                   </div>
@@ -263,7 +263,7 @@ export default function ProjectForm({
                                 setShowClientDropdown(false);
                                 setClientSearch('');
                               }}
-                              className={`w-full text-left px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors flex items-center justify-between group-item ${formData.client === client.name ? 'bg-primary/5 text-primary' : 'text-slate-600 dark:text-slate-400'}`}
+                              className={`w-full text-left px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors flex items-center justify-between group-item ${formData.client === client.name ? 'bg-primary/5 text-primary' : 'text-slate-600'}`}
                             >
                               <div className="flex flex-col">
                                 <span className="font-bold text-sm">{client.name}</span>
@@ -276,7 +276,7 @@ export default function ProjectForm({
                           ))
                         )}
                         
-                        <div className="p-2 border-t border-primary/5 bg-slate-50/50 dark:bg-white/5">
+                        <div className="p-2 border-t border-primary/5 bg-slate-50/50">
                           <button
                             type="button"
                             onClick={(e) => {
@@ -292,7 +292,7 @@ export default function ProjectForm({
                       </>
                     )}
                   </div>
-                  <div className="p-2 bg-slate-50 dark:bg-primary/5 border-t border-primary/5">
+                  <div className="p-2 bg-slate-50 border-t border-primary/5">
                     <button
                       type="button"
                       onClick={(e) => {
@@ -315,25 +315,25 @@ export default function ProjectForm({
       {/* Specialized Metadata Fields removed for Photography */}
 
       <div>
-        <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wide">
+        <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
           {mode === 'reels' ? 'Descripción del Reel' : mode === 'art' ? 'Descripción del Arte' : mode === 'photo' ? 'Descripción de la Fotografía' : 'Descripción del Proyecto'}
         </label>
         <textarea
           value={formData.description}
           onChange={(e) => setFormData({...formData, description: e.target.value})}
-          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-primary/20 bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all text-slate-900 dark:text-slate-100 min-h-[100px]"
+          className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all text-slate-900 min-h-[100px]"
           placeholder={mode === 'reels' ? 'Escribe aquí la descripción del reel...' : mode === 'art' ? 'Describe aquí los detalles de la obra...' : mode === 'photo' ? 'Escribe aquí los detalles de la fotografía...' : 'Describe los detalles del proyecto...'}
         />
       </div>
 
       <div>
         {mode !== 'reels' && (
-          <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase tracking-wide">Galería y Medios</label>
+          <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Galería y Medios</label>
         )}
         
         <div className={`grid grid-cols-2 sm:grid-cols-4 gap-4 ${mode === 'reels' ? 'mb-0' : 'mb-4'}`}>
           {formData.gallery.map((item, index) => (
-            <div key={index} className="relative aspect-[9/16] sm:aspect-square rounded-2xl overflow-hidden border-2 border-slate-100 dark:border-primary/10 group">
+            <div key={index} className="relative aspect-[9/16] sm:aspect-square rounded-2xl overflow-hidden border-2 border-slate-100 group">
               <img src={getMediaThumbnail(item) || null} className="w-full h-full object-cover" alt="Preview" />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <button 
@@ -350,7 +350,7 @@ export default function ProjectForm({
             </div>
           ))}
           {(mode === 'all' || mode === 'photo' || mode === 'art') && (
-            <label className="aspect-square rounded-2xl border-2 border-dashed border-slate-200 dark:border-primary/20 hover:border-primary/40 flex flex-col items-center justify-center cursor-pointer text-slate-400 group transition-all">
+            <label className="aspect-square rounded-2xl border-2 border-dashed border-slate-200 hover:border-primary/40 flex flex-col items-center justify-center cursor-pointer text-slate-400 group transition-all">
               <input type="file" multiple accept="image/*" onChange={handleFileChange} className="hidden" />
               <span className="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">add_a_photo</span>
               <span className="text-[10px] uppercase font-bold mt-2">Subir Foto</span>
@@ -359,7 +359,7 @@ export default function ProjectForm({
         </div>
 
         {(mode === 'all' || mode === 'reels') && (
-          <div className={`bg-slate-50 dark:bg-primary/5 p-6 rounded-3xl border border-slate-200 dark:border-primary/10 ${mode === 'reels' && formData.gallery.length > 0 ? 'mt-6' : ''}`}>
+          <div className={`bg-slate-50 p-6 rounded-3xl border border-slate-200 ${mode === 'reels' && formData.gallery.length > 0 ? 'mt-6' : ''}`}>
             <label className="block text-[10px] font-bold text-slate-500 mb-3 uppercase tracking-widest">
               {mode === 'reels' ? 'Link Directo del Reel (YouTube / Instagram)' : 'Link de Video (YouTube / Instagram)'}
             </label>
@@ -386,7 +386,7 @@ export default function ProjectForm({
                     }
                   }}
                   placeholder={mode === 'reels' ? "Pegar link aquí..." : "Pegar link aquí..."}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-primary/20 bg-white dark:bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-primary transition-all"
                 />
               </div>
               {mode !== 'reels' && (
@@ -397,7 +397,7 @@ export default function ProjectForm({
                     setLivePreview(null);
                   }}
                   disabled={!ytUrl.trim()}
-                  className="px-6 py-3 bg-slate-900 dark:bg-primary text-white rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+                  className="px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
                 >
                   Añadir Video
                 </button>
@@ -405,8 +405,8 @@ export default function ProjectForm({
             </div>
 
             {mode === 'reels' && (
-              <div className="mt-4 p-4 bg-blue-50/50 dark:bg-blue-500/5 rounded-2xl border border-blue-100/50 dark:border-blue-500/10">
-                <p className="text-[11px] text-blue-600 dark:text-blue-400 flex items-start gap-2 leading-relaxed">
+              <div className="mt-4 p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+                <p className="text-[11px] text-blue-600 flex items-start gap-2 leading-relaxed">
                   <span className="material-symbols-outlined text-sm mt-0.5">info</span>
                   <span>
                     <strong>Tip de Calidad:</strong> Prioriza subir tus reels a <strong>YouTube Shorts</strong>. Permite una integración más fluida y estable en tu portfolio que Instagram.
@@ -423,7 +423,7 @@ export default function ProjectForm({
                   exit={{ opacity: 0, height: 0, marginTop: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-primary/10 shadow-sm">
+                  <div className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-primary/10 shadow-sm">
                     <div className="relative w-20 aspect-[9/16] rounded-lg overflow-hidden border border-primary/5 bg-slate-100">
                       <img src={livePreview || null} className="w-full h-full object-cover" alt="Previsualización" />
                       <div className="absolute inset-0 bg-primary/10"></div>
@@ -481,14 +481,14 @@ export default function ProjectForm({
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
-            className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
+            className="bg-white w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
           >
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100">Nuevo Cliente</h3>
+              <h3 className="text-3xl font-display font-bold text-slate-900">Nuevo Cliente</h3>
               <button 
                  type="button"
                 onClick={() => setShowFullClientModal(false)}
-                className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-primary/5 flex items-center justify-center hover:bg-slate-100 transition-all"
+                className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center hover:bg-slate-100 transition-all"
               >
                 <span className="material-symbols-outlined text-slate-400">close</span>
               </button>

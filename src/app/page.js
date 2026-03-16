@@ -78,7 +78,7 @@ export default async function Home() {
           {/* Photography Section */}
           <section id="servicios" className="flex flex-col items-center">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-2 tracking-tight">
                 Fotografía <span className="text-primary/30 font-normal text-2xl ml-2">/ 01</span>
               </h2>
               <div className="h-1 w-20 bg-primary mx-auto rounded-full opacity-20" />
@@ -93,7 +93,7 @@ export default async function Home() {
           {/* Reels Section */}
           <section className="flex flex-col items-center">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-2 tracking-tight">
                 Reels Dinámicos <span className="text-primary/30 font-normal text-2xl ml-2">/ 02</span>
               </h2>
               <div className="h-1 w-20 bg-primary mx-auto rounded-full opacity-20" />
@@ -108,7 +108,7 @@ export default async function Home() {
           {/* Digital Arts Section */}
           <section className="flex flex-col items-center">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-2 tracking-tight">
                 Artes Digitales <span className="text-primary/30 font-normal text-2xl ml-2">/ 03</span>
               </h2>
               <div className="h-1 w-20 bg-primary mx-auto rounded-full opacity-20" />

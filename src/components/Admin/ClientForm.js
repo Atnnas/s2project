@@ -46,7 +46,7 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
             required
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 dark:text-white"
+            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
             placeholder="Nombre oficial"
           />
         </div>
@@ -56,7 +56,7 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
             type="text"
             value={formData.contactPerson}
             onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
-            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 dark:text-white"
+            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
             placeholder="Nombre del dueño"
           />
         </div>
@@ -68,7 +68,7 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
             type="email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 dark:text-white"
+            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
             placeholder="email@empresa.com"
           />
         </div>
@@ -78,7 +78,7 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
             type="text"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 dark:text-white"
+            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
             placeholder="+506 ...."
           />
         </div>
@@ -90,7 +90,7 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
             type="text"
             value={formData.website}
             onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 dark:text-white"
+            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
             placeholder="www.empresa.com"
           />
         </div>
@@ -100,7 +100,7 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
             type="text"
             value={formData.industry}
             onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 dark:text-white"
+            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
             placeholder="Ej. Moda, Tecnología"
           />
         </div>
@@ -110,7 +110,7 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
         <textarea
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-          className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 min-h-[100px] dark:text-white"
+          className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 min-h-[100px]"
           placeholder="Detalles adicionales..."
         />
       </div>

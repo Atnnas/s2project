@@ -8,7 +8,7 @@ export default function ContactoPage() {
   return (
     <>
       <Navbar />
-      <main className="flex-1 bg-background-light dark:bg-background-dark overflow-hidden">
+      <main className="flex-1 bg-background-light overflow-hidden">
         {/* Hero Section simple */}
         <section className="pt-32 pb-16 px-6 text-center">
           <motion.div
@@ -16,7 +16,7 @@ export default function ContactoPage() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto space-y-6"
           >
-            <h1 className="text-5xl md:text-7xl font-display font-black uppercase tracking-tighter text-slate-900 dark:text-slate-100">
+            <h1 className="text-5xl md:text-7xl font-display font-black uppercase tracking-tighter text-slate-900">
               Hablemos de <span className="text-primary">Tu Historia</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-500 font-body max-w-2xl mx-auto leading-relaxed">
@@ -35,31 +35,31 @@ export default function ContactoPage() {
           >
             <div className="space-y-4 text-center">
               <p className="text-xs font-black uppercase tracking-[0.3em] text-primary">Información Directa</p>
-              <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter text-slate-900 dark:text-slate-100 leading-tight">
+              <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter text-slate-900 leading-tight">
                 Estamos a un <span className="opacity-40 italic">Click</span> de Distancia
               </h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {/* Email Item */}
-              <div className="group flex items-center gap-6 p-6 bg-white dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/10 hover:border-primary/30 transition-all hover:shadow-xl hover:shadow-primary/5">
+              <div className="group flex items-center gap-6 p-6 bg-white rounded-3xl border border-slate-100 hover:border-primary/30 transition-all hover:shadow-xl hover:shadow-primary/5">
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
                   <span className="material-symbols-outlined">mail</span>
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Escríbenos</p>
-                  <p className="text-lg font-display font-medium text-slate-900 dark:text-white">info@s2-project.com</p>
+                  <p className="text-lg font-display font-medium text-slate-900">info@s2-project.com</p>
                 </div>
               </div>
 
               {/* Location Item */}
-              <div className="flex items-center gap-6 p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/10">
+              <div className="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl border border-slate-100">
                 <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary/60">
                   <span className="material-symbols-outlined">location_on</span>
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Ubicación</p>
-                  <p className="text-lg font-display font-medium text-slate-900 dark:text-white">San José, Costa Rica</p>
+                  <p className="text-lg font-display font-medium text-slate-900">San José, Costa Rica</p>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function ContactoPage() {
 
             <div className="p-8 bg-primary/5 rounded-[2rem] border border-primary/10 max-w-2xl mx-auto text-center">
               <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4">¿Por qué S2 Project?</p>
-              <p className="text-sm text-slate-600 dark:text-slate-400 font-body leading-relaxed">
+              <p className="text-sm text-slate-600 font-body leading-relaxed">
                 No somos solo una productora. Somos un socio estratégico que diseña historias visuales con estándares cinematográficos y excelencia técnica.
               </p>
             </div>
