@@ -1,0 +1,33 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Diseño del Esquema de MongoDB para Proyectos",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 2,
+      "title": "Creación de Endpoints API Next.js para Proyectos",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Backend Especialista",
+      "dependencies": [
+        "1"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Integrar API de Proyectos en el Frontend (page.js)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Frontend Especialista",
+      "dependencies": [
+        "2"
+      ]
+    }
+  ],
+  "members": []
+}

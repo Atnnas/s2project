@@ -1,0 +1,705 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
+import { motion, AnimatePresence } from 'framer-motion';
+import ProjectForm from '@/components/Admin/ProjectForm';
+import ClientForm from '@/components/Admin/ClientForm';
+
+export default function AdminDashboard() {
+  const { data: session, update } = useSession();
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState('projects-photography');
+  const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [deleteType, setDeleteType] = useState('project'); // 'project', 'user' or 'client'
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [showProjectModal, setShowProjectModal] = useState(false);
+  const [showClientModal, setShowClientModal] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  const [editingProject, setEditingProject] = useState(null);
+  const [editingClient, setEditingClient] = useState(null);
+  const [userFormData, setUserFormData] = useState({ name: '', email: '', role: 'Viewer' });
+  const [clientFormData, setClientFormData] = useState({ 
+    name: '', contactPerson: '', email: '', phone: '', website: '', industry: '', notes: '' 
+  });
+
+  const fetchProjects = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/projects');
+      const data = await res.json();
+      if (data.success) setProjects(data.data);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/users');
+      const data = await res.json();
+      if (data.success) setUsers(data.data);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+
+  const fetchClients = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/clients');
+      const data = await res.json();
+      if (data.success) setClients(data.data);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (activeTab.startsWith('projects-')) {
+      fetchProjects();
+    } else if (activeTab === 'users') {
+      fetchUsers();
+    } else if (activeTab === 'clients') {
+      fetchClients();
+    }
+  }, [activeTab]);
+
+  const initiateDelete = (item, type) => {
+    setItemToDelete(item);
+    setDeleteType(type);
+    setShowConfirm(true);
+  };
+
+  const openUserModal = (user = null) => {
+    if (user) {
+      setEditingUser(user);
+      setUserFormData({ name: user.name || '', email: user.email, role: user.role });
+    } else {
+      setEditingUser(null);
+      setUserFormData({ name: '', email: '', role: 'Viewer' });
+    }
+    setShowUserModal(true);
+  };
+
+  const openProjectModal = (project = null) => {
+    setEditingProject(project);
+    setShowProjectModal(true);
+  };
+
+  const openClientModal = (client = null) => {
+    if (client) {
+      setEditingClient(client);
+      setClientFormData({
+        name: client.name || '',
+        contactPerson: client.contactPerson || '',
+        email: client.email || '',
+        phone: client.phone || '',
+        website: client.website || '',
+        industry: client.industry || '',
+        notes: client.notes || ''
+      });
+    } else {
+      setEditingClient(null);
+      setClientFormData({
+        name: '', contactPerson: '', email: '', phone: '', website: '', industry: '', notes: ''
+      });
+    }
+    setShowClientModal(true);
+  };
+
+  const handleUserSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const method = editingUser ? 'PATCH' : 'POST';
+      const body = editingUser ? { ...userFormData, id: editingUser._id } : userFormData;
+      const res = await fetch('/api/users', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (res.ok) {
+        if (editingUser && userFormData.email === session?.user?.email) {
+          update({ name: userFormData.name });
+        }
+        fetchUsers();
+        setShowUserModal(false);
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  const handleClientSuccess = (newClient) => {
+    fetchClients();
+    setShowClientModal(false);
+  };
+
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
+    try {
+      let endpoint;
+      if (deleteType === 'project') endpoint = `/api/projects?id=${itemToDelete._id}`;
+      else if (deleteType === 'user') endpoint = `/api/users?id=${itemToDelete._id}`;
+      else if (deleteType === 'client') endpoint = `/api/clients?id=${itemToDelete._id}`;
+
+      const res = await fetch(endpoint, { method: 'DELETE' });
+      if (res.ok) {
+        if (deleteType === 'project') {
+          setProjects(projects.filter(p => p._id !== itemToDelete._id));
+        } else if (deleteType === 'user') {
+          setUsers(users.filter(u => u._id !== itemToDelete._id));
+        } else if (deleteType === 'client') {
+          setClients(clients.filter(c => c._id !== itemToDelete._id));
+        }
+        setShowConfirm(false);
+        setItemToDelete(null);
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  const tabs = [
+    { id: 'projects-photography', label: 'Fotografía', icon: 'photo_camera', category: 'Fotografía' },
+    { id: 'projects-reels', label: 'Reels', icon: 'movie_filter', category: 'Reels' },
+    { id: 'projects-digital-arts', label: 'Arte Digital', icon: 'polyline', category: 'Arte Digital' },
+    { id: 'clients', label: 'Clientes', icon: 'business_center' },
+    { id: 'users', label: 'Usuarios', icon: 'group' },
+    { id: 'stats', label: 'Métricas', icon: 'analytics' },
+  ];
+
+  const filteredProjects = projects.filter(p => {
+    const currentTab = tabs.find(t => t.id === activeTab);
+    return currentTab?.category ? p.category === currentTab.category : true;
+  });
+
+  return (
+    <>
+      <Navbar />
+      <AnimatePresence>
+        {showConfirm && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white dark:bg-slate-900 w-full max-m-md rounded-3xl p-8 shadow-2xl border border-primary/10"
+            >
+              <div className="w-16 h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-6">
+                <span className="material-symbols-outlined text-3xl">warning</span>
+              </div>
+              <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-slate-100 mb-2">¿Confirmar eliminación?</h3>
+              <p className="text-slate-500 mb-8 leading-relaxed">
+                Estás a punto de borrar <span className="font-bold text-slate-900 dark:text-slate-100">"{itemToDelete?.title || itemToDelete?.name || itemToDelete?.email}"</span>. Esta acción no se puede deshacer.
+              </p>
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => setShowConfirm(false)}
+                  className="flex-1 px-6 py-4 rounded-2xl bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-all text-sm"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  onClick={confirmDelete}
+                  className="flex-1 px-6 py-4 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-200 dark:shadow-none text-sm"
+                >
+                  Eliminar ahora
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+        
+        {showClientModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
+            >
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100">
+                  {editingClient ? 'Editar Cliente' : 'Nuevo Cliente'}
+                </h3>
+                <button 
+                  onClick={() => setShowClientModal(false)}
+                  className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-primary/5 flex items-center justify-center hover:bg-slate-100 transition-all"
+                >
+                  <span className="material-symbols-outlined text-slate-400">close</span>
+                </button>
+              </div>
+              <ClientForm 
+                client={editingClient} 
+                onSuccess={handleClientSuccess}
+                onCancel={() => setShowClientModal(false)}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+
+        {showUserModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl p-10 shadow-2xl border border-primary/10"
+            >
+              <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100 mb-8">
+                {editingUser ? 'Editar Usuario' : 'Nuevo Usuario'}
+              </h3>
+              <form onSubmit={handleUserSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 px-1">Correo Electrónico</label>
+                  <input
+                    type="email"
+                    required
+                    disabled={!!editingUser}
+                    value={userFormData.email}
+                    onChange={(e) => setUserFormData({ ...userFormData, email: e.target.value })}
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+                    placeholder="ejemplo@gmail.com"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 px-1">Nombre (Opcional)</label>
+                  <input
+                    type="text"
+                    value={userFormData.name}
+                    onChange={(e) => setUserFormData({ ...userFormData, name: e.target.value })}
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-primary/5 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+                    placeholder="Nombre del usuario"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 px-1">Rol de Acceso</label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {['Viewer', 'Editor', 'Admin'].map((role) => (
+                      <button
+                        key={role}
+                        type="button"
+                        onClick={() => setUserFormData({ ...userFormData, role })}
+                        className={`py-3 rounded-xl font-bold text-xs transition-all border-2 ${userFormData.role === role ? 'bg-primary text-white border-primary' : 'bg-transparent text-slate-400 border-slate-100 hover:border-primary/20'}`}
+                      >
+                        {role === 'Viewer' ? 'Observador' : role === 'Admin' ? 'Administrador' : role}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-3 pt-6">
+                  <button
+                    type="button"
+                    onClick={() => setShowUserModal(false)}
+                    className="flex-1 px-6 py-4 rounded-2xl bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-all text-sm"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 px-6 py-4 rounded-2xl bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-sm"
+                  >
+                    {editingUser ? 'Guardar Cambios' : 'Registrar Correo'}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {showProjectModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 overflow-y-auto max-h-[90vh]"
+            >
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100">
+                  {editingProject 
+                    ? (activeTab === 'projects-reels' ? 'Editar Reel' : activeTab === 'projects-digital-arts' ? 'Editar Arte Digital' : activeTab === 'projects-photography' ? 'Editar Fotografía' : 'Editar Proyecto') 
+                    : (activeTab === 'projects-reels' ? 'Nuevo Reel' : activeTab === 'projects-digital-arts' ? 'Nuevo Arte Digital' : activeTab === 'projects-photography' ? 'Nueva Fotografía' : 'Nuevo Proyecto')}
+                </h3>
+                <button 
+                  onClick={() => setShowProjectModal(false)}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+              
+              <ProjectForm 
+                embedded={true} 
+                project={editingProject} 
+                defaultCategory={tabs.find(t => t.id === activeTab)?.category}
+                mode={
+                  activeTab === 'projects-photography' ? 'photo' :
+                  activeTab === 'projects-reels' ? 'reels' :
+                  activeTab === 'projects-digital-arts' ? 'art' : 'all'
+                }
+                onSuccess={() => {
+                  fetchProjects();
+                  setTimeout(() => setShowProjectModal(false), 800);
+                }} 
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main className="flex-1 max-w-7xl mx-auto px-6 py-32 min-h-screen w-full">
+        <header className="mb-16 border-b border-primary/10 pb-12">
+          <h1 className="text-5xl font-display font-bold text-slate-900 dark:text-slate-100 mb-8 tracking-tight">Panel de Control</h1>
+          
+          <div className="flex flex-col items-start gap-6">
+            <div className="flex items-center gap-4 bg-white dark:bg-primary/5 p-4 pr-8 rounded-3xl border border-primary/10 shadow-sm">
+              <div className="relative">
+                <img 
+                  src={session?.user?.image || `https://ui-avatars.com/api/?name=${session?.user?.name || 'User'}&background=3b512f&color=fff`} 
+                  alt="Profile" 
+                  className="w-16 h-16 rounded-2xl object-cover ring-4 ring-primary/5"
+                />
+                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-slate-900 dark:text-slate-100 font-bold text-lg">{session?.user?.name || 'David'}</span>
+                  <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">
+                    {session?.user?.role || 'Admin'}
+                  </span>
+                </div>
+                <p className="text-slate-500 font-body text-sm leading-none">{session?.user?.email}</p>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-slate-900 text-white hover:bg-primary transition-all font-bold text-sm shadow-xl shadow-slate-200 dark:shadow-none hover:scale-[1.02] active:scale-95 group"
+            >
+              <span className="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">logout</span>
+              Finalizar Sesión
+            </button>
+          </div>
+        </header>
+
+        <div className="flex flex-col lg:flex-row gap-8">
+          <aside className="lg:w-64 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-2 pb-4 lg:pb-0 h-fit">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 lg:flex-none flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap border-2 ${activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20 border-primary' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-primary/10 border-transparent'}`}
+              >
+                <span className="material-symbols-outlined">{tab.icon}</span>
+                {tab.label}
+              </button>
+            ))}
+          </aside>
+
+          <div className="flex-1">
+            <AnimatePresence mode="wait">
+              {activeTab.startsWith('projects-') && (
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-10"
+                >
+                  <section className="bg-white dark:bg-primary/5 p-8 rounded-3xl border border-primary/10">
+                     <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-2xl font-display font-bold flex items-center gap-3">
+                          <span className="material-symbols-outlined text-primary">edit_square</span>
+                          Gestión : {tabs.find(t => t.id === activeTab)?.label}
+                        </h2>
+                        <button 
+                          onClick={() => openProjectModal()}
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20"
+                        >
+                          <span className="material-symbols-outlined text-sm">add_circle</span>
+                          {activeTab === 'projects-reels' ? 'Nuevo Reel' : activeTab === 'projects-digital-arts' ? 'Nuevo Arte Digital' : activeTab === 'projects-photography' ? 'Nueva Fotografía' : 'Nuevo Registro'}
+                        </button>
+                     </div>
+                     
+                     <div className="border-t border-primary/5 pt-8">
+                        <h3 className="text-xl font-display font-bold mb-6 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                          <span className="material-symbols-outlined text-primary/60">list_alt</span>
+                          {activeTab === 'projects-reels' ? 'Reels Guardados' : activeTab === 'projects-digital-arts' ? 'Artes Guardados' : activeTab === 'projects-photography' ? 'Fotos Guardadas' : 'Registros Guardados'}
+                        </h3>
+
+                        {loading ? (
+                          <p className="text-slate-400 py-10 text-center">Cargando proyectos...</p>
+                        ) : (
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-left">
+                              <thead>
+                                <tr className="border-b border-primary/5">
+                                  <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">
+                                    {activeTab === 'projects-reels' ? 'Reel' : activeTab === 'projects-digital-arts' ? 'Arte' : activeTab === 'projects-photography' ? 'Foto' : 'Proyecto'}
+                                  </th>
+                                  <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">URL Imagen</th>
+                                  <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Categoría</th>
+                                  <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black text-right">Acciones</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-primary/5">
+                                {filteredProjects.length === 0 ? (
+                                  <tr>
+                                    <td colSpan="4" className="py-10 text-center text-slate-400 italic">
+                                      No hay {activeTab === 'projects-reels' ? 'reels' : activeTab === 'projects-digital-arts' ? 'artes' : activeTab === 'projects-photography' ? 'fotos' : 'registros'} en esta categoría.
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  filteredProjects.map(project => (
+                                    <tr key={project._id} className="group hover:bg-primary/5 transition-colors">
+                                      <td className="py-4 px-4">
+                                        <div className="flex items-center gap-4">
+                                          <div 
+                                            className="w-14 h-14 rounded-xl bg-cover bg-center shadow-inner border border-black/5 flex-shrink-0" 
+                                            style={{ backgroundImage: `url("${project.imageUrl}")` }} 
+                                          />
+                                          <div>
+                                            <p className="font-bold text-slate-800 dark:text-slate-200">{project.title}</p>
+                                            <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">{project.client || 'S2 Project'}</p>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="py-4 px-4 text-slate-500 text-xs font-body max-w-[200px] truncate">
+                                        {project.imageUrl}
+                                      </td>
+                                      <td className="py-4 px-4">
+                                        <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-widest border ${
+                                          project.category === 'Fotografía' ? 'bg-primary/10 text-primary border-primary/20' : 
+                                          project.category === 'Reels' ? 'bg-blue-50 text-blue-600 border-blue-100' : 
+                                          'bg-purple-50 text-purple-600 border-purple-100'
+                                        }`}>
+                                          {project.category}
+                                        </span>
+                                      </td>
+                                      <td className="py-4 px-4">
+                                        <div className="flex justify-end gap-2">
+                                          <button 
+                                            onClick={() => openProjectModal(project)}
+                                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all shadow-sm"
+                                            title="Editar"
+                                          >
+                                            <span className="material-symbols-outlined text-lg">edit</span>
+                                          </button>
+                                          <button 
+                                            onClick={() => initiateDelete(project, 'project')}
+                                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-red-100 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm"
+                                            title="Borrar"
+                                          >
+                                            <span className="material-symbols-outlined text-lg">delete</span>
+                                          </button>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ))
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                     </div>
+                  </section>
+                </motion.div>
+              )}
+              {activeTab === 'clients' && (
+                <motion.div
+                  key="clients"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-8"
+                >
+                  <section className="bg-white dark:bg-primary/5 p-8 rounded-3xl border border-primary/10">
+                    <div className="flex items-center justify-between mb-8">
+                      <h2 className="text-2xl font-display font-bold flex items-center gap-3">
+                        <span className="material-symbols-outlined text-primary">business_center</span>
+                        Administración de Clientes
+                      </h2>
+                      <button 
+                        onClick={() => openClientModal()}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:scale-[1.02] active:scale-95 transition-all"
+                      >
+                        <span className="material-symbols-outlined text-sm">add_business</span>
+                        Nuevo Cliente
+                      </button>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-primary/5">
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Empresa</th>
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Dueño</th>
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Contacto</th>
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black text-right">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-primary/5">
+                          {loading ? (
+                            <tr><td colSpan="4" className="py-10 text-center text-slate-400">Cargando clientes...</td></tr>
+                          ) : clients.length === 0 ? (
+                            <tr><td colSpan="4" className="py-10 text-center text-slate-400 italic">No hay clientes registrados.</td></tr>
+                          ) : clients.map(client => (
+                            <tr key={client._id} className="group hover:bg-primary/5 transition-colors">
+                              <td className="py-4 px-4">
+                                <div>
+                                  <p className="font-bold text-slate-800 dark:text-slate-200">{client.name}</p>
+                                  <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">{client.industry || 'General'}</p>
+                                </div>
+                              </td>
+                              <td className="py-4 px-4 text-slate-600 dark:text-slate-400 text-sm">{client.contactPerson || '-'}</td>
+                              <td className="py-4 px-4">
+                                <p className="text-slate-500 text-xs font-body">{client.email}</p>
+                                <p className="text-slate-400 text-[10px] font-body">{client.phone}</p>
+                              </td>
+                              <td className="py-4 px-4 text-right">
+                                <div className="flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button 
+                                    onClick={() => openClientModal(client)}
+                                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all shadow-sm"
+                                  >
+                                    <span className="material-symbols-outlined text-sm">edit</span>
+                                  </button>
+                                  <button 
+                                    onClick={() => initiateDelete(client, 'client')}
+                                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm"
+                                  >
+                                    <span className="material-symbols-outlined text-sm">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                </motion.div>
+              )}
+              {activeTab === 'users' && (
+                <motion.div
+                  key="users"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-8"
+                >
+                  <section className="bg-white dark:bg-primary/5 p-8 rounded-3xl border border-primary/10">
+                    <div className="flex items-center justify-between mb-8">
+                      <h2 className="text-2xl font-display font-bold flex items-center gap-3">
+                        <span className="material-symbols-outlined text-primary">group</span>
+                        Listado de Usuarios
+                      </h2>
+                      <button 
+                        onClick={() => openUserModal()}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:scale-[1.02] active:scale-95 transition-all"
+                      >
+                        <span className="material-symbols-outlined text-sm">person_add</span>
+                        Nuevo Usuario
+                      </button>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-primary/5">
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Usuario</th>
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Email</th>
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Rol</th>
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black text-right">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-primary/5">
+                          {loading ? (
+                            <tr><td colSpan="4" className="py-10 text-center text-slate-400">Cargando usuarios...</td></tr>
+                          ) : users.length === 0 ? (
+                            <tr><td colSpan="4" className="py-10 text-center text-slate-400 italic">No hay usuarios registrados.</td></tr>
+                          ) : users.map(user => (
+                            <tr key={user._id} className="group hover:bg-primary/5 transition-colors">
+                              <td className="py-4 px-4">
+                                <div className="flex items-center gap-3">
+                                  <img 
+                                    src={user.image || `https://ui-avatars.com/api/?name=${user.name || user.email}&background=f1f5f9&color=64748b`} 
+                                    alt={user.name} 
+                                    className="w-10 h-10 rounded-full border border-primary/10 object-cover" 
+                                  />
+                                  <span className="font-bold text-slate-800 dark:text-slate-200">{user.name || 'Pendiente...'}</span>
+                                </div>
+                              </td>
+                               <td className="py-4 px-4 text-slate-500 text-sm font-body">{user.email}</td>
+                              <td className="py-4 px-4">
+                                <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider border ${
+                                  user.role === 'Admin' ? 'bg-primary/10 text-primary border-primary/20' : 
+                                  user.role === 'Editor' ? 'bg-blue-50 text-blue-600 border-blue-100' : 
+                                  'bg-slate-50 text-slate-500 border-slate-200'
+                                }`}>
+                                  {user.role === 'Viewer' ? 'Observador' : user.role === 'Admin' ? 'Administrador' : user.role}
+                                </span>
+                              </td>
+                              <td className="py-4 px-4 text-right">
+                                <div className="flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button 
+                                    onClick={() => openUserModal(user)}
+                                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all shadow-sm"
+                                  >
+                                    <span className="material-symbols-outlined text-sm">edit</span>
+                                  </button>
+                                  <button 
+                                    onClick={() => initiateDelete(user, 'user')}
+                                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm"
+                                  >
+                                    <span className="material-symbols-outlined text-sm">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                </motion.div>
+              )}
+              {activeTab === 'stats' && (
+                <motion.div
+                  key="stats"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="bg-white dark:bg-primary/5 p-12 rounded-3xl border border-primary/10 text-center"
+                >
+                  <span className="material-symbols-outlined text-5xl text-slate-300 mb-4">insights</span>
+                  <p className="text-slate-500">Métricas de visualización en desarrollo.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
