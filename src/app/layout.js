@@ -66,7 +66,8 @@ export const metadata = {
   title: "S2 Project - Portfolio Showcase",
   description: "Premium Quality • Professional Hardware • Software Precision",
   icons: {
-    icon: '/logo1.png',
+    icon: [{ url: '/logo3.png' }, { url: '/logo1.png', rel: 'icon' }],
+    apple: '/logo3.png',
   },
 };
 
