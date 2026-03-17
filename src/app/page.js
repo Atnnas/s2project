@@ -1,10 +1,8 @@
-import Navbar from "@/components/Navbar/Navbar";
-import Hero from "@/components/Hero/Hero";
+import ContactSection from "@/components/Contact/ContactSection";
 import Footer from "@/components/Footer/Footer";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 import { serializeData } from "@/lib/serialize";
-import Image from "next/image";
 import { CircularGallery } from "@/components/ui/CircularGallery";
 
 export async function generateMetadata() {
@@ -64,9 +62,8 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
       <main className="flex-1">
-        <Hero />
+        <ContactSection />
         
         {!isDbConnected && process.env.NODE_ENV === 'development' && (
           <div className="bg-yellow-100 text-yellow-800 p-2 text-center text-sm font-semibold sticky top-20 z-40 shadow">

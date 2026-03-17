@@ -71,6 +71,9 @@ export const metadata = {
   },
 };
 
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
@@ -83,9 +86,11 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider>
           <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-            <div className="layout-container flex h-full grow flex-col">
+            <Navbar />
+            <main className="flex-1 pt-24 md:pt-40">
               {children}
-            </div>
+            </main>
+            <Footer />
             <CookieConsent />
           </div>
         </AuthProvider>

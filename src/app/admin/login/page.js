@@ -4,8 +4,6 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
 
 export default function AdminLoginPage() {
   const { data: session, status } = useSession();
@@ -19,8 +17,7 @@ export default function AdminLoginPage() {
 
   return (
     <>
-      <Navbar />
-      <main className="flex-1 flex items-center justify-center min-h-screen px-6 py-32 bg-slate-50">
+      <main className="flex-1 flex items-center justify-center min-h-screen px-6 py-12 bg-slate-50">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -47,7 +44,6 @@ export default function AdminLoginPage() {
           </p>
         </motion.div>
       </main>
-      <Footer />
     </>
   );
 }

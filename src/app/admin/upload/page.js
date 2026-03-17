@@ -1,7 +1,5 @@
 'use client';
 
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -17,8 +15,7 @@ export default function AdminUploadPage({ embedded = false, project = null, onSu
 
   return (
     <>
-      {!embedded && <Navbar />}
-      <main className={`${embedded ? '' : 'flex-1 max-w-2xl mx-auto px-6 py-32 min-h-screen w-full'}`}>
+      <main className={`${embedded ? '' : 'flex-1 max-w-2xl mx-auto px-6 py-12 min-h-screen w-full'}`}>
         <motion.div 
           initial={embedded ? {} : { opacity: 0, y: 20 }}
           animate={embedded ? {} : { opacity: 1, y: 0 }}
@@ -43,7 +40,6 @@ export default function AdminUploadPage({ embedded = false, project = null, onSu
           />
         </motion.div>
       </main>
-      {!embedded && <Footer />}
     </>
   );
 }

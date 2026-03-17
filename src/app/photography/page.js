@@ -1,5 +1,3 @@
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 
@@ -48,7 +46,6 @@ export default async function PhotographyPage() {
 
   return (
     <>
-      <Navbar />
       <main className="flex-1 max-w-7xl mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
         <header className="mb-8 text-center">
           <h1 className="text-6xl font-display font-bold text-slate-900 mb-4 tracking-tight">Fotografía</h1>
@@ -65,7 +62,6 @@ export default async function PhotographyPage() {
           </div>
         )}
       </main>
-      <Footer />
     </>
   );
 }

@@ -25,16 +25,8 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Si es móvil (< 768px), mantenemos la visibilidad de la cabecera siempre en true
-      if (window.innerWidth < 768) {
-        setIsVisible(true);
-      } else {
-        if (currentScrollY < lastScrollY || currentScrollY < 50) {
-          setIsVisible(true);
-        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          setIsVisible(false);
-        }
-      }
+      // Siempre mantenemos la visibilidad de la cabecera en true para que el logo esté presente
+      setIsVisible(true);
 
       setLastScrollY(currentScrollY);
     };
@@ -79,7 +71,7 @@ export default function Navbar() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-            className={`flex items-center justify-between whitespace-nowrap px-6 md:px-20 py-4 fixed top-0 w-full z-50 transition-all duration-300 ${
+            className={`flex items-center justify-between whitespace-nowrap px-6 md:px-40 py-3 md:py-2 fixed top-0 w-full z-50 transition-all duration-300 ${
               isMenuOpen 
                 ? 'bg-primary border-b border-white/10 shadow-none' 
                 : 'bg-[#396542]/10 backdrop-blur-2xl border-b border-[#396542]/20 shadow-[0_8px_32px_rgba(57,101,66,0.15)]'
@@ -91,6 +83,17 @@ export default function Navbar() {
               className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left z-50"
               style={{ scaleX }}
             />
+
+            {/* Logo - Desktop/Tablet (Left Aligned) */}
+            <div className="hidden md:flex items-center justify-start py-2">
+              <Link href="/" className="group flex items-center gap-4">
+                <img 
+                  src="/logo1.png" 
+                  alt="S2 PROJECT" 
+                  className="h-28 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+                />
+              </Link>
+            </div>
 
             {/* Mobile Hamburger Button - Left Side */}
             <button 
@@ -128,16 +131,18 @@ export default function Navbar() {
               </div>
             </button>
 
-            {/* Mobile Home Button - Center Logo Link */}
-            <div className="md:hidden flex-1 text-center py-2">
+            {/* Mobile Home Button - Absolute Right Logo Link */}
+            <div className="md:hidden absolute right-0 top-0 h-full flex items-center pr-2">
               <Link 
                 href="/" 
                 onClick={() => setIsMenuOpen(false)}
-                className="inline-block px-4 py-2"
+                className="relative z-[70] flex items-center justify-center p-2"
               >
-                <span className={`font-display font-black tracking-tighter text-xl transition-colors ${isMenuOpen ? 'text-white' : 'text-slate-900 hover:text-primary'}`}>
-                  S2 PROJECT
-                </span>
+                <img 
+                  src="/logo1.png" 
+                  alt="S2 PROJECT" 
+                  className={`h-28 w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
+                />
               </Link>
             </div>
             
@@ -195,7 +200,6 @@ export default function Navbar() {
                 </div>
 
                 <NavbarLink href="/nosotros">Nosotros</NavbarLink>
-                <NavbarLink href="/contacto">Contacto</NavbarLink>
                 <NavbarLink href="/admin/dashboard">Administración</NavbarLink>
               </nav>
             </div>
@@ -237,10 +241,12 @@ export default function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                   className="inline-block group"
                 >
-                  <span className="font-display font-black tracking-tighter text-3xl transition-all group-hover:text-white/80">
-                    S2 PROJECT
-                  </span>
-                  <div className="h-0.5 w-full bg-white/20 mt-1 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                  <img 
+                    src="/logo1.png" 
+                    alt="S2 PROJECT" 
+                    className="h-16 w-auto object-contain brightness-0 invert"
+                  />
+                  <div className="h-0.5 w-full bg-white/20 mt-2 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
                 </Link>
               </motion.div>
 
@@ -309,10 +315,6 @@ export default function Navbar() {
 
                 <MobileNavLink href="/nosotros" active={pathname === "/nosotros"} onClick={() => setIsMenuOpen(false)} index={4}>
                   Nosotros
-                </MobileNavLink>
-                
-                <MobileNavLink href="/contacto" active={pathname === "/contacto"} onClick={() => setIsMenuOpen(false)} index={5}>
-                  Contacto
                 </MobileNavLink>
 
                 <div className="my-4" />

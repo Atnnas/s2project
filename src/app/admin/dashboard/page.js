@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/navigation';
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectForm from '@/components/Admin/ProjectForm';
 import ClientForm from '@/components/Admin/ClientForm';
@@ -178,7 +176,6 @@ export default function AdminDashboard() {
 
   return (
     <>
-      <Navbar />
       <AnimatePresence>
         {showConfirm && (
           <motion.div 
@@ -367,7 +364,7 @@ export default function AdminDashboard() {
         )}
       </AnimatePresence>
 
-      <main className="flex-1 max-w-7xl mx-auto px-6 py-32 min-h-screen w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-6 py-12 min-h-screen w-full">
         <header className="mb-16 border-b border-primary/10 pb-12">
           <h1 className="text-5xl font-display font-bold text-slate-900 mb-8 tracking-tight">Panel de Control</h1>
           
@@ -699,7 +696,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

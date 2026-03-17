@@ -1,15 +1,12 @@
 'use client';
 
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
 import { motion } from 'framer-motion';
 import ProjectForm from "@/components/Admin/ProjectForm";
 
 export default function ReelsUploadPage() {
   return (
     <>
-      <Navbar />
-      <main className="flex-1 max-w-2xl mx-auto px-6 py-32 min-h-screen w-full">
+      <main className="flex-1 max-w-2xl mx-auto px-6 py-12 min-h-screen w-full">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -26,7 +23,6 @@ export default function ReelsUploadPage() {
           <ProjectForm mode="reels" defaultCategory="Reels" />
         </motion.div>
       </main>
-      <Footer />
     </>
   );
 }
