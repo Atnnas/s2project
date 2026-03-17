@@ -23,18 +23,19 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Si es móvil (< 768px), mantenemos la visibilidad siempre en true
+      const currentScrollY = window.scrollY;
+      
+      // Si es móvil (< 768px), mantenemos la visibilidad de la cabecera siempre en true
       if (window.innerWidth < 768) {
         setIsVisible(true);
-        return;
+      } else {
+        if (currentScrollY < lastScrollY || currentScrollY < 50) {
+          setIsVisible(true);
+        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsVisible(false);
+        }
       }
 
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < lastScrollY || currentScrollY < 50) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-      }
       setLastScrollY(currentScrollY);
     };
 
@@ -94,10 +95,10 @@ export default function Navbar() {
             {/* Mobile Hamburger Button - Left Side */}
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden flex items-center justify-center w-10 h-10 text-slate-900 z-[70] relative"
+              className="md:hidden flex items-center justify-center w-16 h-16 text-slate-900 z-[70] relative -ml-2"
               aria-label="Toggle Menu"
             >
-              <div className="flex flex-col gap-1.5 w-6 items-start">
+              <div className="flex flex-col gap-1.5 w-6 items-center">
                 <motion.span 
                   animate={{ 
                     rotate: isMenuOpen ? 45 : 0, 
@@ -127,12 +128,20 @@ export default function Navbar() {
               </div>
             </button>
 
-            {/* Logo placeholder or filler for centering if needed */}
-            <div className="md:hidden flex-1 text-center">
-              <span className={`font-display font-black tracking-tighter text-xl transition-colors ${isMenuOpen ? 'text-white' : 'text-slate-900'}`}>
-                S2 PROJECT
-              </span>
+            {/* Mobile Home Button - Center Logo Link */}
+            <div className="md:hidden flex-1 text-center py-2">
+              <Link 
+                href="/" 
+                onClick={() => setIsMenuOpen(false)}
+                className="inline-block px-4 py-2"
+              >
+                <span className={`font-display font-black tracking-tighter text-xl transition-colors ${isMenuOpen ? 'text-white' : 'text-slate-900 hover:text-primary'}`}>
+                  S2 PROJECT
+                </span>
+              </Link>
             </div>
+            
+
 
             <div className="flex flex-1 justify-end gap-10 items-center">
               {/* Desktop Nav - Unchanged md:flex */}
@@ -217,6 +226,24 @@ export default function Navbar() {
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed left-0 top-0 bottom-0 z-[45] w-[85%] max-w-[400px] md:hidden bg-primary flex flex-col items-start justify-start p-10 text-white overflow-y-auto pt-24"
             >
+              {/* Brand Logo Home Link */}
+              <motion.div
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                className="mb-8"
+              >
+                <Link 
+                  href="/" 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="inline-block group"
+                >
+                  <span className="font-display font-black tracking-tighter text-3xl transition-all group-hover:text-white/80">
+                    S2 PROJECT
+                  </span>
+                  <div className="h-0.5 w-full bg-white/20 mt-1 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                </Link>
+              </motion.div>
+
               {/* User Profile Section */}
               <motion.div 
                 initial={{ x: -20, opacity: 0 }}
@@ -246,9 +273,9 @@ export default function Navbar() {
                     </div>
                   </>
                 ) : (
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 py-4">
                      <span className="material-symbols-outlined text-4xl opacity-20">account_circle</span>
-                     <Link href="/admin/login" onClick={() => setIsMenuOpen(false)} className="text-[10px] font-black uppercase tracking-[0.4em] hover:text-white/100 transition-colors">Iniciar Sesión</Link>
+                     <Link href="/admin/login" onClick={() => setIsMenuOpen(false)} className="text-[10px] font-black uppercase tracking-[0.4em] hover:text-white/100 transition-colors p-2">Iniciar Sesión</Link>
                   </div>
                 )}
               </motion.div>
@@ -303,15 +330,15 @@ export default function Navbar() {
                 transition={{ delay: 0.7 }}
                 className="mt-auto flex flex-col items-start gap-6 pb-10"
               >
-                <div className="flex gap-6">
-                  <a href="#" className="w-8 h-8 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
-                    <i className="fa-brands fa-instagram text-sm"></i>
+                <div className="flex gap-4">
+                  <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
+                    <i className="fa-brands fa-instagram text-lg"></i>
                   </a>
-                  <a href="#" className="w-8 h-8 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
-                    <i className="fa-brands fa-whatsapp text-sm"></i>
+                  <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
+                    <i className="fa-brands fa-whatsapp text-lg"></i>
                   </a>
-                  <a href="#" className="w-8 h-8 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
-                    <i className="fa-regular fa-envelope text-sm"></i>
+                  <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
+                    <i className="fa-regular fa-envelope text-lg"></i>
                   </a>
                 </div>
                 <div className="text-left opacity-30">
@@ -323,6 +350,27 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Floating Home Button (FAB) - Visible only on scroll */}
+      <AnimatePresence>
+        {(lastScrollY > 400 && !isMenuOpen) && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[60] md:hidden"
+          >
+            <Link
+              href="/"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="flex items-center gap-3 px-6 py-3 bg-primary/90 backdrop-blur-xl text-white rounded-full shadow-[0_8px_32px_rgba(59,81,47,0.4)] border border-white/10 active:scale-95 transition-transform"
+            >
+              <span className="material-symbols-outlined text-xl">home</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Inicio</span>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -330,7 +378,7 @@ export default function Navbar() {
 function NavbarLink({ href, children, as = Link }) {
   const Component = as;
   const commonProps = {
-    className: "relative group/link py-1 px-2 block transition-all",
+    className: "relative group/link py-3 px-4 block transition-all",
     children: (
       <>
         <span className="relative z-10 opacity-80 group-hover/link:opacity-100 transition-opacity text-lg font-semibold tracking-wide font-display">
@@ -364,7 +412,7 @@ function MobileNavLink({ href, children, onClick, active, index }) {
       <Link 
         href={href} 
         onClick={onClick}
-        className={`group flex items-center justify-start py-2 transition-all relative text-white font-bold text-xl uppercase tracking-widest ${active ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
+        className={`group flex items-center justify-start py-5 transition-all relative text-white font-bold text-xl uppercase tracking-widest ${active ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
       >
         <span className="relative">
           {children}

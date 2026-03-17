@@ -241,7 +241,7 @@ function GalleryContent({ projects }) {
           >
             {/* Controls */}
             <button 
-              className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors z-50 flex items-center gap-2"
+              className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors z-50 flex items-center gap-3 p-4"
               onClick={closeProject}
             >
               <span className="text-[10px] font-bold uppercase tracking-widest">Cerrar</span>
@@ -251,13 +251,13 @@ function GalleryContent({ projects }) {
             {selectedProject.gallery?.length > 1 && (
               <div className="contents">
                 <button 
-                  className="absolute left-6 top-1/2 -translate-y-1/2 p-4 text-white/40 hover:text-white hover:bg-white/10 rounded-full transition-all z-50"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-6 text-white/40 hover:text-white hover:bg-white/10 rounded-full transition-all z-50 flex items-center justify-center min-w-[60px] min-h-[60px]"
                   onClick={(e) => { e.stopPropagation(); prevAsset(); }}
                 >
                   <span className="material-symbols-outlined text-5xl">chevron_left</span>
                 </button>
                 <button 
-                  className="absolute right-6 top-1/2 -translate-y-1/2 p-4 text-white/40 hover:text-white hover:bg-white/10 rounded-full transition-all z-50"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-6 text-white/40 hover:text-white hover:bg-white/10 rounded-full transition-all z-50 flex items-center justify-center min-w-[60px] min-h-[60px]"
                   onClick={(e) => { e.stopPropagation(); nextAsset(); }}
                 >
                   <span className="material-symbols-outlined text-5xl">chevron_right</span>

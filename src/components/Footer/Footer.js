@@ -41,10 +41,10 @@ export default function Footer() {
           <div className="opacity-40">
             <p>© {new Date().getFullYear()} S2 Project. Todos los derechos reservados.</p>
           </div>
-          <div className="flex items-center gap-8">
-            <div className="flex gap-6 opacity-40">
-              <a href="#" className="hover:opacity-100 transition-opacity">Privacidad</a>
-              <a href="#" className="hover:opacity-100 transition-opacity">Términos</a>
+          <div className="flex items-center gap-2 md:gap-8">
+            <div className="flex gap-4 md:gap-6 opacity-40">
+              <a href="#" className="hover:opacity-100 transition-opacity p-2">Privacidad</a>
+              <a href="#" className="hover:opacity-100 transition-opacity p-2">Términos</a>
             </div>
             <div className="flex items-center gap-2 group">
               <span className="opacity-30">Developed by</span>
