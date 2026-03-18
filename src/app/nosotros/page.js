@@ -29,7 +29,7 @@ export default function NosotrosPage() {
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-500 font-body leading-relaxed max-w-xl">
-              S2 Project no es una agencia, es una **declaración de guerra** contra lo convencional. No ejecutamos proyectos; construimos imperios visuales que dominan la atención.
+              Somos un aliado estratégico dedicado a transformar la presencia digital de marcas líderes a través de una ejecución técnica impecable y una visión creativa de alto nivel.
             </p>
 
             <motion.div 
