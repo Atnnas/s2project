@@ -152,6 +152,7 @@ export default function Navbar() {
               {/* Desktop Nav - Unchanged md:flex */}
               <nav className="hidden md:flex items-center gap-12 text-[#1d2729]">
                 <NavbarLink href="/">Inicio</NavbarLink>
+                <NavbarLink href="/servicios">Servicios</NavbarLink>
                 
                 {/* Portafolio con Dropdown - Solo visible si hay sesión */}
                 {session && (
@@ -302,6 +303,9 @@ export default function Navbar() {
               <nav className="w-full flex flex-col gap-1 py-8">
                 <MobileNavLink href="/" active={pathname === "/"} onClick={() => setIsMenuOpen(false)} index={0}>
                   Inicio
+                </MobileNavLink>
+                <MobileNavLink href="/servicios" active={pathname === "/servicios"} onClick={() => setIsMenuOpen(false)} index={1}>
+                  Servicios
                 </MobileNavLink>
                 
                 <div className="my-2" />
