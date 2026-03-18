@@ -6,9 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function BookingSection() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Reemplaza este URL con tu link oficial de Google Calendar Appointment Schedule (Opción 1)
-  // Para obtenerlo: Ve a tu Google Calendar -> Pulsa en tu bloque de Citas -> Compartir -> Inserción en sitios web
-  const calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/AcZss01v5Z9uX1Y3C0B1B3B2B1B1B1B1-example"; // Placeholder con tu cuenta
+  // Link oficial proporcionado por el usuario
+  const calendarUrl = "https://calendar.app.google/q59wA3H5xwSxBxkD6"; 
   const userEmail = "david.artavia.rodriguez@gmail.com"; 
 
   return (
@@ -64,37 +63,16 @@ export default function BookingSection() {
                 width="100%" 
                 height="100%" 
                 frameBorder="0" 
-                scrolling="no"
+                scrolling="yes"
                 className="bg-white"
               />
               
-              {/* Overlay for Placeholder State */}
-              {(calendarUrl.includes("example") || calendarUrl.includes("placeholder")) && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-white/80 backdrop-blur-md">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
-                    <span className="material-symbols-outlined text-4xl">link_off</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-slate-900 mb-2">Configuración para {userEmail}</h3>
-                  <p className="text-sm text-slate-500 max-w-xs mb-8">
-                    Ya tenemos tu cuenta vinculada. Para activar las citas, solo pega el link de "Página de Citas" de Google Calendar en el código del componente.
-                  </p>
-                  <div className="flex gap-4">
-                    <a 
-                      href={`https://calendar.google.com/calendar/u/0/r/settings/appointment-schedules`} 
-                      target="_blank"
-                      className="text-xs font-black uppercase tracking-widest bg-slate-900 text-white px-6 py-3 rounded-xl hover:bg-primary transition-colors"
-                    >
-                      Configurar citas en Google
-                    </a>
-                    <button 
-                      onClick={() => setIsOpen(false)}
-                      className="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors px-6"
-                    >
-                      Regresar
-                    </button>
-                  </div>
-                </div>
-              )}
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="absolute top-4 right-4 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg hover:text-primary transition-colors z-20"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
             </motion.div>
           )}
 
