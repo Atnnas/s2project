@@ -1,5 +1,4 @@
 import ContactSection from "@/components/Contact/ContactSection";
-import Footer from "@/components/Footer/Footer";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 import { serializeData } from "@/lib/serialize";
@@ -118,7 +117,6 @@ export default async function Home() {
           </section>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

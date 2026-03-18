@@ -1,5 +1,3 @@
-import Footer from "@/components/Footer/Footer";
-
 export const metadata = {
   title: "Nosotros | S2 Project",
   description: "Conoce a S2 Project, la agencia creativa detrás de las marcas de élite.",
@@ -23,7 +21,6 @@ export default function NosotrosPage() {
           </p>
         </div>
       </main>
-      <Footer />
     </>
   );
 }
