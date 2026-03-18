@@ -36,5 +36,9 @@ export const config = {
   matcher: [
     "/admin/((?!login).*)",
     "/administracion/((?!login).*)",
+    "/photography/:path*",
+    "/reels/:path*",
+    "/digital-arts/:path*",
+    "/portfolio/:path*",
   ],
 };

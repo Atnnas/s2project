@@ -153,51 +153,61 @@ export default function Navbar() {
               <nav className="hidden md:flex items-center gap-12 text-[#1d2729]">
                 <NavbarLink href="/">Inicio</NavbarLink>
                 
-                {/* Servicios con Dropdown */}
-                <div 
-                  className="relative group/dropdown"
-                  onMouseEnter={() => setIsDropdownOpen(true)}
-                  onMouseLeave={() => setIsDropdownOpen(false)}
-                >
-                  <div className="cursor-pointer">
-                    <NavbarLink as="div">
-                      <span className="flex items-center gap-1">
-                        Servicios
-                        <motion.span 
-                          animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-                          className="material-symbols-outlined text-sm leading-none"
-                        >
-                          expand_more
-                        </motion.span>
-                      </span>
-                    </NavbarLink>
-                  </div>
-
-                  <AnimatePresence>
-                    {isDropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute top-full right-0 mt-4 w-56 bg-white/90 backdrop-blur-xl border border-primary/10 rounded-2xl shadow-2xl overflow-hidden py-3 z-[100]"
-                      >
-                        {dropdownItems.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            className="flex items-center px-6 py-3 text-slate-700 hover:bg-primary/5 transition-colors font-display font-semibold group/item"
+                {/* Portafolio con Dropdown - Solo visible si hay sesión */}
+                {session && (
+                  <div 
+                    className="relative group/dropdown"
+                    onMouseEnter={() => setIsDropdownOpen(true)}
+                    onMouseLeave={() => setIsDropdownOpen(false)}
+                  >
+                    <div className="cursor-pointer">
+                      <NavbarLink as="div">
+                        <span className="flex items-center gap-1">
+                          Portafolio
+                          <motion.span 
+                            animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+                            className="material-symbols-outlined text-sm leading-none"
                           >
-                            <span className="flex-1">{item.label}</span>
-                            <span className="material-symbols-outlined text-sm opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all">
-                              arrow_forward
-                            </span>
+                            expand_more
+                          </motion.span>
+                        </span>
+                      </NavbarLink>
+                    </div>
+
+                    <AnimatePresence>
+                      {isDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                          className="absolute top-full right-0 mt-4 w-56 bg-white/90 backdrop-blur-xl border border-primary/10 rounded-2xl shadow-2xl overflow-hidden py-3 z-[100]"
+                        >
+                          <Link
+                            href="/portfolio"
+                            className="flex items-center px-6 py-3 text-primary font-display font-black uppercase tracking-widest text-[10px] hover:bg-primary/5 transition-colors border-b border-primary/5"
+                            onClick={() => setIsDropdownOpen(false)}
+                          >
+                            Ver Todo el Portafolio
                           </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                          {dropdownItems.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className="flex items-center px-6 py-3 text-slate-700 hover:bg-primary/5 transition-colors font-display font-semibold group/item text-sm"
+                              onClick={() => setIsDropdownOpen(false)}
+                            >
+                              <span className="flex-1">{item.label}</span>
+                              <span className="material-symbols-outlined text-sm opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all">
+                                arrow_forward
+                              </span>
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )}
 
                 <NavbarLink href="/nosotros">Nosotros</NavbarLink>
                 <NavbarLink href="/admin/dashboard">Administración</NavbarLink>
@@ -296,20 +306,27 @@ export default function Navbar() {
                 
                 <div className="my-2" />
                 
-                <p className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-6 px-1">Secciones</p>
-                <div className="flex flex-col gap-1 items-start">
-                  {dropdownItems.map((item, idx) => (
-                    <MobileNavLink 
-                      key={item.href} 
-                      href={item.href} 
-                      active={pathname === item.href}
-                      onClick={() => setIsMenuOpen(false)} 
-                      index={idx + 1}
-                    >
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
-                </div>
+                {session && (
+                  <>
+                    <p className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-6 px-1">Portafolio</p>
+                    <div className="flex flex-col gap-1 items-start">
+                      <MobileNavLink href="/portfolio" active={pathname === "/portfolio"} onClick={() => setIsMenuOpen(false)} index={1}>
+                        Ver Todo
+                      </MobileNavLink>
+                      {dropdownItems.map((item, idx) => (
+                        <MobileNavLink 
+                          key={item.href} 
+                          href={item.href} 
+                          active={pathname === item.href}
+                          onClick={() => setIsMenuOpen(false)} 
+                          index={idx + 2}
+                        >
+                          {item.label}
+                        </MobileNavLink>
+                      ))}
+                    </div>
+                  </>
+                )}
 
                 <div className="my-8 w-12 h-[1px] bg-white/10" />
 
