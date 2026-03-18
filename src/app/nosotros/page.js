@@ -41,38 +41,20 @@ export default function NosotrosPage() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              rotate: 0,
-              y: [0, -20, 0] 
-            }}
-            transition={{ 
-              duration: 1, 
-              ease: "circOut",
-              y: {
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }
-            }}
-            className="relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex justify-center lg:justify-end"
           >
-            {/* Image Container with Custom Frame */}
-            <div className="relative z-10 rounded-[4rem] overflow-hidden shadow-2xl shadow-primary/20 aspect-video lg:aspect-square group">
+            <div className="relative w-full max-w-lg aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
               <Image 
                 src="/nosotros.jpeg" 
                 alt="Equipo S2 Project"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                className="object-cover"
                 priority
               />
             </div>
-            
-            {/* Decorative Card behind image */}
-            <div className="absolute -top-6 -right-6 w-full h-full border-2 border-primary/20 rounded-[4rem] -z-10" />
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-primary opacity-10 rounded-full blur-2xl -z-10" />
           </motion.div>
         </div>
 
