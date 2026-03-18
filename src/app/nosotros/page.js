@@ -68,8 +68,6 @@ export default function NosotrosPage() {
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-12">
-              </div>
             </div>
             
             {/* Decorative Card behind image */}
