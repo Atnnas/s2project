@@ -6,8 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function BookingSection() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // NOTA PARA EL USUARIO: Reemplaza este URL con tu link oficial de Google Calendar Appointment Schedule
-  const calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/placeholder";
+  // Reemplaza este URL con tu link oficial de Google Calendar Appointment Schedule (Opción 1)
+  // Para obtenerlo: Ve a tu Google Calendar -> Pulsa en tu bloque de Citas -> Compartir -> Inserción en sitios web
+  const calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/AcZss01v5Z9uX1Y3C0B1B3B2B1B1B1B1-example"; // Placeholder con tu cuenta
+  const userEmail = "david.artavia.rodriguez@gmail.com"; 
 
   return (
     <section className="w-full max-w-5xl mx-auto px-6 pb-32">
@@ -72,16 +74,25 @@ export default function BookingSection() {
                   <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
                     <span className="material-symbols-outlined text-4xl">link_off</span>
                   </div>
-                  <h3 className="text-xl font-display font-bold text-slate-900 mb-2">Configuración Pendiente</h3>
+                  <h3 className="text-xl font-display font-bold text-slate-900 mb-2">Configuración para {userEmail}</h3>
                   <p className="text-sm text-slate-500 max-w-xs mb-8">
-                    Por favor, proporciona tu cuenta de Google para vincular el calendario oficial de citas.
+                    Ya tenemos tu cuenta vinculada. Para activar las citas, solo pega el link de "Página de Citas" de Google Calendar en el código del componente.
                   </p>
-                  <button 
-                    onClick={() => setIsOpen(false)}
-                    className="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors"
-                  >
-                    Regresar
-                  </button>
+                  <div className="flex gap-4">
+                    <a 
+                      href={`https://calendar.google.com/calendar/u/0/r/settings/appointment-schedules`} 
+                      target="_blank"
+                      className="text-xs font-black uppercase tracking-widest bg-slate-900 text-white px-6 py-3 rounded-xl hover:bg-primary transition-colors"
+                    >
+                      Configurar citas en Google
+                    </a>
+                    <button 
+                      onClick={() => setIsOpen(false)}
+                      className="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors px-6"
+                    >
+                      Regresar
+                    </button>
+                  </div>
                 </div>
               )}
             </motion.div>
