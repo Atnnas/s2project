@@ -69,7 +69,7 @@ export default function BookingSection() {
               />
               
               {/* Overlay for Placeholder State */}
-              {calendarUrl.includes("placeholder") && (
+              {(calendarUrl.includes("example") || calendarUrl.includes("placeholder")) && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-white/80 backdrop-blur-md">
                   <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
                     <span className="material-symbols-outlined text-4xl">link_off</span>
