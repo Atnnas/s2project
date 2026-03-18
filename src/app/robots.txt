@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /servicios
+Allow: /nosotros
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+Disallow: /_next/*
+
+Sitemap: https://s2-project.com/sitemap.xml

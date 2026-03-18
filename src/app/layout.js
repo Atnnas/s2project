@@ -63,21 +63,72 @@ const roundo = localFont({
 });
 
 export const metadata = {
-  title: "S2 Project - Portfolio Showcase",
-  description: "Premium Quality • Professional Hardware • Software Precision",
+  metadataBase: new URL('https://s2-project.com'),
+  title: {
+    default: "S2 Project | Agencia de Marketing Digital y Producción Audiovisual",
+    template: "%s | S2 Project"
+  },
+  description: "Agencia creativa de élite especializada en producción de Reels, fotografía comercial cinemática y estrategias de marketing digital de alto impacto.",
+  keywords: ["marketing digital", "producción de reels", "fotografía comercial", "artes digitales", "branding", "estrategia de contenido", "S2 Project"],
+  authors: [{ name: "S2 Project Team" }],
+  creator: "S2 Project",
+  publisher: "S2 Project",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_CR",
+    url: "https://s2-project.com",
+    siteName: "S2 Project",
+    title: "S2 Project | Marketing Digital y Producción Audiovisual de Élite",
+    description: "Elevamos la identidad de tu marca con contenido visual de alta fidelidad y estrategias digitales disruptivas.",
+    images: [
+      {
+        url: "/og-main.jpg",
+        width: 1200,
+        height: 630,
+        alt: "S2 Project - Agencia Creativa",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "S2 Project | Marketing Digital",
+    description: "Producción audiovisual y artes digitales de alto impacto.",
+    images: ["/og-main.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [{ url: '/logo3.png' }, { url: '/logo1.png', rel: 'icon' }],
     apple: '/logo3.png',
+  },
+  alternates: {
+    canonical: 'https://s2-project.com',
   },
 };
 
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import StructuredData from "@/components/SEO/StructuredData";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <head>
+        <StructuredData />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>

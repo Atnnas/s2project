@@ -11,12 +11,15 @@ export async function generateMetadata() {
     const latestProject = await Project.findOne({}).sort({ createdAt: -1 });
     
     return {
-      title: "S2 Project | Portfolio Showcase",
-      description: "Cinematic photography, dynamic reels, and strategic digital arts.",
+      title: "S2 Project | Portafolio de Producción Audiovisual y Marketing",
+      description: "Explora el portafolio de S2 Project: Fotografía comercial cinemática, producción de Reels de alto impacto y estrategias de marketing digital de élite.",
       openGraph: {
-        title: "S2 Project Portfolio",
-        description: "Visual excellence in photography, video, and digital design.",
-        images: [latestProject?.imageUrl || "/og-image.jpg"],
+        title: "S2 Project | Portafolio Creativo",
+        description: "Excelencia visual en fotografía, video y diseño digital para marcas de vanguardia.",
+        images: [latestProject?.imageUrl || "/og-main.jpg"],
+      },
+      alternates: {
+        canonical: 'https://s2-project.com',
       },
     };
   } catch (e) {

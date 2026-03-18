@@ -1,6 +1,7 @@
 export const metadata = {
-  title: "Nosotros | S2 Project",
-  description: "Conoce a S2 Project, la agencia creativa detrás de las marcas de élite.",
+  title: "Sobre Nosotros | La Agencia Detrás de tu Éxito Digital",
+  description: "Conoce a S2 Project, el equipo de expertos en marketing y producción audiovisual dedicados a transformar la presencia digital de marcas premium.",
+  keywords: ["equipo s2 project", "agencia creativa costa rica", "expertos en marketing digital", "producción audiovisual profesional"],
 };
 
 export default function NosotrosPage() {
