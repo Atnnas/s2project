@@ -49,7 +49,7 @@ export default function ContactSection({ compact = false }) {
               </div>
               <div className="text-left">
                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Escríbenos</p>
-                <p className="text-lg font-display font-medium text-slate-900">info@s2-project.com</p>
+                <p className="text-base md:text-lg font-display font-medium text-slate-900 whitespace-nowrap">info@s2-project.com</p>
               </div>
             </a>
 
