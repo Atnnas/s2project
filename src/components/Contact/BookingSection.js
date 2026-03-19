@@ -8,7 +8,7 @@ export default function BookingSection() {
 
   // Link oficial proporcionado por el usuario
   const calendarUrl = "https://calendar.app.google/q59wA3H5xwSxBxkD6"; 
-  const userEmail = "david.artavia.rodriguez@gmail.com"; 
+  const userEmail = "info@s2-project.com"; 
 
   return (
     <section className="w-full max-w-5xl mx-auto px-6 pb-32">
