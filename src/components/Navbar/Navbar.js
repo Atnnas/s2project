@@ -88,18 +88,18 @@ export default function Navbar() {
             />
 
             {/* Logo - Desktop/Tablet (Left Aligned) */}
-            <div className="hidden md:flex items-center justify-start py-2">
-              <Link href="/" className="group flex items-center gap-4">
+            <div className="hidden md:flex items-center justify-start py-2 relative z-[70]">
+              <Link href="/" className="group flex items-center gap-4 relative z-[75]">
                 <AnimatePresence mode="wait">
                   <motion.img 
                     key={lastScrollY > 50 ? 'logo-horizontal' : 'logo-vertical'}
                     src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
                     alt="S2 PROJECT" 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-18' : 'h-24'} w-auto object-contain transition-all duration-300 group-hover:scale-105`}
+                    className={`${lastScrollY > 50 ? 'h-18' : 'h-24'} w-auto object-contain transition-all duration-300 group-hover:scale-105 pointer-events-none`}
                   />
                 </AnimatePresence>
               </Link>
@@ -117,7 +117,7 @@ export default function Navbar() {
                     rotate: isMenuOpen ? 45 : 0, 
                     y: isMenuOpen ? 8 : 0,
                     width: isMenuOpen ? "24px" : "24px",
-                    backgroundColor: isMenuOpen ? "#ffffff" : "currentColor"
+                    backgroundColor: isMenuOpen ? "#ffffff" : "#0f172a"
                   }}
                   className="h-0.5 bg-current rounded-full"
                 />
@@ -125,7 +125,7 @@ export default function Navbar() {
                   animate={{ 
                     opacity: isMenuOpen ? 0 : 1,
                     x: isMenuOpen ? -10 : 0,
-                    backgroundColor: isMenuOpen ? "#ffffff" : "currentColor"
+                    backgroundColor: isMenuOpen ? "#ffffff" : "#0f172a"
                   }}
                   className="h-0.5 w-4 bg-current rounded-full"
                 />
@@ -134,7 +134,7 @@ export default function Navbar() {
                     rotate: isMenuOpen ? -45 : 0, 
                     y: isMenuOpen ? -8 : 0,
                     width: isMenuOpen ? "24px" : "24px",
-                    backgroundColor: isMenuOpen ? "#ffffff" : "currentColor"
+                    backgroundColor: isMenuOpen ? "#ffffff" : "#0f172a"
                   }}
                   className="h-0.5 bg-current rounded-full"
                 />
@@ -142,11 +142,11 @@ export default function Navbar() {
             </button>
 
             {/* Mobile Home Button - Absolute Right Logo Link */}
-            <div className="md:hidden absolute right-0 top-0 h-full flex items-center pr-2">
+            <div className="md:hidden absolute right-0 top-0 h-full flex items-center pr-2 z-[70]">
               <Link 
                 href="/" 
                 onClick={() => setIsMenuOpen(false)}
-                className="relative z-[70] flex items-center justify-center p-2"
+                className="relative z-[75] flex items-center justify-center p-2"
               >
                 <AnimatePresence mode="wait">
                   <motion.img 
@@ -157,7 +157,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-16' : 'h-20'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
+                    className={`${lastScrollY > 50 ? 'h-16' : 'h-20'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''} pointer-events-none`}
                   />
                 </AnimatePresence>
               </Link>
