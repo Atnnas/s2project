@@ -59,6 +59,13 @@ export default function Navbar() {
     }
   }, [isMenuOpen]);
 
+  const handleLogoClick = (e) => {
+    if (pathname === '/') {
+      // If already on home, just scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <div 
@@ -91,6 +98,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center justify-start py-2 relative z-[90]">
               <Link 
                 href="/" 
+                onClick={handleLogoClick}
                 className="group flex items-center gap-4 relative z-[100] pointer-events-auto cursor-pointer"
               >
                 <AnimatePresence>
@@ -146,7 +154,10 @@ export default function Navbar() {
             <div className="md:hidden absolute right-0 top-0 h-full flex items-center pr-2 z-[90]">
               <Link 
                 href="/" 
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => {
+                  handleLogoClick(e);
+                  setIsMenuOpen(false);
+                }}
                 className="relative z-[100] flex items-center justify-center p-2 pointer-events-auto cursor-pointer"
               >
                 <AnimatePresence>
@@ -269,7 +280,10 @@ export default function Navbar() {
               >
                 <Link 
                   href="/" 
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => {
+                    handleLogoClick(e);
+                    setIsMenuOpen(false);
+                  }}
                   className="inline-block group"
                 >
                   <img 
