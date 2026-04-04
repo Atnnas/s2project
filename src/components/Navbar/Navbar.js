@@ -88,9 +88,12 @@ export default function Navbar() {
             />
 
             {/* Logo - Desktop/Tablet (Left Aligned) */}
-            <div className="hidden md:flex items-center justify-start py-2 relative z-[70]">
-              <Link href="/" className="group flex items-center gap-4 relative z-[75]">
-                <AnimatePresence mode="wait">
+            <div className="hidden md:flex items-center justify-start py-2 relative z-[90]">
+              <Link 
+                href="/" 
+                className="group flex items-center gap-4 relative z-[100] pointer-events-auto cursor-pointer"
+              >
+                <AnimatePresence>
                   <motion.img 
                     key={lastScrollY > 50 ? 'logo-horizontal' : 'logo-vertical'}
                     src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
@@ -99,7 +102,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-14' : 'h-24'} w-auto object-contain transition-all duration-300 group-hover:scale-105 pointer-events-none`}
+                    className={`${lastScrollY > 50 ? 'h-20' : 'h-28'} w-auto object-contain transition-all duration-300 group-hover:scale-105`}
                   />
                 </AnimatePresence>
               </Link>
@@ -139,16 +142,14 @@ export default function Navbar() {
                   className="h-0.5 bg-current rounded-full"
                 />
               </div>
-            </button>
-
-            {/* Mobile Home Button - Absolute Right Logo Link */}
-            <div className="md:hidden absolute right-0 top-0 h-full flex items-center pr-2 z-[70]">
+            </button>            {/* Mobile Home Button - Absolute Right Logo Link */}
+            <div className="md:hidden absolute right-0 top-0 h-full flex items-center pr-2 z-[90]">
               <Link 
                 href="/" 
                 onClick={() => setIsMenuOpen(false)}
-                className="relative z-[75] flex items-center justify-center p-2"
+                className="relative z-[100] flex items-center justify-center p-2 pointer-events-auto cursor-pointer"
               >
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                   <motion.img 
                     key={lastScrollY > 50 ? 'logo-horizontal-mobile' : 'logo-vertical-mobile'}
                     src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
@@ -157,12 +158,13 @@ export default function Navbar() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-12' : 'h-20'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''} pointer-events-none`}
+                    className={`${lastScrollY > 50 ? 'h-16' : 'h-24'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
                   />
                 </AnimatePresence>
               </Link>
             </div>
             
+ 
 
 
             <div className="flex flex-1 justify-end gap-10 items-center">
