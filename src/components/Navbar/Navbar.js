@@ -34,11 +34,14 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll); // También check al redimensionar
     
+    // Initial call to set correct state on load
+    handleScroll();
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   const dropdownItems = [
     { href: '/photography', label: 'Fotografía' },
@@ -87,11 +90,18 @@ export default function Navbar() {
             {/* Logo - Desktop/Tablet (Left Aligned) */}
             <div className="hidden md:flex items-center justify-start py-2">
               <Link href="/" className="group flex items-center gap-4">
-                <img 
-                  src="/logo1.png" 
-                  alt="S2 PROJECT" 
-                  className="h-28 w-auto object-contain transition-all duration-300 group-hover:scale-105"
-                />
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={lastScrollY > 50 ? 'logo-horizontal' : 'logo-vertical'}
+                    src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
+                    alt="S2 PROJECT" 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.3 }}
+                    className={`${lastScrollY > 50 ? 'h-12' : 'h-28'} w-auto object-contain transition-all duration-300 group-hover:scale-105`}
+                  />
+                </AnimatePresence>
               </Link>
             </div>
 
@@ -138,11 +148,18 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className="relative z-[70] flex items-center justify-center p-2"
               >
-                <img 
-                  src="/logo1.png" 
-                  alt="S2 PROJECT" 
-                  className={`h-28 w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
-                />
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={lastScrollY > 50 ? 'logo-horizontal-mobile' : 'logo-vertical-mobile'}
+                    src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
+                    alt="S2 PROJECT" 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                    className={`${lastScrollY > 50 ? 'h-10' : 'h-28'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
+                  />
+                </AnimatePresence>
               </Link>
             </div>
             
@@ -210,6 +227,7 @@ export default function Navbar() {
                   </div>
                 )}
 
+                <NavbarLink href="/proceso">Proceso</NavbarLink>
                 <NavbarLink href="/nosotros">Nosotros</NavbarLink>
                 <NavbarLink href="/admin/dashboard">Administración</NavbarLink>
               </nav>
@@ -336,6 +354,10 @@ export default function Navbar() {
 
                 <MobileNavLink href="/nosotros" active={pathname === "/nosotros"} onClick={() => setIsMenuOpen(false)} index={4}>
                   Nosotros
+                </MobileNavLink>
+                
+                <MobileNavLink href="/proceso" active={pathname === "/proceso"} onClick={() => setIsMenuOpen(false)} index={5}>
+                  Proceso
                 </MobileNavLink>
 
                 <div className="my-4" />

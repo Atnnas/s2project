@@ -3,12 +3,12 @@ export default function Footer() {
     <footer className="bg-primary text-white py-20 px-6 mt-auto">
       <div className="max-w-4xl mx-auto text-center space-y-12">
         {/* Main CTA */}
-        <div className="space-y-2">
-          <h2 className="text-4xl md:text-7xl font-display font-black uppercase tracking-tighter leading-none">
-            INICIA TU HISTORIA AQUI
+        <div className="space-y-4">
+          <h2 className="text-4xl md:text-8xl font-display font-black uppercase tracking-tighter leading-none">
+            INICIA TU <span className="italic opacity-60">ESCALADA</span>
           </h2>
-          <p className="text-sm md:text-md font-display uppercase tracking-[0.3em] font-medium opacity-80">
-            S2-PROJECT.COM
+          <p className="text-[10px] md:text-xs font-display uppercase tracking-[0.5em] font-black opacity-60">
+            RESULTADOS QUE DEFINEN LEGADOS
           </p>
         </div>
 
@@ -39,12 +39,12 @@ export default function Footer() {
         {/* Footer legal */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-widest font-black">
           <div className="opacity-40">
-            <p>© {new Date().getFullYear()} S2 Project. Todos los derechos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} S2 Project. Todos los derechos reservados.</p>
           </div>
           <div className="flex items-center gap-2 md:gap-8">
             <div className="flex gap-4 md:gap-6 opacity-40">
               <a href="#" className="hover:opacity-100 transition-opacity p-2">Privacidad</a>
-              <a href="#" className="hover:opacity-100 transition-opacity p-2">Términos</a>
+              <a href="#" className="hover:opacity-100 transition-opacity p-2">T&eacute;rminos</a>
             </div>
             <div className="flex items-center gap-2 group">
               <span className="opacity-30">Developed by</span>

@@ -123,6 +123,7 @@ export const metadata = {
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import StructuredData from "@/components/SEO/StructuredData";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
 
 export default function RootLayout({ children }) {
   return (
@@ -142,6 +143,7 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <Footer />
+            <WhatsAppButton />
             <CookieConsent />
           </div>
         </AuthProvider>

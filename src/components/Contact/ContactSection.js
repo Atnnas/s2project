@@ -14,10 +14,10 @@ export default function ContactSection({ compact = false }) {
           className="max-w-4xl mx-auto space-y-6"
         >
           <h1 className="text-5xl md:text-7xl font-display font-black uppercase tracking-tighter text-slate-900">
-            Hablemos de <span className="text-primary">Tu Historia</span>
+            Diagn&oacute;stico de <span className="text-primary italic">Resultados</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-500 font-body max-w-2xl mx-auto leading-relaxed">
-            ¿Listo para elevar la imagen de tu marca al siguiente nivel? Nuestro equipo está listo para materializar tu visión.
+            &iquest;Listo para escalar el ROI de tu marca mediante una estrategia de dominio integral? Iniciemos la transformaci&oacute;n de tu presencia digital hoy mismo.
           </p>
         </motion.div>
       </section>
@@ -32,7 +32,7 @@ export default function ContactSection({ compact = false }) {
           className="space-y-12"
         >
           <div className="space-y-4 text-center">
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-primary">Información Directa</p>
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-primary">Informaci&oacute;n Directa</p>
             <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter text-slate-900 leading-tight">
               Estamos a un <span className="opacity-40 italic">Click</span> de Distancia
             </h3>
@@ -48,7 +48,7 @@ export default function ContactSection({ compact = false }) {
                 <span className="material-symbols-outlined">mail</span>
               </div>
               <div className="text-left">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Escríbenos</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Escr&iacute;benos</p>
                 <p className="text-base md:text-lg font-display font-medium text-slate-900 whitespace-nowrap">info@s2-project.com</p>
               </div>
             </a>
@@ -59,8 +59,8 @@ export default function ContactSection({ compact = false }) {
                 <span className="material-symbols-outlined">location_on</span>
               </div>
               <div className="text-left">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Ubicación</p>
-                <p className="text-lg font-display font-medium text-slate-900">San José, Costa Rica</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Ubicaci&oacute;n</p>
+                <p className="text-lg font-display font-medium text-slate-900">San Jos&eacute;, Costa Rica</p>
               </div>
             </div>
           </div>
@@ -86,9 +86,9 @@ export default function ContactSection({ compact = false }) {
           </div>
 
           <div className="p-8 bg-primary/5 rounded-[2rem] border border-primary/10 max-w-2xl mx-auto text-center">
-            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4">¿Por qué S2 Project?</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4">&iquest;Por qu&eacute; S2 Project?</p>
             <p className="text-sm text-slate-600 font-body leading-relaxed">
-              No somos solo una productora. Somos un socio estratégico que diseña historias visuales con estándares cinematográficos y excelencia técnica.
+              No somos solo una productora. Somos un socio estrat&eacute;gico que dise&ntilde;a historias visuales con est&aacute;ndares cinematogr&aacute;ficos y excelencia t&eacute;cnica.
             </p>
           </div>
         </motion.div>
