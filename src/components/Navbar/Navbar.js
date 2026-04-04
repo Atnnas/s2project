@@ -90,16 +90,16 @@ export default function Navbar() {
             {/* Logo - Desktop/Tablet (Left Aligned) */}
             <div className="hidden md:flex items-center justify-start py-2">
               <Link href="/" className="group flex items-center gap-4">
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                   <motion.img 
                     key={lastScrollY > 50 ? 'logo-horizontal' : 'logo-vertical'}
                     src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
                     alt="S2 PROJECT" 
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className={`${lastScrollY > 50 ? 'h-14' : 'h-24'} w-auto object-contain transition-all duration-500 group-hover:scale-105`}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className={`${lastScrollY > 50 ? 'h-18' : 'h-24'} w-auto object-contain transition-all duration-300 group-hover:scale-105`}
                   />
                 </AnimatePresence>
               </Link>
@@ -148,16 +148,16 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className="relative z-[70] flex items-center justify-center p-2"
               >
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                   <motion.img 
                     key={lastScrollY > 50 ? 'logo-horizontal-mobile' : 'logo-vertical-mobile'}
                     src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
                     alt="S2 PROJECT" 
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className={`${lastScrollY > 50 ? 'h-12' : 'h-20'} w-auto object-contain transition-all duration-500 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className={`${lastScrollY > 50 ? 'h-16' : 'h-20'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
                   />
                 </AnimatePresence>
               </Link>
