@@ -112,7 +112,7 @@ export const metadata = {
     },
   },
   icons: {
-    icon: [{ url: '/logo3.png' }, { url: '/logo1.png', rel: 'icon' }],
+    icon: '/favicon.ico',
     apple: '/logo3.png',
   },
   alternates: {
