@@ -99,7 +99,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-18' : 'h-24'} w-auto object-contain transition-all duration-300 group-hover:scale-105 pointer-events-none`}
+                    className={`${lastScrollY > 50 ? 'h-14' : 'h-24'} w-auto object-contain transition-all duration-300 group-hover:scale-105 pointer-events-none`}
                   />
                 </AnimatePresence>
               </Link>
@@ -157,7 +157,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-16' : 'h-20'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''} pointer-events-none`}
+                    className={`${lastScrollY > 50 ? 'h-12' : 'h-20'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''} pointer-events-none`}
                   />
                 </AnimatePresence>
               </Link>
