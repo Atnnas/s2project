@@ -112,7 +112,7 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/icon.png',
     apple: '/logo3.png',
   },
   alternates: {
