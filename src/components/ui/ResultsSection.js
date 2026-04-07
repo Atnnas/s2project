@@ -21,7 +21,7 @@ const processSteps = [
 
 export default function ResultsSection() {
   return (
-    <section className="py-40 bg-slate-900 text-white overflow-hidden relative">
+    <section data-navbar-theme="dark" className="py-40 bg-slate-900 text-white overflow-hidden relative">
       {/* Decorative Grid Background */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <div className="grid grid-cols-12 h-full w-full">

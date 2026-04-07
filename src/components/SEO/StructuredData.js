@@ -31,8 +31,8 @@ export default function StructuredData() {
       "closes": "18:00"
     },
     "sameAs": [
-      "https://www.instagram.com/s2project",
-      "https://www.facebook.com/s2project"
+      "https://www.instagram.com/s2project_marketing/",
+      "https://www.facebook.com/profile.php?id=61584523825008"
     ],
     "priceRange": "$$$"
   };

@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
 
@@ -27,12 +28,18 @@ export default function Navbar() {
       
       // Siempre mantenemos la visibilidad de la cabecera en true para que el logo esté presente
       setIsVisible(true);
-
       setLastScrollY(currentScrollY);
+
+      // Check current background theme
+      const elementUnderNavbar = document.elementFromPoint(window.innerWidth / 2, 40);
+      if (elementUnderNavbar) {
+        const section = elementUnderNavbar.closest('[data-navbar-theme]');
+        setIsDark(section?.getAttribute('data-navbar-theme') === 'dark');
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll); // También check al redimensionar
+    window.addEventListener('resize', handleScroll);
     
     // Initial call to set correct state on load
     handleScroll();
@@ -80,17 +87,18 @@ export default function Navbar() {
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-            className={`flex items-center justify-between whitespace-nowrap px-6 md:px-40 py-3 md:py-2 fixed top-0 w-full z-50 transition-all duration-300 ${
+            transition={{ type: 'spring', stiffness: 260, damping: 20 }}            className={`flex items-center justify-between whitespace-nowrap px-6 md:px-40 py-3 md:py-2 fixed top-0 w-full z-50 transition-all duration-500 ${
               isMenuOpen 
                 ? 'bg-primary border-b border-white/10 shadow-none' 
-                : 'bg-[#396542]/10 backdrop-blur-2xl border-b border-[#396542]/20 shadow-[0_8px_32px_rgba(57,101,66,0.15)]'
+                : isDark
+                  ? 'bg-slate-900 border-b border-white/10 shadow-xl'
+                  : 'bg-white border-b border-slate-100 shadow-sm'
             } group/navbar`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
             <motion.div 
-              className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left z-50"
+              className={`absolute bottom-0 left-0 right-0 h-[2px] origin-left z-50 ${isDark ? 'bg-white/40' : 'bg-primary'}`}
               style={{ scaleX }}
             />
 
@@ -110,7 +118,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-20' : 'h-28'} w-auto object-contain transition-all duration-300 group-hover:scale-105`}
+                    className={`${lastScrollY > 50 ? 'h-20' : 'h-28'} w-auto object-contain transition-all duration-300 group-hover:scale-105 ${isDark ? 'brightness-0 invert' : ''}`}
                   />
                 </AnimatePresence>
               </Link>
@@ -119,7 +127,7 @@ export default function Navbar() {
             {/* Mobile Hamburger Button - Left Side */}
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden flex items-center justify-center w-16 h-16 text-slate-900 z-[70] relative -ml-2"
+              className={`md:hidden flex items-center justify-center w-16 h-16 z-[70] relative -ml-2 transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}
               aria-label="Toggle Menu"
             >
               <div className="flex flex-col gap-1.5 w-6 items-center">
@@ -128,29 +136,30 @@ export default function Navbar() {
                     rotate: isMenuOpen ? 45 : 0, 
                     y: isMenuOpen ? 8 : 0,
                     width: isMenuOpen ? "24px" : "24px",
-                    backgroundColor: isMenuOpen ? "#ffffff" : "#0f172a"
+                    backgroundColor: isMenuOpen ? "#ffffff" : isDark ? "#ffffff" : "#0f172a"
                   }}
-                  className="h-0.5 bg-current rounded-full"
+                  className="h-0.5 w-full rounded-full"
                 />
                 <motion.span 
                   animate={{ 
                     opacity: isMenuOpen ? 0 : 1,
                     x: isMenuOpen ? -10 : 0,
-                    backgroundColor: isMenuOpen ? "#ffffff" : "#0f172a"
+                    backgroundColor: isMenuOpen ? "#ffffff" : isDark ? "#ffffff" : "#0f172a"
                   }}
-                  className="h-0.5 w-4 bg-current rounded-full"
+                  className="h-0.5 w-4 rounded-full"
                 />
                 <motion.span 
                   animate={{ 
                     rotate: isMenuOpen ? -45 : 0, 
                     y: isMenuOpen ? -8 : 0,
                     width: isMenuOpen ? "24px" : "24px",
-                    backgroundColor: isMenuOpen ? "#ffffff" : "#0f172a"
+                    backgroundColor: isMenuOpen ? "#ffffff" : isDark ? "#ffffff" : "#0f172a"
                   }}
-                  className="h-0.5 bg-current rounded-full"
+                  className="h-0.5 w-full rounded-full"
                 />
               </div>
-            </button>            {/* Mobile Home Button - Absolute Right Logo Link */}
+            </button>
+            {/* Mobile Home Button - Absolute Right Logo Link */}
             <div className="md:hidden absolute right-0 top-0 h-full flex items-center pr-2 z-[90]">
               <Link 
                 href="/" 
@@ -181,8 +190,8 @@ export default function Navbar() {
             <div className="flex flex-1 justify-end gap-10 items-center">
               {/* Desktop Nav - Unchanged md:flex */}
               <nav className="hidden md:flex items-center gap-12 text-[#1d2729]">
-                <NavbarLink href="/">Inicio</NavbarLink>
-                <NavbarLink href="/servicios">Servicios</NavbarLink>
+                <NavbarLink href="/" isDark={isDark}>Inicio</NavbarLink>
+                <NavbarLink href="/servicios" isDark={isDark}>Servicios</NavbarLink>
                 
                 {/* Portafolio con Dropdown - Solo visible si hay sesión */}
                 {session && (
@@ -192,7 +201,7 @@ export default function Navbar() {
                     onMouseLeave={() => setIsDropdownOpen(false)}
                   >
                     <div className="cursor-pointer">
-                      <NavbarLink as="div">
+                      <NavbarLink as="div" isDark={isDark}>
                         <span className="flex items-center gap-1">
                           Portafolio
                           <motion.span 
@@ -240,9 +249,9 @@ export default function Navbar() {
                   </div>
                 )}
 
-                <NavbarLink href="/proceso">Proceso</NavbarLink>
-                <NavbarLink href="/nosotros">Nosotros</NavbarLink>
-                <NavbarLink href="/admin/dashboard">Administración</NavbarLink>
+                <NavbarLink href="/proceso" isDark={isDark}>Proceso</NavbarLink>
+                <NavbarLink href="/nosotros" isDark={isDark}>Nosotros</NavbarLink>
+                <NavbarLink href="/admin/dashboard" isDark={isDark}>Administración</NavbarLink>
               </nav>
             </div>
             
@@ -392,7 +401,10 @@ export default function Navbar() {
                 className="mt-auto flex flex-col items-start gap-6 pb-10"
               >
                 <div className="flex gap-4">
-                  <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
+                  <a href="https://www.facebook.com/profile.php?id=61584523825008" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
+                    <i className="fa-brands fa-facebook-f text-lg"></i>
+                  </a>
+                  <a href="https://www.instagram.com/s2project_marketing/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
                     <i className="fa-brands fa-instagram text-lg"></i>
                   </a>
                   <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
@@ -436,20 +448,20 @@ export default function Navbar() {
   );
 }
 
-function NavbarLink({ href, children, as = Link }) {
+function NavbarLink({ href, children, isDark, as = Link }) {
   const Component = as;
   const commonProps = {
     className: "relative group/link py-3 px-4 block transition-all",
     children: (
       <>
-        <span className="relative z-10 opacity-80 group-hover/link:opacity-100 transition-opacity text-lg font-semibold tracking-wide font-display">
+        <span className={`relative z-10 transition-opacity text-lg font-semibold tracking-wide font-display ${isDark ? 'text-white opacity-100' : 'text-[#1d2729] opacity-80 group-hover/link:opacity-100'}`}>
           {children}
         </span>
         <motion.span 
-          className="absolute inset-0 -z-0 bg-primary/5 rounded-full scale-0 opacity-0 group-hover/link:scale-110 group-hover/link:opacity-100 transition-all duration-300 ease-out"
+          className={`absolute inset-0 -z-0 rounded-full scale-0 opacity-0 group-hover/link:scale-110 group-hover/link:opacity-100 transition-all duration-300 ease-out ${isDark ? 'bg-white/10' : 'bg-primary/5'}`}
           aria-hidden="true"
         />
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover/link:w-full" />
+        <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover/link:w-full ${isDark ? 'bg-white' : 'bg-primary'}`} />
       </>
     )
   };
