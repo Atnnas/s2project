@@ -7,7 +7,7 @@ export default function BookingSection() {
   const [isOpen, setIsOpen] = useState(false);
 
   // Link oficial proporcionado por el usuario
-  const calendarUrl = "https://calendar.google.com/calendar/u/4?cid=Y181N2RkMGExZGRmYzIxNWJmMzBmYTNiMWZlODBmYjI3ZmI1MmUwMzhjMTNjMTg2ZDRhYTYyMjk5ZjY3ZTUyZmZhQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&authuser=0"; 
+  const calendarUrl = "https://calendar.app.google/zadeELEGddkDxJ829"; 
   const userEmail = "info@s2-project.com"; 
 
   return (
