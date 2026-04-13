@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const steps = [
@@ -52,20 +52,46 @@ const metrics = [
 ];
 
 export default function ProcesoPage() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end end"]
-  });
+  const [activeStep, setActiveStep] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const interactionTimeoutRef = useRef(null);
 
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  useEffect(() => {
+    if (isPaused) return;
+    
+    const intervalId = setInterval(() => {
+      setActiveStep((prevStep) => (prevStep + 1) % steps.length);
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [isPaused]);
+
+  const handleInteraction = () => {
+    setIsPaused(true);
+    if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
+    // Resume autoplay after 8 seconds of inactivity on mobile taps
+    interactionTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 8000);
+  };
+
+  const handleStepClick = (index) => {
+    setActiveStep(index);
+    handleInteraction();
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevStep) => (prevStep + 1) % steps.length);
+    handleInteraction();
+  };
+
+  const handlePrev = () => {
+    setActiveStep((prevStep) => (prevStep - 1 + steps.length) % steps.length);
+    handleInteraction();
+  };
 
   return (
-    <main className="bg-[#f8faf9] text-slate-900 selection:bg-primary/20 pb-40 overflow-hidden">
+    <main className="bg-[#f8faf9] text-slate-900 selection:bg-primary/20 pt-8 sm:pt-10 lg:pt-12 pb-40">
       {/* Luz Cristalina Background Elements */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-[10%] left-[10%] w-[80vw] h-[80vw] bg-primary/5 rounded-full blur-[120px]" />
@@ -73,148 +99,183 @@ export default function ProcesoPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-32 mb-20">
+      <section className="flex flex-col items-center text-center px-6 mb-4 md:mb-6">
          <motion.div
            initial={{ opacity: 0, y: 30 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 1 }}
-           className="space-y-8"
+           className="space-y-4"
          >
            <div className="flex items-center justify-center gap-4">
-              <span className="h-[1px] w-8 bg-primary/40"></span>
-              <span className="text-[10px] font-black uppercase tracking-[1em] text-primary">METODOLOGÍA S2</span>
-              <span className="h-[1px] w-8 bg-primary/40"></span>
+              <span className="h-[1px] w-6 bg-primary/40"></span>
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.8em] text-primary">METODOLOGÍA S2</span>
+              <span className="h-[1px] w-6 bg-primary/40"></span>
            </div>
-           <h1 className="text-7xl md:text-[10rem] font-display font-black uppercase tracking-tighter leading-[0.8] text-slate-900">
-             Proceso <br />
-             <span className="text-primary italic">Vertical</span>
+           {/* COMPACT SINGLE-LINE TITLE */}
+           <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter text-slate-900">
+             Proceso <span className="text-primary italic">Vertical</span>
            </h1>
-           <p className="text-xl md:text-3xl text-slate-500 font-body max-w-3xl mx-auto leading-relaxed">
-             Estrategia, ejecución y optimización para hacer crecer marcas de forma profesional.
-           </p>
-         </motion.div>
-
-         <motion.div 
-           animate={{ y: [0, 10, 0] }}
-           transition={{ duration: 2, repeat: Infinity }}
-           className="mt-20 flex flex-col items-center gap-4 opacity-30"
-         >
-           <span className="text-[8px] font-black uppercase tracking-[0.5em]">Deslizar para Explorar</span>
-           <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent" />
          </motion.div>
       </section>
 
-      {/* Timeline Section */}
-      <section ref={containerRef} className="container mx-auto px-6 relative py-20">
-        {/* Central Line */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] bg-slate-200 hidden md:block">
-           <motion.div 
-             style={{ scaleY, originY: 0 }}
-             className="absolute inset-0 bg-primary w-full"
-           />
-        </div>
-
-        <div className="space-y-40 md:space-y-60 relative z-10">
-          {steps.map((step, index) => (
-            <div key={step.id} className={`flex flex-col md:flex-row items-center justify-center w-full group overflow-visible`}>
-              {/* Left Side Content */}
-              <div className={`w-full md:w-1/2 flex ${step.align === 'left' ? 'md:justify-end md:pr-20' : 'hidden md:flex'}`}>
-                {step.align === 'left' ? <ProcessCard step={step} index={index} /> : <div className="w-full" />}
-              </div>
-
-              {/* Center Dot - The number in the central line */}
-              <div className="relative flex items-center justify-center z-20 my-10 md:my-0">
-                 <motion.div 
-                   whileInView={{ scale: [0, 1.2, 1], rotate: [0, 90, 0] }}
-                   viewport={{ once: false, margin: "-10%" }}
-                   className="w-14 h-14 rounded-2xl bg-white shadow-2xl border-2 border-primary/20 flex items-center justify-center text-primary font-black text-xl"
-                 >
-                   {step.id}
-                 </motion.div>
-                 {/* Pulse Aura */}
-                 <div className="absolute inset-0 rounded-full bg-primary/10 animate-ping -z-10" />
-              </div>
-
-              {/* Right Side Content */}
-              <div className={`w-full md:w-1/2 flex ${step.align === 'right' ? 'md:justify-start md:pl-20' : 'hidden md:flex'}`}>
-                {step.align === 'right' ? <ProcessCard step={step} index={index} /> : <div className="w-full" />}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Expectant Results Section */}
-      <section className="container mx-auto px-6 mt-60">
-        <motion.div
-           initial={{ opacity: 0, scale: 0.9 }}
-           whileInView={{ opacity: 1, scale: 1 }}
-           viewport={{ once: true, margin: "-20%" }}
-           className="relative p-12 md:p-32 rounded-[4rem] bg-slate-900 text-white overflow-hidden shadow-2xl"
+      {/* Main 3-Column Interactive Layout */}
+      <section className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12 relative pt-2 mb-20 lg:mb-40 min-h-[70vh]">
+        <div 
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(57,101,66,0.2)_0%,_transparent_60%)]" />
           
-          <div className="relative z-10 space-y-20">
-            <div className="max-w-3xl space-y-6">
-              <h2 className="text-6xl md:text-9xl font-display font-black uppercase tracking-tighter leading-none text-primary italic">
-                Resultados
-              </h2>
-              <p className="text-xl text-slate-400 font-body leading-relaxed">
-                Nuestra ingeniería de crecimiento produce datos reales que respaldan el éxito de nuestros socios. Transformamos la estrategia en dominio digital.
-              </p>
-            </div>
+          {/* Column 1: Interactive Menu (Desktop only, vertical list) */}
+          <div className="hidden lg:flex lg:col-span-3 lg:sticky lg:top-32 space-y-2 z-20 flex-col snap-x lg:pb-0 h-fit">
+             {steps.map((step, index) => {
+               const isActive = activeStep === index;
+               return (
+                 <button 
+                   key={step.id} 
+                   onClick={() => handleStepClick(index)}
+                   className={`text-left p-6 flex items-center gap-6 border-l-4 transition-all duration-300 group min-w-[280px] lg:min-w-0 snap-start ${isActive ? 'bg-white shadow-2xl border-primary scale-[1.02]' : 'bg-transparent border-transparent hover:bg-slate-100 hover:border-slate-200'}`}
+                 >
+                   <div className={`w-12 h-12 flex shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
+                     {step.id}
+                   </div>
+                   <div className="flex-1">
+                     <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>{step.title}</h3>
+                   </div>
+                 </button>
+               );
+             })}
+          </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
-              {metrics.map((metric, idx) => (
-                <div key={idx} className="p-10 rounded-[3rem] bg-white/5 border border-white/10 hover:bg-primary transition-all duration-700 group">
-                  <div className="space-y-6">
-                    <span className="material-symbols-outlined text-primary text-4xl group-hover:text-white transition-colors">
-                      {metric.icon}
-                    </span>
-                    <div className="text-5xl md:text-7xl font-display font-black group-hover:scale-110 transition-transform origin-left">
-                      {metric.value}
+          {/* Mobile Single-Pill Carousel */}
+          <div className="lg:hidden w-full flex items-center justify-between pb-6 gap-2 z-20">
+             <button onClick={handlePrev} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
+                 <span className="material-symbols-outlined text-xl">chevron_left</span>
+             </button>
+             
+             <div className="flex-1 overflow-hidden relative min-h-[50px] flex items-center justify-center">
+                 <AnimatePresence mode="wait">
+                   <motion.div
+                     key={activeStep}
+                     initial={{ opacity: 0, x: 20 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     exit={{ opacity: 0, x: -20 }}
+                     transition={{ duration: 0.2, ease: "easeOut" }}
+                     className="absolute inset-0 flex items-center justify-center w-full"
+                   >
+                     <div className="bg-slate-900 mx-auto p-2 pr-5 rounded-full flex items-center gap-3 transition-all shadow-xl max-w-full cursor-pointer" onClick={handleNext}>
+                         <div className="w-8 h-8 rounded-full bg-primary text-white flex flex-shrink-0 items-center justify-center font-black shadow-inner">
+                            <span className="text-[10px] sm:text-xs">{steps[activeStep].id}</span>
+                         </div>
+                         <div className="flex-1 overflow-hidden">
+                            <h3 className="font-display font-black uppercase text-[10px] sm:text-xs tracking-widest text-white whitespace-nowrap truncate w-full pr-2">
+                               {steps[activeStep].title}
+                            </h3>
+                         </div>
+                      </div>
+                   </motion.div>
+                 </AnimatePresence>
+             </div>
+             
+             <button onClick={handleNext} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
+                 <span className="material-symbols-outlined text-xl">chevron_right</span>
+             </button>
+          </div>
+
+          {/* Column 2: Active Card Viewport */}
+          <div className="lg:col-span-5 w-full mb-8 lg:mb-0">
+             <AnimatePresence mode="wait">
+               <motion.div
+                 key={activeStep}
+                 initial={{ opacity: 0, x: -30 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 exit={{ opacity: 0, x: 30 }}
+                 transition={{ duration: 0.4, ease: "easeOut" }}
+                 className="w-full h-full flex flex-col"
+               >
+                 <ProcessCard step={{ ...steps[activeStep], align: 'left' }} index={activeStep} />
+               </motion.div>
+             </AnimatePresence>
+          </div>
+
+          {/* Column 3: Sticky Results Board & Immediate CTA */}
+          <div className="lg:col-span-4 h-full relative z-20">
+            <motion.div
+               initial={{ opacity: 0, x: 20 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ duration: 0.8 }}
+               className="relative p-6 lg:p-8 rounded-none bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(57,101,66,0.25)_0%,_transparent_75%)] pointer-events-none" />
+              
+              <div className="relative z-10 flex flex-col space-y-6">
+                
+                {/* Compact Header */}
+                <div className="space-y-1">
+                  <h2 className="text-3xl xl:text-5xl font-display font-black uppercase tracking-tight leading-none text-primary italic">
+                    Resultados
+                  </h2>
+                  <p className="text-xs xl:text-sm text-slate-400 font-body leading-relaxed">
+                    Datos reales que respaldan tu éxito institucional.
+                  </p>
+                </div>
+
+                {/* Ultra-Dense Grid: Always 3 Columns */}
+                <div className="grid grid-cols-3 gap-2 lg:gap-3 flex-1 content-center">
+                  {metrics.map((metric, idx) => (
+                    <div key={idx} className="p-3 lg:p-4 rounded-none bg-white/5 border border-white/10 hover:bg-primary hover:border-primary transition-all duration-300 group flex flex-col justify-between h-full">
+                      <div className="space-y-1 lg:space-y-2 flex flex-col h-full">
+                        <span className="material-symbols-outlined text-primary text-xl lg:text-2xl group-hover:text-white transition-colors">
+                          {metric.icon}
+                        </span>
+                        <div className="text-xl lg:text-2xl xl:text-3xl font-display font-black text-white group-hover:scale-105 transition-transform origin-left mt-auto">
+                          {metric.value}
+                        </div>
+                        <p className="text-[6px] sm:text-[7px] xl:text-[8px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white/80 transition-colors truncate">
+                          {metric.label}
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-500 group-hover:text-white/60 transition-colors">
-                      {metric.label}
-                    </p>
+                  ))}
+                </div>
+
+                {/* Fully Integrated ROI Action Button */}
+                <div className="pt-2">
+                  <div className="relative group block w-full">
+                    {/* Animated Glow Wrapper */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-500 blur-sm opacity-0 group-hover:opacity-40 transition duration-700"></div>
+                    
+                    <Link
+                      href="https://api.whatsapp.com/send?phone=50660060026"
+                      target="_blank"
+                      className="relative flex items-center justify-center gap-3 bg-slate-950 border border-slate-800 text-white px-4 py-4 w-full rounded-none font-display font-bold uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)]"
+                    >
+                      {/* Background Sweep */}
+                      <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
+                      
+                      {/* Button Text */}
+                      <span className="relative z-10 flex-shrink-0 text-center">Solicitar Análisis ROI</span>
+                      
+                      {/* Icon Animation */}
+                      <div className="relative z-10 w-6 h-6 bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-none hidden sm:flex">
+                        <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
+                          arrow_outward
+                        </span>
+                        <span className="material-symbols-outlined text-xs absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0">
+                          arrow_outward
+                        </span>
+                      </div>
+                    </Link>
                   </div>
                 </div>
-              ))}
-            </div>
+
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+
+        </div>
       </section>
 
-      {/* Lead Generation CTA */}
-      <section className="max-w-5xl mx-auto px-6 mt-40">
-        <motion.div
-           initial={{ opacity: 0, y: 50 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="p-12 md:p-24 rounded-[4.5rem] bg-white border border-slate-100 shadow-2xl shadow-primary/5 text-center space-y-12 overflow-hidden relative group"
-        >
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] group-hover:scale-150 transition-transform duration-1000" />
-          
-          <div className="relative z-10 space-y-6">
-            <h3 className="text-4xl md:text-7xl font-display font-black uppercase tracking-tighter leading-none">
-              &iquest;Analizamos tu Marca <br />
-              <span className="text-primary italic">Estrat&eacute;gicamente Gratis?</span>
-            </h3>
-            <p className="text-slate-500 text-xl md:text-2xl font-body max-w-2xl mx-auto">
-              Identificamos oportunidades de escala y ROI sin costo alguno. El primer paso hacia tu legado empieza aqu&iacute;.
-            </p>
-          </div>
-          
-          <Link 
-            href="https://api.whatsapp.com/send?phone=50660060026"
-            target="_blank"
-            className="inline-flex items-center gap-6 bg-slate-900 text-white px-16 py-8 rounded-full font-display font-bold uppercase tracking-widest text-sm hover:bg-primary transition-all shadow-xl"
-          >
-            SOLICITAR ANÁLISIS ROI
-            <span className="material-symbols-outlined">north_east</span>
-          </Link>
-        </motion.div>
-      </section>
     </main>
   );
 }
@@ -223,30 +284,28 @@ function ProcessCard({ step, index }) {
   const isRight = step.align === 'right';
   
   return (
-    <motion.div
-      initial={{ opacity: 0, x: isRight ? 50 : -50 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: false, margin: "-10%" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`p-10 md:p-16 rounded-[3.5rem] bg-white border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-700 relative overflow-hidden group w-full flex flex-col ${isRight ? 'items-end text-right' : 'items-start text-left'}`}
+    <div
+      className={`p-10 md:p-16 rounded-none bg-white border border-slate-100 shadow-xl relative overflow-hidden group w-full h-full flex flex-col justify-between items-start text-left`}
     >
-      <div className={`relative z-10 space-y-8 flex flex-col ${isRight ? 'items-end' : 'items-start'}`}>
-        <div className="w-20 h-20 rounded-3xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:shadow-primary/20">
-          <span className="material-symbols-outlined text-4xl">{step.icon}</span>
+      <div className={`relative z-10 flex flex-col ${isRight ? 'items-end' : 'items-start'} h-full w-full`}>
+        <div className="space-y-8 flex-1">
+          <div className="w-20 h-20 rounded-none bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:shadow-primary/20">
+            <span className="material-symbols-outlined text-4xl">{step.icon}</span>
+          </div>
+          <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 group-hover:text-primary transition-colors pr-8">
+            {step.title}
+          </h3>
+          <p className="text-lg md:text-xl text-slate-500 font-body leading-relaxed max-w-xl">
+            {step.desc}
+          </p>
         </div>
-        <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 group-hover:text-primary transition-colors">
-          {step.title}
-        </h3>
-        <p className="text-lg md:text-xl text-slate-500 font-body leading-relaxed">
-          {step.desc}
-        </p>
         
-        <div className="pt-4 flex items-center gap-4 text-slate-300">
+        <div className="pt-8 w-full flex items-center gap-4 text-slate-300 mt-auto">
            {!isRight && <span className="h-[2px] w-12 bg-slate-100 group-hover:bg-primary/20"></span>}
            <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-primary">Fase Estrat&eacute;gica</span>
            {isRight && <span className="h-[2px] w-12 bg-slate-100 group-hover:bg-primary/20"></span>}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

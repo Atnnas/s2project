@@ -111,14 +111,13 @@ export default function Navbar() {
               >
                 <AnimatePresence>
                   <motion.img 
-                    key={lastScrollY > 50 ? 'logo-horizontal' : 'logo-vertical'}
-                    src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
+                    key="logo-desktop"
+                    src="/logo_top_bar.png"
                     alt="S2 PROJECT" 
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-20' : 'h-28'} w-auto object-contain transition-all duration-300 group-hover:scale-105 ${isDark ? 'brightness-0 invert' : ''}`}
+                    className={`${lastScrollY > 50 ? 'h-24' : 'h-36'} w-auto object-contain transition-all duration-300 group-hover:scale-105`}
                   />
                 </AnimatePresence>
               </Link>
@@ -171,14 +170,13 @@ export default function Navbar() {
               >
                 <AnimatePresence>
                   <motion.img 
-                    key={lastScrollY > 50 ? 'logo-horizontal-mobile' : 'logo-vertical-mobile'}
-                    src={lastScrollY > 50 ? "/logo2.png" : "/logo1.png"} 
+                    key="logo-mobile"
+                    src="/logo_top_bar.png"
                     alt="S2 PROJECT" 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-16' : 'h-24'} w-auto object-contain transition-all duration-300 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
+                    className="h-32 w-auto object-contain transition-all duration-300"
                   />
                 </AnimatePresence>
               </Link>
@@ -296,9 +294,9 @@ export default function Navbar() {
                   className="inline-block group"
                 >
                   <img 
-                    src="/logo1.png" 
+                    src="/logo_top_bar.png" 
                     alt="S2 PROJECT" 
-                    className="h-16 w-auto object-contain brightness-0 invert"
+                    className="h-20 w-auto object-contain"
                   />
                   <div className="h-0.5 w-full bg-white/20 mt-2 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
                 </Link>

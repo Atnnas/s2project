@@ -43,9 +43,9 @@ export default async function ReelsPage() {
 
   return (
     <>
-      <main className="flex-1 max-w-7xl mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
+      <main className="flex-1 max-w-7xl mx-auto px-6 pt-8 sm:pt-10 lg:pt-12 pb-20 min-h-screen flex flex-col items-center">
         <header className="mb-8 text-center">
-          <h1 className="text-6xl font-display font-bold text-slate-900 mb-4 tracking-tight">Reels Dinámicos</h1>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 mb-4">Reels Dinámicos</h1>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto font-body">
             Contenido vertical de alto impacto diseñado para la retención y el engagement en redes sociales.
           </p>

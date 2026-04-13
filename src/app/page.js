@@ -1,8 +1,5 @@
 import HeroSection from "@/components/ui/HeroSection";
-import StrategicServices from "@/components/ui/StrategicServices";
-import ResultsSection from "@/components/ui/ResultsSection";
-import ContactSection from "@/components/Contact/ContactSection";
-import BookingSection from "@/components/Contact/BookingSection";
+import HomeInteractiveBoard from "@/components/ui/HomeInteractiveBoard";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 
@@ -32,16 +29,9 @@ export const revalidate = 3600;
 
 export default async function Home() {
   return (
-    <main className="flex flex-col w-full">
+    <main className="flex flex-col w-full bg-background-light">
       <HeroSection />
-      <StrategicServices />
-      <ResultsSection />
-      
-      <div id="contacto" className="bg-background-light py-40">
-        <ContactSection />
-      </div>
-      
-      <BookingSection />
+      <HomeInteractiveBoard />
     </main>
   );
 }
