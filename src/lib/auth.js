@@ -39,6 +39,7 @@ export const authOptions = {
         if (dbUser) {
           token.role = dbUser.role;
           token.image = dbUser.image; // Persistir imagen de DB en el token
+          token.isActive = dbUser.isActive;
         }
       }
       // Manejar actualización manual de la sesión (ej. cambio de nombre)
@@ -51,6 +52,7 @@ export const authOptions = {
       if (session.user) {
         session.user.role = token.role;
         session.user.image = token.image; // Servir imagen de DB en la sesión
+        session.user.isActive = token.isActive;
       }
       return session;
     },

@@ -24,7 +24,7 @@ export default function AdminDashboard() {
   const [editingUser, setEditingUser] = useState(null);
   const [editingProject, setEditingProject] = useState(null);
   const [editingClient, setEditingClient] = useState(null);
-  const [userFormData, setUserFormData] = useState({ name: '', email: '', role: 'Viewer' });
+  const [userFormData, setUserFormData] = useState({ name: '', email: '', role: 'Viewer', isActive: false });
   const [clientFormData, setClientFormData] = useState({ 
     name: '', contactPerson: '', email: '', phone: '', website: '', industry: '', notes: '' 
   });
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/users');
+      const res = await fetch('/api/users', { cache: 'no-store' });
       const data = await res.json();
       if (data.success) setUsers(data.data);
     } catch (e) { console.error(e); }
@@ -78,10 +78,10 @@ export default function AdminDashboard() {
   const openUserModal = (user = null) => {
     if (user) {
       setEditingUser(user);
-      setUserFormData({ name: user.name || '', email: user.email, role: user.role });
+      setUserFormData({ name: user.name || '', email: user.email, role: user.role, isActive: user.isActive || false });
     } else {
       setEditingUser(null);
-      setUserFormData({ name: '', email: '', role: 'Viewer' });
+      setUserFormData({ name: '', email: '', role: 'Viewer', isActive: false });
     }
     setShowUserModal(true);
   };
@@ -117,19 +117,31 @@ export default function AdminDashboard() {
     try {
       const method = editingUser ? 'PATCH' : 'POST';
       const body = editingUser ? { ...userFormData, id: editingUser._id } : userFormData;
+      
+      console.log('SAVE ACTION: Sending data:', body);
+      
       const res = await fetch('/api/users', {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
-      if (res.ok) {
+      
+      const data = await res.json();
+      console.log('SAVE ACTION: Response:', data);
+
+      if (res.ok && data.success) {
         if (editingUser && userFormData.email === session?.user?.email) {
           update({ name: userFormData.name });
         }
-        fetchUsers();
+        await fetchUsers();
         setShowUserModal(false);
+      } else {
+        alert('Error al guardar: ' + (data.error || 'Error desconocido'));
       }
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+      console.error(e);
+      alert('Error de conexión al guardar cambios.');
+    }
   };
 
   const handleClientSuccess = (newClient) => {
@@ -269,7 +281,7 @@ export default function AdminDashboard() {
                     required
                     disabled={!!editingUser}
                     value={userFormData.email}
-                    onChange={(e) => setUserFormData({ ...userFormData, email: e.target.value })}
+                    onChange={(e) => setUserFormData(prev => ({ ...prev, email: e.target.value }))}
                     className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
                     placeholder="ejemplo@gmail.com"
                   />
@@ -279,7 +291,7 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     value={userFormData.name}
-                    onChange={(e) => setUserFormData({ ...userFormData, name: e.target.value })}
+                    onChange={(e) => setUserFormData(prev => ({ ...prev, name: e.target.value }))}
                     className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
                     placeholder="Nombre del usuario"
                   />
@@ -291,7 +303,7 @@ export default function AdminDashboard() {
                       <button
                         key={role}
                         type="button"
-                        onClick={() => setUserFormData({ ...userFormData, role })}
+                        onClick={() => setUserFormData(prev => ({ ...prev, role }))}
                         className={`py-3 rounded-xl font-bold text-xs transition-all border-2 ${userFormData.role === role ? 'bg-primary text-white border-primary' : 'bg-transparent text-slate-400 border-slate-100 hover:border-primary/20'}`}
                       >
                         {role === 'Viewer' ? 'Observador' : role === 'Admin' ? 'Administrador' : role}
@@ -299,6 +311,32 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 </div>
+
+                <div className="space-y-2 pt-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 px-1">Estado del Acceso (Portafolio)</label>
+                  <label className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-primary/10 cursor-pointer hover:border-primary/30 transition-all">
+                    <div className="relative">
+                      <input 
+                        type="checkbox" 
+                        className="sr-only" 
+                        checked={userFormData.isActive}
+                        onChange={(e) => {
+                          const val = e.target.checked;
+                          setUserFormData(prev => ({ ...prev, isActive: val }));
+                        }}
+                      />
+                      <div className={`block w-14 h-8 rounded-full transition-colors ${userFormData.isActive ? 'bg-primary' : 'bg-slate-300'}`}></div>
+                      <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${userFormData.isActive ? 'transform translate-x-6' : ''}`}></div>
+                    </div>
+                    <div>
+                      <p className={`font-bold text-sm ${userFormData.isActive ? 'text-primary' : 'text-slate-500'}`}>
+                        {userFormData.isActive ? 'Cuenta Activa' : 'Cuenta Inactiva (Bloqueada)'}
+                      </p>
+                      <p className="text-[10px] text-slate-400">Si está inactiva, verá un mensaje al intentar acceder al Portafolio.</p>
+                    </div>
+                  </label>
+                </div>
+
                 <div className="flex gap-3 pt-6">
                   <button
                     type="button"
@@ -625,7 +663,7 @@ export default function AdminDashboard() {
                           <tr className="border-b border-primary/5">
                             <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Usuario</th>
                             <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Email</th>
-                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Rol</th>
+                            <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black">Rol / Estado</th>
                             <th className="pb-4 pt-2 px-4 text-xs uppercase tracking-widest text-slate-400 font-black text-right">Acciones</th>
                           </tr>
                         </thead>
@@ -648,13 +686,21 @@ export default function AdminDashboard() {
                               </td>
                                <td className="py-4 px-4 text-slate-500 text-sm font-body">{user.email}</td>
                               <td className="py-4 px-4">
-                                <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider border ${
-                                  user.role === 'Admin' ? 'bg-primary/10 text-primary border-primary/20' : 
-                                  user.role === 'Editor' ? 'bg-blue-50 text-blue-600 border-blue-100' : 
-                                  'bg-slate-50 text-slate-500 border-slate-200'
-                                }`}>
-                                  {user.role === 'Viewer' ? 'Observador' : user.role === 'Admin' ? 'Administrador' : user.role}
-                                </span>
+                                <div className="flex flex-col gap-2 items-start">
+                                  <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider border ${
+                                    user.role === 'Admin' ? 'bg-primary/10 text-primary border-primary/20' : 
+                                    user.role === 'Editor' ? 'bg-blue-50 text-blue-600 border-blue-100' : 
+                                    'bg-slate-50 text-slate-500 border-slate-200'
+                                  }`}>
+                                    {user.role === 'Viewer' ? 'Observador' : user.role === 'Admin' ? 'Administrador' : user.role}
+                                  </span>
+                                  <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest border flex items-center gap-1 ${
+                                    user.isActive ? 'bg-green-50 text-green-600 border-green-200' : 'bg-red-50 text-red-500 border-red-200'
+                                  }`}>
+                                    <span className={`w-1.5 h-1.5 rounded-full ${user.isActive ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                                    {user.isActive ? 'Activo' : 'Inactivo'}
+                                  </span>
+                                </div>
                               </td>
                               <td className="py-4 px-4 text-right">
                                 <div className="flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">

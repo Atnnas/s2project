@@ -13,6 +13,7 @@ export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [showAccessModal, setShowAccessModal] = useState(false);
   const pathname = usePathname();
 
   const { scrollYProgress } = useScroll();
@@ -65,6 +66,21 @@ export default function Navbar() {
       document.body.style.overflow = 'unset';
     }
   }, [isMenuOpen]);
+
+  const handleRestrictedAccess = (e) => {
+    // Si no hay sesión o si la sesión existe pero no está activo
+    if (!session || !session.user || !session.user.isActive) {
+      e.preventDefault();
+      setShowAccessModal(true);
+      if (isMenuOpen) setIsMenuOpen(false);
+      if (isDropdownOpen) setIsDropdownOpen(false);
+      return false;
+    }
+    // Si tiene permisos, permite navegación y cierra menús
+    if (isMenuOpen) setIsMenuOpen(false);
+    if (isDropdownOpen) setIsDropdownOpen(false);
+    return true;
+  };
 
   const handleLogoClick = (e) => {
     if (pathname === '/') {
@@ -191,8 +207,7 @@ export default function Navbar() {
                 <NavbarLink href="/" isDark={isDark}>Inicio</NavbarLink>
                 <NavbarLink href="/servicios" isDark={isDark}>Servicios</NavbarLink>
                 
-                {/* Portafolio con Dropdown - Solo visible si hay sesión */}
-                {session && (
+                {/* Portafolio con Dropdown - SIEMPRE VISIBLE */}
                   <div 
                     className="relative group/dropdown"
                     onMouseEnter={() => setIsDropdownOpen(true)}
@@ -224,7 +239,7 @@ export default function Navbar() {
                           <Link
                             href="/portfolio"
                             className="flex items-center px-6 py-3 text-primary font-display font-black uppercase tracking-widest text-[10px] hover:bg-primary/5 transition-colors border-b border-primary/5"
-                            onClick={() => setIsDropdownOpen(false)}
+                            onClick={handleRestrictedAccess}
                           >
                             Ver Todo el Portafolio
                           </Link>
@@ -233,7 +248,7 @@ export default function Navbar() {
                               key={item.href}
                               href={item.href}
                               className="flex items-center px-6 py-3 text-slate-700 hover:bg-primary/5 transition-colors font-display font-semibold group/item text-sm"
-                              onClick={() => setIsDropdownOpen(false)}
+                              onClick={handleRestrictedAccess}
                             >
                               <span className="flex-1">{item.label}</span>
                               <span className="material-symbols-outlined text-sm opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all">
@@ -245,7 +260,6 @@ export default function Navbar() {
                       )}
                     </AnimatePresence>
                   </div>
-                )}
 
                 <NavbarLink href="/proceso" isDark={isDark}>Proceso</NavbarLink>
                 <NavbarLink href="/nosotros" isDark={isDark}>Nosotros</NavbarLink>
@@ -351,11 +365,10 @@ export default function Navbar() {
                 
                 <div className="my-2" />
                 
-                {session && (
                   <>
                     <p className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-6 px-1">Portafolio</p>
                     <div className="flex flex-col gap-1 items-start">
-                      <MobileNavLink href="/portfolio" active={pathname === "/portfolio"} onClick={() => setIsMenuOpen(false)} index={1}>
+                      <MobileNavLink href="/portfolio" active={pathname === "/portfolio"} onClick={handleRestrictedAccess} index={1}>
                         Ver Todo
                       </MobileNavLink>
                       {dropdownItems.map((item, idx) => (
@@ -363,7 +376,7 @@ export default function Navbar() {
                           key={item.href} 
                           href={item.href} 
                           active={pathname === item.href}
-                          onClick={() => setIsMenuOpen(false)} 
+                          onClick={handleRestrictedAccess} 
                           index={idx + 2}
                         >
                           {item.label}
@@ -371,7 +384,6 @@ export default function Navbar() {
                       ))}
                     </div>
                   </>
-                )}
 
                 <div className="my-8 w-12 h-[1px] bg-white/10" />
 
@@ -442,7 +454,74 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      <AccessProtectionModal isOpen={showAccessModal} onClose={() => setShowAccessModal(false)} />
     </>
+  );
+}
+
+function AccessProtectionModal({ isOpen, onClose }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[1000] flex items-center justify-center p-6 bg-slate-900/80 backdrop-blur-md"
+        >
+          <motion.div
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            className="bg-white w-full max-w-lg rounded-3xl p-8 md:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-primary/20 relative"
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors"
+            >
+              <span className="material-symbols-outlined">close</span>
+            </button>
+            
+            <div className="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
+              <span className="material-symbols-outlined text-3xl">lock</span>
+            </div>
+            
+            <h3 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tight text-slate-900 mb-4">
+              Acceso <span className="text-primary">Restringido</span>
+            </h3>
+            <p className="text-slate-500 font-body mb-8 leading-relaxed text-sm">
+              Nuestros portafolios de Fotografía, Reels y Arte Digital están protegidos por acuerdos de confidencialidad con nuestros clientes de alto perfil.
+              <br/><br/>
+              Para visualizar nuestra galería privada, por favor comunícate directamente con nuestro equipo o reserva una sesión estratégica gratuita.
+            </p>
+
+            <div className="space-y-3">
+               <a 
+                 href="https://api.whatsapp.com/send?phone=50660060026" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="group flex items-center justify-center gap-3 w-full p-4 rounded-xl bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all font-bold text-sm tracking-wider"
+               >
+                 <i className="fa-brands fa-whatsapp text-lg"></i>
+                 Contactar por WhatsApp
+               </a>
+               <a 
+                 href="https://calendar.app.google/zadeELEGddkDxJ829" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="group flex items-center justify-center gap-3 w-full p-4 rounded-xl bg-slate-900 text-white hover:bg-primary transition-all font-bold text-sm tracking-wider shadow-xl shadow-slate-200"
+               >
+                 <span className="material-symbols-outlined text-lg">calendar_month</span>
+                 Agendar Cita en Calendario
+               </a>
+               <p className="text-center pt-4 text-[10px] uppercase font-black tracking-widest text-slate-400">
+                 ¿Ya tienes acceso? <Link href="/admin/login" onClick={onClose} className="text-primary underline">Inicia Sesión</Link>
+               </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 

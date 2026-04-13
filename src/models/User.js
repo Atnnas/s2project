@@ -18,6 +18,10 @@ const UserSchema = new mongoose.Schema({
     enum: ['Viewer', 'Editor', 'Admin'],
     default: 'Viewer',
   },
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true,
 });

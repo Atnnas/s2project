@@ -26,10 +26,10 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
     }
 
-    const { name, email, role, image } = await req.json();
+    const { name, email, role, image, isActive } = await req.json();
     await connectDB();
     
-    const user = await User.create({ name, email, role, image });
+    const user = await User.create({ name, email, role, image, isActive: isActive || false });
     return NextResponse.json({ success: true, data: user });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
@@ -43,11 +43,33 @@ export async function PATCH(req) {
       return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id, role, name, email } = await req.json();
-    await connectDB();
+    const payload = await req.json();
+    console.log('PATCH /api/users payload received:', payload);
+    const { id, role, name, email, isActive } = payload;
     
-    const user = await User.findByIdAndUpdate(id, { role, name, email }, { new: true });
-    return NextResponse.json({ success: true, data: user });
+    await connectDB();
+    const user = await User.findById(id);
+    
+    if (!user) {
+      console.error('User NOT found for ID:', id);
+      return NextResponse.json({ success: false, error: 'Usuario no encontrado' }, { status: 404 });
+    }
+
+    if (role !== undefined) user.role = role;
+    if (name !== undefined) user.name = name;
+    if (email !== undefined) user.email = email;
+    if (isActive !== undefined) user.isActive = isActive;
+
+    console.log('Fields to save - email:', user.email, 'isActive:', user.isActive);
+    
+    await user.save();
+    
+    console.log('User saved successfully to DB');
+    return NextResponse.json({ 
+      success: true, 
+      data: user, 
+      message: `Usuario ${user.email} actualizado correctamente` 
+    });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
