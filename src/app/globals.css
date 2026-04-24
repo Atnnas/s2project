@@ -35,11 +35,20 @@
   --font-roundo: var(--font-roundo);
 }
 
+:root {
+  --navbar-height: 140px;
+}
+
 @custom-variant dark (&.dark);
 
 @layer base {
-  html {
+  html:not([data-scroll-behavior="smooth"]) {
+    scroll-behavior: auto;
+  }
+  html[data-scroll-behavior="smooth"] {
     scroll-behavior: smooth;
+  }
+  html {
     color-scheme: light only;
   }
   h1, h2, h3, h4, h5, h6 {

@@ -7,11 +7,14 @@ export const metadata = {
 
 export default function PortfolioPage() {
   return (
-    <main className="flex-1 max-w-6xl mx-auto px-6 pt-8 sm:pt-10 lg:pt-12 pb-12 min-h-screen">
-      <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 mb-6">Nuestro Portafolio</h1>
-      <p className="text-xl text-slate-500 max-w-2xl font-body mb-16">
-        Proyectos de élite diseñados para elevar la identidad digital de marcas líderes.
-      </p>
+    <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-[calc(100vh-var(--navbar-height))] w-full">
+      {/* Spacer for fixed navbar */}
+      <div className="shrink-0 h-[var(--navbar-height)]" />
+      <div className="flex-1 w-full max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24 pt-8 sm:pt-10 lg:pt-12 pb-12">
+        <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] mb-6">Nuestro Portafolio</h1>
+        <p className="text-[clamp(1.1rem,1.2vw,1.35rem)] text-slate-500 max-w-2xl font-body leading-relaxed mb-16">
+          Proyectos de élite diseñados para elevar la identidad digital de marcas líderes.
+        </p>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="p-8 bg-white rounded-2xl border border-primary/10 shadow-sm transition-all hover:shadow-md">
@@ -39,6 +42,7 @@ export default function PortfolioPage() {
           </a>
         </div>
       </div>
-    </main>
+      </div>
+    </div>
   );
 }

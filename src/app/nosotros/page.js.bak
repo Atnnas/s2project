@@ -1,0 +1,100 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+
+export default function NosotrosPage() {
+
+  const servicios = [
+    { icon: "hub", label: "Dominio Estratégico de Redes" },
+    { icon: "movie_edit", label: "Ingeniería de Contenido" },
+    { icon: "ads_click", label: "Meta Ads de Élite" },
+    { icon: "trending_up", label: "Optimización de Conversión" },
+  ];
+
+  return (
+    <div className="flex-1 flex flex-col mt-[5vh] bg-white relative overflow-x-hidden min-h-[calc(100vh-var(--navbar-height))] w-full">
+      {/* Background decorative elements */}
+      <div className="absolute top-20 right-0 w-[clamp(300px,50vw,700px)] h-[clamp(300px,50vw,700px)] bg-primary/[0.08] rounded-full blur-[160px] -z-10" />
+      {/* Se eliminó el elemento decorativo inferior que interfería visualmente con la foto y el footer */}
+
+      {/* RESTRUCTURACIÓN TOTAL: Grid de 2 Columnas Estricto */}
+      <div className="flex-1 w-full max-w-[1920px] mx-auto flex flex-col lg:flex-row items-stretch relative z-10">
+        
+        {/* COLUMNA IZQUIERDA: Anclaje de Foto — Sin padding superior para evitar cortes */}
+        <div className="w-full lg:w-[48%] flex-1 flex flex-col justify-end relative order-2 lg:order-1 h-full pt-0 lg:pt-20">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full flex-1 min-h-[calc(100vh-var(--navbar-height))] flex flex-col justify-end"
+          >
+            {/* Contenedor de Imagen de ALTA PRECISIÓn: object-contain asegura que NADA de la foto se corte */}
+            <div className="relative w-full flex-1 h-full z-20"> 
+              <Image
+                src="/foto_nosotros_final.png"
+                alt="S2 Project Identidad de Marca"
+                fill
+                className="object-contain object-bottom pointer-events-none" 
+                priority
+              />
+              {/* Se eliminaron los degradados a blanco para asegurar una unión perfecta y limpia con el footer */}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* COLUMNA DERECHA: Bloque de Información — Alineado al ras del footer */}
+        <div className="w-full lg:w-[52%] flex flex-col flex-1 justify-center px-6 sm:px-12 lg:px-24 pt-0 pb-0 lg:pb-2 gap-[clamp(1.5rem,4vh,2.5rem)] order-1 lg:order-2">
+          
+          {/* Main Title Section */}
+          <motion.div
+            initial={{ opacity: 0, x: 25 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-4"
+          >
+            <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85]">
+              Arquitectos <br />
+              <span className="text-primary italic">de Dominio</span>
+            </h1>
+            <p className="text-[clamp(1.1rem,1.2vw,1.35rem)] text-slate-500 font-body leading-relaxed max-w-2xl">
+              Somos una <strong>Agencia Boutique Premium</strong> dedicada a diseñar infraestructuras de marca que no solo compiten, sino que dominan su industria mediante estrategia real y resultados medibles.
+            </p>
+          </motion.div>
+
+          {/* Vision Section */}
+          <motion.div
+            initial={{ opacity: 0, x: 25 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="space-y-6"
+          >
+            <div className="space-y-3">
+              <h3 className="text-[clamp(1.6rem,2.2vw,2.2rem)] font-display font-black uppercase tracking-tight text-slate-800">Nuestra Visión</h3>
+              <p className="text-slate-400 font-body leading-relaxed text-[clamp(1rem,1.1vw,1.2rem)] max-w-2xl">
+                Desde 2026, hemos redefinido el estándar de la gestión digital. No producimos contenido aislado; creamos activos estratégicos que aseguran la <strong>conversión</strong> y maximizan el <strong>ROI</strong> de nuestros aliados.
+              </p>
+            </div>
+            
+            {/* Services List — Clean Green Bars */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
+              {servicios.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
+                  className="flex flex-col border-l-4 border-primary pl-6 py-1 cursor-default group"
+                >
+                  <span className="text-slate-800 font-bold text-[clamp(1rem,1.1vw,1.15rem)] transition-colors duration-300">
+                    {item.label}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}

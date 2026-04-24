@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 export default function WhatsAppButton() {
   // Número de WhatsApp proporcionado por el cliente
   const whatsappNumber = "50660060026";
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}`;
+  const whatsappMessage = encodeURIComponent("Hola S2, me interesa conocer como trabajan con marcas como la mia.");
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${whatsappMessage}`;
 
   return (
     <motion.a
@@ -26,7 +27,7 @@ export default function WhatsAppButton() {
         stiffness: 400, 
         damping: 15
       }}
-      className="fixed bottom-8 right-8 z-[100] flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#25D366] text-white shadow-[0_15px_30px_-5px_rgba(37,211,102,0.4)] hover:shadow-[0_25px_50px_-10px_rgba(37,211,102,0.6)] border border-white/20 overflow-hidden group perspective-1000 transition-shadow duration-300"
+      className="fixed bottom-[clamp(1rem,4vw,2rem)] right-[clamp(1rem,4vw,2rem)] z-[100] flex items-center justify-center w-[clamp(60px,8vw,86px)] h-[clamp(60px,8vw,86px)] rounded-full bg-[#25D366] text-white shadow-[0_15px_30px_-5px_rgba(37,211,102,0.4)] hover:shadow-[0_25px_50px_-10px_rgba(37,211,102,0.6)] border border-white/20 overflow-hidden group perspective-1000 transition-shadow duration-300"
       aria-label="Contactar por WhatsApp"
     >
       {/* 3D Sphere Lighting - Top Highlight (Inner Glow) */}

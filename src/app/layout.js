@@ -68,7 +68,7 @@ export const metadata = {
     default: "S2 Project | Agencia de Marketing Digital y Producción Audiovisual",
     template: "%s | S2 Project"
   },
-  description: "Agencia creativa de élite especializada en producción de Reels, fotografía comercial cinemática y estrategias de marketing digital de alto impacto.",
+  description: "S2 Project. Agencia boutique de marketing digital. Estrategia, contenido, produccion y Meta Ads para marcas que quieren crecer.",
   keywords: ["marketing digital", "producción de reels", "fotografía comercial", "artes digitales", "branding", "estrategia de contenido", "S2 Project"],
   authors: [{ name: "S2 Project Team" }],
   creator: "S2 Project",
@@ -84,7 +84,7 @@ export const metadata = {
     url: "https://s2-project.com",
     siteName: "S2 Project",
     title: "S2 Project | Marketing Digital y Producción Audiovisual de Élite",
-    description: "Elevamos la identidad de tu marca con contenido visual de alta fidelidad y estrategias digitales disruptivas.",
+    description: "S2 Project. Agencia boutique de marketing digital. Estrategia, contenido, produccion y Meta Ads para marcas que quieren crecer.",
     images: [
       {
         url: "/og-main.jpg",
@@ -127,7 +127,7 @@ import WhatsAppButton from "@/components/ui/WhatsAppButton";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="es" data-scroll-behavior="smooth">
       <head>
         <StructuredData />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -139,7 +139,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
             <Navbar />
-            <main className="flex-1 pt-24 md:pt-40">
+            <main className="flex-1 pt-0 flex flex-col bg-white">
               {children}
             </main>
             <Footer />

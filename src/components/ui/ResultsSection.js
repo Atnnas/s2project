@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const results = [
   { label: "Interacción", value: "+185%", desc: "Crecimiento de compromiso", color: "bg-blue-500" },
@@ -129,6 +130,11 @@ export default function ResultsSection() {
               </motion.div>
             ))}
           </div>
+
+          {/* Metrics Disclaimer */}
+          <p className="mt-12 text-[10px] md:text-xs text-slate-500 font-body italic opacity-40 text-center max-w-4xl mx-auto">
+            * Métricas promedio observadas en cuentas gestionadas por S2 Project durante los últimos 12 meses. Los resultados pueden variar según industria, historial y nivel de inversión.
+          </p>
         </div>
 
         {/* Lead Gen Button Block */}
@@ -138,7 +144,7 @@ export default function ResultsSection() {
            viewport={{ once: true }}
            className="mt-40 text-center"
         >
-          <a
+          <Link
             href="/#contacto"
             className="group inline-flex items-center gap-10 p-1 bg-white/10 rounded-full border border-white/10 pr-12 hover:bg-white hover:text-slate-900 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.1)]"
           >
@@ -147,9 +153,9 @@ export default function ResultsSection() {
             </div>
             <div className="text-left">
               <span className="block text-[8px] font-black uppercase tracking-[0.6em] text-primary">Diagnóstico Estratégico</span>
-              <span className="block text-lg font-display font-black uppercase tracking-tight">Análisis Gratuito de Marca</span>
+              <span className="block text-lg font-display font-black uppercase tracking-tight">Quiero Empezar</span>
             </div>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

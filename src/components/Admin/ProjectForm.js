@@ -18,7 +18,7 @@ export default function ProjectForm({
 
   const [formData, setFormData] = useState({
     title: project?.title || '',
-    category: project?.category || defaultCategory || 'Fotografía',
+    category: project?.category || (mode === 'reels' ? 'Reels' : mode === 'art' ? 'Arte Digital' : mode === 'photo' ? 'Fotografía' : defaultCategory),
     imageUrl: project?.imageUrl || '',
     gallery: project?.gallery || (project?.imageUrl ? [{ type: 'image', url: project.imageUrl }] : []),
     client: project?.client || '',

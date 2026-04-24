@@ -1,10 +1,10 @@
 export const metadata = {
-  title: "Nuestros Servicios | Marketing Digital y Producción de Reels",
-  description: "Descubre nuestros servicios de producción de Reels, fotografía comercial cinemática y artes digitales. Soluciones creativas diseñadas para elevar tu marca.",
+  title: "Servicios | S2 Project | Agencia Boutique de Marketing Digital",
+  description: "Servicios de S2 Project: gestion integral, identidad de marca, produccion audiovisual y contenido corporativo. Planes desde 99/mes.",
   keywords: ["servicios de marketing", "productora de reels", "fotógrafo comercial", "diseño de marca", "S2 Project servicios"],
   openGraph: {
     title: "Servicios Creativos de Élite | S2 Project",
-    description: "Producción audiovisual y marketing digital con enfoque en resultados y excelencia visual.",
+    description: "Servicios de S2 Project: gestion integral, identidad de marca, produccion audiovisual y contenido corporativo. Planes desde 99/mes.",
     images: ["/og-services.jpg"],
   },
 };

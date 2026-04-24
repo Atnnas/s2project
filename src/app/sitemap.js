@@ -1,7 +1,7 @@
 export default function sitemap() {
   const baseUrl = 'https://s2-project.com';
   
-  const routes = ['', '/servicios', '/nosotros', '/portfolio'].map((route) => ({
+  const routes = ['', '/servicios', '/nosotros', '/portafolio'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new URLSearchParams(route).get('lastModified') || new Date().toISOString().split('T')[0],
     changeFrequency: 'monthly',

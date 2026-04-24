@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import { useSession, signOut } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Suspense } from 'react';
 import ProjectForm from '@/components/Admin/ProjectForm';
 import ClientForm from '@/components/Admin/ClientForm';
 
-export default function AdminDashboard() {
+function DashboardContent() {
   const { data: session, update } = useSession();
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('projects-photography');
+  const initialTab = searchParams.get('tab') || 'projects-photography';
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]);
   const [clients, setClients] = useState([]);
@@ -58,6 +61,14 @@ export default function AdminDashboard() {
     } catch (e) { console.error(e); }
     setLoading(false);
   };
+
+  useEffect(() => {
+    // Sync with query param if it changes
+    const tabParam = searchParams.get('tab');
+    if (tabParam && tabParam !== activeTab) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (activeTab.startsWith('projects-')) {
@@ -173,9 +184,9 @@ export default function AdminDashboard() {
   };
 
   const tabs = [
-    { id: 'projects-photography', label: 'Fotografía', icon: 'photo_camera', category: 'Fotografía' },
-    { id: 'projects-reels', label: 'Reels', icon: 'movie_filter', category: 'Reels' },
-    { id: 'projects-digital-arts', label: 'Arte Digital', icon: 'polyline', category: 'Arte Digital' },
+    { id: 'projects-photography', label: 'Fotografía', icon: 'photo_camera', category: 'Fotografía', categories: ['Fotografía', 'Photography'] },
+    { id: 'projects-reels', label: 'Reels', icon: 'movie_filter', category: 'Reels', categories: ['Reels', 'Reel'] },
+    { id: 'projects-digital-arts', label: 'Artes Digitales', icon: 'polyline', category: 'Arte Digital', categories: ['Arte Digital', 'Digital Arts', 'Artes Digitales'] },
     { id: 'clients', label: 'Clientes', icon: 'business_center' },
     { id: 'users', label: 'Usuarios', icon: 'group' },
     { id: 'stats', label: 'Métricas', icon: 'analytics' },
@@ -183,7 +194,8 @@ export default function AdminDashboard() {
 
   const filteredProjects = projects.filter(p => {
     const currentTab = tabs.find(t => t.id === activeTab);
-    return currentTab?.category ? p.category === currentTab.category : true;
+    if (!currentTab?.categories) return true;
+    return currentTab.categories.includes(p.category);
   });
 
   return (
@@ -373,7 +385,7 @@ export default function AdminDashboard() {
                 <h3 className="text-3xl font-display font-bold text-slate-900">
                   {editingProject 
                     ? (activeTab === 'projects-reels' ? 'Editar Reel' : activeTab === 'projects-digital-arts' ? 'Editar Arte Digital' : activeTab === 'projects-photography' ? 'Editar Fotografía' : 'Editar Proyecto') 
-                    : (activeTab === 'projects-reels' ? 'Nuevo Reel' : activeTab === 'projects-digital-arts' ? 'Nuevo Arte Digital' : activeTab === 'projects-photography' ? 'Nueva Fotografía' : 'Nuevo Proyecto')}
+                    : (activeTab === 'projects-reels' ? 'Añadir Nuevo Reel' : activeTab === 'projects-digital-arts' ? 'Añadir Artes Digitales' : activeTab === 'projects-photography' ? 'Añadir Fotografía' : 'Nuevo Registro')}
                 </h3>
                 <button 
                   onClick={() => setShowProjectModal(false)}
@@ -402,56 +414,64 @@ export default function AdminDashboard() {
         )}
       </AnimatePresence>
 
-      <main className="flex-1 max-w-7xl mx-auto px-6 py-12 min-h-screen w-full">
-        <header className="mb-16 border-b border-primary/10 pb-12">
-          <h1 className="text-5xl font-display font-bold text-slate-900 mb-8 tracking-tight">Panel de Control</h1>
-          
-          <div className="flex flex-col items-start gap-6">
-            <div className="flex items-center gap-4 bg-white p-4 pr-8 rounded-3xl border border-primary/10 shadow-sm">
+      <main className="flex flex-col max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12 w-full pb-8">
+        {/* Spacer for fixed navbar */}
+        <div className="shrink-0 h-[var(--navbar-height)]" />
+
+        {/* Compact Header */}
+        <header className="shrink-0 flex items-center justify-between gap-4 pb-4 border-b border-primary/10 mb-4">
+          <div className="flex items-center gap-4">
+            <h1 className="text-[clamp(1.2rem,2.5vw,2rem)] font-display font-bold text-slate-900 tracking-tight">Panel de Control</h1>
+            <div className="hidden sm:flex items-center gap-3 bg-white px-3 py-2 rounded-2xl border border-primary/10 shadow-sm">
               <div className="relative">
                 <img 
                   src={session?.user?.image || `https://ui-avatars.com/api/?name=${session?.user?.name || 'User'}&background=3b512f&color=fff`} 
                   alt="Profile" 
-                  className="w-16 h-16 rounded-2xl object-cover ring-4 ring-primary/5"
+                  className="w-9 h-9 rounded-xl object-cover ring-2 ring-primary/5"
                 />
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
               </div>
               <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-slate-900 font-bold text-lg">{session?.user?.name || 'David'}</span>
-                  <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-slate-900 font-bold text-sm">{session?.user?.name || 'David'}</span>
+                  <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[8px] font-black uppercase tracking-widest border border-primary/20">
                     {session?.user?.role || 'Admin'}
                   </span>
                 </div>
-                <p className="text-slate-500 font-body text-sm leading-none">{session?.user?.email}</p>
+                <p className="text-slate-500 font-body text-xs leading-none">{session?.user?.email}</p>
               </div>
             </div>
-
-            <button 
-              onClick={() => signOut({ callbackUrl: '/' })}
-              className="flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-slate-900 text-white hover:bg-primary transition-all font-bold text-sm shadow-xl shadow-slate-200 hover:scale-[1.02] active:scale-95 group"
-            >
-              <span className="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">logout</span>
-              Finalizar Sesión
-            </button>
           </div>
+          <button 
+            onClick={() => signOut({ callbackUrl: '/' })}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-primary transition-all font-bold text-xs shadow-lg hover:scale-[1.02] active:scale-95 group"
+          >
+            <span className="material-symbols-outlined text-base group-hover:rotate-12 transition-transform">logout</span>
+            <span className="hidden sm:inline">Cerrar Sesión</span>
+          </button>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          <aside className="lg:w-64 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-2 pb-4 lg:pb-0 h-fit">
+        {/* Tabs + Content */}
+        <div className="flex flex-col gap-3">
+          {/* Horizontal Tab Bar */}
+          <div className="shrink-0 flex gap-1.5 overflow-x-auto pb-1 scrollbar-hide">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 lg:flex-none flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap border-2 ${activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20 border-primary' : 'text-slate-500 hover:bg-slate-100 border-transparent'}`}
+                onClick={() => {
+                  setActiveTab(tab.id);
+                  router.push(`/admin/dashboard?tab=${tab.id}`, { scroll: false });
+                }}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs transition-all whitespace-nowrap border-2 ${activeTab === tab.id ? 'bg-primary text-white shadow-md shadow-primary/20 border-primary' : 'text-slate-500 hover:bg-slate-100 border-transparent'}`}
               >
-                <span className="material-symbols-outlined">{tab.icon}</span>
+                <span className="material-symbols-outlined text-base">{tab.icon}</span>
                 {tab.label}
               </button>
             ))}
-          </aside>
+          </div>
 
-          <div className="flex-1">
+          {/* Content Area */}
+          <div className="rounded-2xl">
             <AnimatePresence mode="wait">
               {activeTab.startsWith('projects-') && (
                 <motion.div
@@ -743,5 +763,20 @@ export default function AdminDashboard() {
         </div>
       </main>
     </>
+  );
+}
+
+export default function AdminDashboard() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-500 font-display font-bold">Cargando Panel...</p>
+        </div>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   );
 }

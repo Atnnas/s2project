@@ -19,13 +19,14 @@ export const revalidate = 3600;
 
 import { serializeData } from "@/lib/serialize";
 import { CircularGallery } from "@/components/ui/CircularGallery";
+import MaintenanceState from "@/components/ui/MaintenanceState";
 
 export default async function ReelsPage() {
   let projects = [];
   try {
     await connectToDatabase();
     const dbProjects = await Project.find({
-      category: { $in: ["Reels"] }
+      category: { $in: ["Reels", "Reel"] }
     }).sort({ createdAt: -1 }).lean();
     
     projects = serializeData(dbProjects);
@@ -43,10 +44,14 @@ export default async function ReelsPage() {
 
   return (
     <>
-      <main className="flex-1 max-w-7xl mx-auto px-6 pt-8 sm:pt-10 lg:pt-12 pb-20 min-h-screen flex flex-col items-center">
-        <header className="mb-8 text-center">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 mb-4">Reels Dinámicos</h1>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto font-body">
+    <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-[calc(100vh-var(--navbar-height))] w-full">
+      {/* Spacer for fixed navbar */}
+      <div className="shrink-0 h-[var(--navbar-height)]" />
+      <div className="flex-1 w-full max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24 pt-8 pb-20 flex flex-col items-center">
+
+        <header className="mb-8 text-center shrink-0">
+          <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] mb-4">Reels Dinámicos</h1>
+          <p className="text-[clamp(1.1rem,1.2vw,1.35rem)] text-slate-500 max-w-2xl mx-auto font-body leading-relaxed">
             Contenido vertical de alto impacto diseñado para la retención y el engagement en redes sociales.
           </p>
         </header>
@@ -54,11 +59,14 @@ export default async function ReelsPage() {
         {projects.length > 0 ? (
           <CircularGallery items={galleryItems} category="Reels" />
         ) : (
-          <div className="py-20 text-center text-slate-400">
-            <p className="text-xl">No se han encontrado reels todavía.</p>
-          </div>
+          <MaintenanceState 
+            category="Reels" 
+            icon="movie_filter" 
+            message="Nuestra galería de contenido vertical está en producción técnica." 
+          />
         )}
-      </main>
+      </div>
+    </div>
     </>
   );
 }

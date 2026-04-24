@@ -4,11 +4,18 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function BookingSection() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState('initial'); // 'initial' or 'redirected'
 
   // Link oficial proporcionado por el usuario
   const calendarUrl = "https://calendar.app.google/zadeELEGddkDxJ829"; 
   const userEmail = "info@s2-project.com"; 
+
+  const handleBooking = () => {
+    // Abrir en pestaña nueva con seguridad rel="noopener noreferrer"
+    window.open(calendarUrl, '_blank', 'noopener,noreferrer');
+    // Cambiar al paso de confirmación visual
+    setStep('redirected');
+  };
 
   return (
     <section className="w-full max-w-5xl mx-auto px-6 pb-32">
@@ -38,11 +45,11 @@ export default function BookingSection() {
             </p>
           </div>
 
-          {!isOpen ? (
+          {step === 'initial' ? (
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setIsOpen(true)}
+              onClick={handleBooking}
               className="group relative inline-flex items-center gap-4 bg-slate-900 text-white px-10 py-6 rounded-2xl font-display font-bold uppercase tracking-widest overflow-hidden transition-all shadow-xl shadow-slate-900/20"
             >
               <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
@@ -53,26 +60,53 @@ export default function BookingSection() {
             </motion.button>
           ) : (
             <motion.div 
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="w-full aspect-[4/3] md:aspect-video rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 relative"
+              className="w-full max-w-2xl mx-auto rounded-[2rem] bg-slate-50 border border-primary/10 p-10 md:p-16 relative overflow-hidden group"
             >
-              <iframe 
-                src={calendarUrl}
-                style={{ border: 0 }} 
-                width="100%" 
-                height="100%" 
-                frameBorder="0" 
-                scrolling="yes"
-                className="bg-white"
-              />
+              {/* Subtle background pulse */}
+              <div className="absolute inset-0 bg-primary/5 animate-pulse" />
               
-              <button 
-                onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg hover:text-primary transition-colors z-20"
-              >
-                <span className="material-symbols-outlined">close</span>
-              </button>
+              <div className="relative z-10 space-y-6">
+                <div className="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="material-symbols-outlined text-4xl animate-bounce">check_circle</span>
+                </div>
+                
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-slate-900 uppercase tracking-tight">
+                  ¡Calendario Abierto con Éxito!
+                </h3>
+                
+                <div className="space-y-4 text-slate-500 font-body text-base max-w-md mx-auto">
+                    <p>
+                      Hemos abierto el sistema de reservas en una <span className="text-primary font-bold">nueva ventana</span> para garantizar 100% de seguridad en tu dispositivo.
+                    </p>
+                    <p className="text-sm italic">
+                      Por favor, completa tu reserva allí. Una vez finalices, recibirás una confirmación por correo.
+                    </p>
+                </div>
+
+                <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <button 
+                    onClick={() => setStep('initial')}
+                    className="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors text-xs font-black uppercase tracking-widest"
+                  >
+                    <span className="material-symbols-outlined text-sm">arrow_back</span>
+                    Reiniciar proceso
+                  </button>
+                  
+                  <div className="hidden sm:block w-px h-4 bg-slate-200" />
+
+                  <a 
+                    href={calendarUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline text-xs font-black uppercase tracking-widest flex items-center gap-2"
+                  >
+                    Abrir de nuevo si se cerró
+                    <span className="material-symbols-outlined text-sm">open_in_new</span>
+                  </a>
+                </div>
+              </div>
             </motion.div>
           )}
 

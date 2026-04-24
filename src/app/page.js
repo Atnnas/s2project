@@ -9,7 +9,7 @@ export async function generateMetadata() {
     const latestProject = await Project.findOne({}).sort({ createdAt: -1 });
     
     return {
-      title: "S2 Project | Arquitectos de Legados Digitales",
+      title: "S2 Project | Agencia Boutique de Marketing Digital",
       description: "Elevamos tu marca al nivel de las leyendas. Estrategia integral de redes sociales, producción de alta fidelidad y crecimiento medible.",
       openGraph: {
         title: "S2 Project | Estrategia y Legado Digital",

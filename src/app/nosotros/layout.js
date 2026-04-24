@@ -1,10 +1,13 @@
-import { metadata as SEO } from "./page";
-
 export const metadata = {
-  ...SEO,
-  title: "Sobre Nosotros | La Agencia Detrás de tu Éxito Digital",
+  title: "Nosotros | S2 Project | Agencia Boutique",
+  description: "Somos S2 Project, una agencia boutique con un enfoque fresco del marketing digital. La nueva generacion de agencias.",
+  keywords: ["agencia boutique", "marketing digital Costa Rica", "branding premium", "estrategia digital", "producción audiovisual", "S2 Project nosotros"],
+  openGraph: {
+    title: "Sobre Nosotros | S2 Project",
+    description: "Somos S2 Project, una agencia boutique con un enfoque fresco del marketing digital. La nueva generacion de agencias.",
+  },
 };
 
 export default function NosotrosLayout({ children }) {
-  return <>{children}</>;
+  return <div className="bg-white">{children}</div>;
 }

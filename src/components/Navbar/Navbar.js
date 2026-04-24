@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
@@ -14,14 +14,12 @@ export default function Navbar() {
   const [isDark, setIsDark] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showAccessModal, setShowAccessModal] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,46 +96,46 @@ export default function Navbar() {
       />
 
       <AnimatePresence>
-        {(isVisible || isHovered || isMenuOpen) && (
+        {mounted && (isVisible || isHovered || isMenuOpen) && (
           <motion.header 
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 20 }}            className={`flex items-center justify-between whitespace-nowrap px-6 md:px-40 py-3 md:py-2 fixed top-0 w-full z-50 transition-all duration-500 ${
+            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            className={`fixed top-0 w-full z-50 transition-all duration-500 ${
               isMenuOpen 
                 ? 'bg-primary border-b border-white/10 shadow-none' 
                 : isDark
                   ? 'bg-slate-900 border-b border-white/10 shadow-xl'
-                  : 'bg-white border-b border-slate-100 shadow-sm'
+                  : 'bg-white shadow-none'
             } group/navbar`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <motion.div 
-              className={`absolute bottom-0 left-0 right-0 h-[2px] origin-left z-50 ${isDark ? 'bg-white/40' : 'bg-primary'}`}
-              style={{ scaleX }}
-            />
-
-            {/* Logo - Desktop/Tablet (Left Aligned) */}
-            <div className="hidden md:flex items-center justify-start py-2 relative z-[90]">
-              <Link 
-                href="/" 
-                onClick={handleLogoClick}
-                className="group flex items-center gap-4 relative z-[100] pointer-events-auto cursor-pointer"
-              >
-                <AnimatePresence>
+            <div className="max-w-[1920px] mx-auto w-full flex items-center justify-between px-2 md:px-4 relative h-[140px]">
+              
+              {/* Logo - Massive Authority Overlay (400px) as per user request for "100% bigger" */}
+              <div className="hidden md:flex items-center justify-start absolute top-1/2 -translate-y-1/2 left-2 z-[100] h-[400px] pointer-events-none">
+                <Link 
+                  href="/" 
+                  onClick={handleLogoClick}
+                  className="group relative cursor-pointer block h-[400px] w-[1200px] pointer-events-auto"
+                >
                   <motion.img 
-                    key="logo-desktop"
                     src="/logo_top_bar.png"
                     alt="S2 PROJECT" 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: -10, scale: 1 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={{ originX: 0, originY: 0.5 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`${lastScrollY > 50 ? 'h-24' : 'h-36'} w-auto object-contain transition-all duration-300 group-hover:scale-105`}
+                    className="relative h-full w-auto object-contain transition-all duration-300 pointer-events-auto"
                   />
-                </AnimatePresence>
-              </Link>
-            </div>
+                </Link>
+              </div>
+
+              {/* Rest of Navbar Content... */}
+              {/* ... ensures the content is now inside the 1920px container ... */}
 
             {/* Mobile Hamburger Button - Left Side */}
             <button 
@@ -182,89 +180,34 @@ export default function Navbar() {
                   handleLogoClick(e);
                   setIsMenuOpen(false);
                 }}
-                className="relative z-[100] flex items-center justify-center p-2 pointer-events-auto cursor-pointer"
+                className="relative z-[100] flex items-center justify-center p-2 pointer-events-auto cursor-pointer flex-shrink-0"
               >
-                <AnimatePresence>
-                  <motion.img 
-                    key="logo-mobile"
-                    src="/logo_top_bar.png"
-                    alt="S2 PROJECT" 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className="h-32 w-auto object-contain transition-all duration-300"
-                  />
-                </AnimatePresence>
+                <motion.img 
+                  src="/logo_top_bar.png"
+                  alt="S2 PROJECT" 
+                  initial={{ opacity: 0, scale: 1.7 }}
+                  animate={{ opacity: 1, scale: 1.85 }}
+                  style={{ originX: 1 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="h-[clamp(64px,20vw,102px)] w-auto object-contain transition-all duration-300"
+                />
               </Link>
             </div>
             
  
 
 
-            <div className="flex flex-1 justify-end gap-10 items-center">
-              {/* Desktop Nav - Unchanged md:flex */}
-              <nav className="hidden md:flex items-center gap-12 text-[#1d2729]">
-                <NavbarLink href="/" isDark={isDark}>Inicio</NavbarLink>
-                <NavbarLink href="/servicios" isDark={isDark}>Servicios</NavbarLink>
-                
-                {/* Portafolio con Dropdown - SIEMPRE VISIBLE */}
-                  <div 
-                    className="relative group/dropdown"
-                    onMouseEnter={() => setIsDropdownOpen(true)}
-                    onMouseLeave={() => setIsDropdownOpen(false)}
-                  >
-                    <div className="cursor-pointer">
-                      <NavbarLink as="div" isDark={isDark}>
-                        <span className="flex items-center gap-1">
-                          Portafolio
-                          <motion.span 
-                            animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-                            className="material-symbols-outlined text-sm leading-none"
-                          >
-                            expand_more
-                          </motion.span>
-                        </span>
-                      </NavbarLink>
-                    </div>
+            {/* Desktop Navigation - Right Aligned */}
+            <div className="hidden md:flex items-center absolute right-8 lg:right-16 gap-[clamp(1.2rem,2.2vw,2.5rem)] z-[101]">
+              <NavbarLink href="/" isDark={isDark}>Inicio</NavbarLink>
+              <NavbarLink href="/servicios" isDark={isDark}>Servicios</NavbarLink>
+              
+              <NavbarLink href="/portafolio" isDark={isDark} onClick={handleRestrictedAccess}>Portafolio</NavbarLink>
 
-                    <AnimatePresence>
-                      {isDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="absolute top-full right-0 mt-4 w-56 bg-white/90 backdrop-blur-xl border border-primary/10 rounded-2xl shadow-2xl overflow-hidden py-3 z-[100]"
-                        >
-                          <Link
-                            href="/portfolio"
-                            className="flex items-center px-6 py-3 text-primary font-display font-black uppercase tracking-widest text-[10px] hover:bg-primary/5 transition-colors border-b border-primary/5"
-                            onClick={handleRestrictedAccess}
-                          >
-                            Ver Todo el Portafolio
-                          </Link>
-                          {dropdownItems.map((item) => (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              className="flex items-center px-6 py-3 text-slate-700 hover:bg-primary/5 transition-colors font-display font-semibold group/item text-sm"
-                              onClick={handleRestrictedAccess}
-                            >
-                              <span className="flex-1">{item.label}</span>
-                              <span className="material-symbols-outlined text-sm opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all">
-                                arrow_forward
-                              </span>
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                <NavbarLink href="/proceso" isDark={isDark}>Proceso</NavbarLink>
-                <NavbarLink href="/nosotros" isDark={isDark}>Nosotros</NavbarLink>
-                <NavbarLink href="/admin/dashboard" isDark={isDark}>Administración</NavbarLink>
-              </nav>
+              <NavbarLink href="/proceso" isDark={isDark}>Proceso</NavbarLink>
+              <NavbarLink href="/nosotros" isDark={isDark}>Nosotros</NavbarLink>
+              <NavbarLink href="/admin/dashboard" isDark={isDark}>Administración</NavbarLink>
+            </div>
             </div>
             
             <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/navbar:opacity-100 transition-opacity duration-700 bg-[radial-gradient(ellipse_at_top,_rgba(57,101,66,0.1)_0%,_transparent_70%)]" />
@@ -365,25 +308,9 @@ export default function Navbar() {
                 
                 <div className="my-2" />
                 
-                  <>
-                    <p className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-6 px-1">Portafolio</p>
-                    <div className="flex flex-col gap-1 items-start">
-                      <MobileNavLink href="/portfolio" active={pathname === "/portfolio"} onClick={handleRestrictedAccess} index={1}>
-                        Ver Todo
-                      </MobileNavLink>
-                      {dropdownItems.map((item, idx) => (
-                        <MobileNavLink 
-                          key={item.href} 
-                          href={item.href} 
-                          active={pathname === item.href}
-                          onClick={handleRestrictedAccess} 
-                          index={idx + 2}
-                        >
-                          {item.label}
-                        </MobileNavLink>
-                      ))}
-                    </div>
-                  </>
+                <MobileNavLink href="/portafolio" active={pathname === "/portafolio"} onClick={handleRestrictedAccess} index={2}>
+                  Portafolio
+                </MobileNavLink>
 
                 <div className="my-8 w-12 h-[1px] bg-white/10" />
 
@@ -528,17 +455,18 @@ function AccessProtectionModal({ isOpen, onClose }) {
 function NavbarLink({ href, children, isDark, as = Link }) {
   const Component = as;
   const commonProps = {
-    className: "relative group/link py-3 px-4 block transition-all",
+    className: "relative group/link px-6 flex items-center transition-all z-[101] h-full self-stretch",
     children: (
       <>
-        <span className={`relative z-10 transition-opacity text-lg font-semibold tracking-wide font-display ${isDark ? 'text-white opacity-100' : 'text-[#1d2729] opacity-80 group-hover/link:opacity-100'}`}>
+        <span className={`relative z-10 transition-opacity text-xl font-bold tracking-tight font-display ${isDark ? 'text-white opacity-100' : 'text-[#1d2729] opacity-80 group-hover/link:opacity-100'}`}>
           {children}
+          {/* Underline - Now relative to text span */}
+          <span className={`absolute -bottom-1.5 left-0 right-0 h-0.5 transition-all duration-300 group-hover/link:opacity-100 opacity-0 ${isDark ? 'bg-white' : 'bg-primary'}`} />
         </span>
         <motion.span 
-          className={`absolute inset-0 -z-0 rounded-full scale-0 opacity-0 group-hover/link:scale-110 group-hover/link:opacity-100 transition-all duration-300 ease-out ${isDark ? 'bg-white/10' : 'bg-primary/5'}`}
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0 w-16 h-16 rounded-full scale-0 opacity-0 group-hover/link:scale-110 group-hover/link:opacity-100 transition-all duration-300 ease-out ${isDark ? 'bg-white/10' : 'bg-primary/5'}`}
           aria-hidden="true"
         />
-        <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover/link:w-full ${isDark ? 'bg-white' : 'bg-primary'}`} />
       </>
     )
   };

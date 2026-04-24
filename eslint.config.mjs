@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "tmp/**",
+    "team_manager.js",
+    "team_manager.py",
+    "seed.js"
   ]),
 ]);
 

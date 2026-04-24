@@ -5,47 +5,47 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const mainService = {
-  title: "Gestión Estratégica 360°",
-  subtitle: "El motor de tu Retorno de Inversión (ROI)",
+  title: "Gestión Integral",
+  subtitle: "Pensado para marcas que quieren crecer",
   description: "Nuestra arquitectura de gestión mensual no es solo contenido; es una infraestructura diseñada para dominar el mercado digital. Fusionamos narrativa de alta fidelidad con ingeniería de datos para asegurar resultados medibles.",
   features: [
-    "Estrategia de Crecimiento y Posicionamiento",
-    "Planificación Táctica de Contenido Trimestral",
-    "Producción de Activos con Enfoque en Conversión",
-    "Gestión de Campañas Meta Ads y Optimización",
-    "Análisis de Métricas y Rendimiento"
+    "Estrategia y direccion de marca",
+    "Planificacion mensual de contenido",
+    "Produccion de video, foto y reels",
+    "Campanas de Meta Ads",
+    "Análisis y ajustes continuos"
   ]
 };
 
 const secondaryServices = [
   {
     id: "branding",
-    title: "Identidad de Legado",
-    subtitle: "Brand Kits con Propósito Estratégico",
-    description: "Diseñamos el ADN visual de marcas destinadas a liderar. Construimos una estética premium que comunica autoridad instantánea en tu sector comercial.",
-    features: ["Diseño de Logotipo Premium", "Paleta de Colores Exclusiva", "Tipografía Corporativa", "Guía de Estilo de Marca", "Assets de Redes Sociales"]
+    title: "Identidad de Marca",
+    subtitle: "Brand Kit con Proposito Estrategico",
+    description: "Disenamos la identidad visual de tu marca: logo, colores, tipografia y guia de uso. Todo lo que necesitas para proyectar presencia desde el primer dia.",
+    features: ["Diseno de logotipo", "Paleta de colores", "Sistema tipografico", "Manual de marca", "Assets para redes sociales"]
   },
   {
     id: "real-estate",
-    title: "Real Estate Premium",
-    subtitle: "Elevación del Valor Percibido",
-    description: "Producciones cinematográficas y fotografía aérea con drones para activos inmobiliarios de lujo. Capturamos la esencia de las propiedades para cerrar ventas más rápido.",
+    title: "Real Estate",
+    subtitle: "La propiedad merece verse asi",
+    description: "Produccion audiovisual de alto nivel para proyectos inmobiliarios. Cinematografia, drone y fotografia que transforman propiedades en experiencias.",
     features: ["Cinematografía Inmobiliaria", "Fotografía Aérea con Dron", "Recorridos Visuales Fluidos", "Edición Dinámica Musical", "Optimizados para Meta Ads"]
   },
   {
     id: "corporate",
-    title: "Narrativa Corporativa",
-    subtitle: "Comunicaciones de Alta Fidelidad",
-    description: "Material audiovisual para empresas con visión. Transmitimos el mensaje central de tu corporación a través de producciones de alcance ejecutivo y corporativo.",
-    features: ["Videos Institucionales", "Entrevistas Comerciales", "Casos de Éxito y Testimonios", "Cobertura Premium de Eventos", "Comunicaciones de Alto Nivel"]
+    title: "Contenido Corporativo",
+    subtitle: "Para empresas que comunican con estilo",
+    description: "Video institucional, entrevistas, casos de exito y cobertura de eventos. Producciones pensadas para empresas que entienden el valor de comunicar bien.",
+    features: ["Video institucional", "Entrevistas y testimonios", "Casos de exito", "Cobertura de eventos", "Comunicacion interna y ejecutiva"]
   }
 ];
 
 const tabs = [
-  { id: "01", title: "Gestión Estrella 360°", desc: "El motor principal de tu ROI.", icon: "layers" },
-  { id: "02", title: "Identidad de Legado", desc: "Construcción de ADN de Marca.", icon: "architecture" },
-  { id: "03", title: "Real Estate Premium", desc: "Producción Inmobiliaria Luxury.", icon: "domain" },
-  { id: "04", title: "Narrativa Corporativa", desc: "Comunicaciones corporativas.", icon: "business_center" }
+  { id: "01", title: "Gestión Integral", desc: "Todo lo que tu marca necesita, mes a mes.", icon: "layers" },
+  { id: "02", title: "Identidad de Marca", desc: "Tu marca, desde cero o desde reinvencion.", icon: "architecture" },
+  { id: "03", title: "Real Estate", desc: "Fotografia, video y drone para proyectos de alto nivel.", icon: "domain" },
+  { id: "04", title: "Contenido Corporativo", desc: "Video institucional y eventos.", icon: "business_center" }
 ];
 
 export default function ServiciosPage() {
@@ -89,65 +89,51 @@ export default function ServiciosPage() {
   };
 
   return (
-    <main className="min-h-screen pt-8 sm:pt-10 lg:pt-12 pb-40 overflow-hidden bg-background-light text-slate-900 flex flex-col w-full">
-      
-      {/* Premium Minimal Hero */}
-      <section className="relative px-6 mb-8 md:mb-12 text-center">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
-        
-        <div className="max-w-4xl mx-auto space-y-8">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85]">
-            Arquitectura <br />
-            <span className="text-primary italic relative inline-block">
-              de Resultados
-              <motion.span 
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="absolute -bottom-2 left-0 h-2 bg-primary/10 -z-10"
-              />
-            </span>
+    <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-screen w-full">
+      {/* Hero Header Standardized */}
+      <section className="relative w-full pt-[clamp(160px,18vh,220px)] pb-12 px-6 shrink-0 text-center">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex items-center justify-center gap-4 pt-2 mb-4"
+          >
+            <span className="h-[1px] w-8 bg-primary/40"></span>
+            <span className="text-[10px] font-black uppercase tracking-[1em] text-primary">S2 PROJECT</span>
+            <span className="h-[1px] w-8 bg-primary/40"></span>
+          </motion.div>
+          <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block">
+            Servicios
           </h1>
         </div>
       </section>
 
-      {/* DASHBOARD GRID */}
-      <section className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12 relative flex-1">
+      {/* DASHBOARD GRID — Standardized Geometry from Home */}
+      <section className="w-full relative pb-20 bg-white flex-1 flex flex-col justify-center">
         <div 
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch h-full"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           
-          {/* Column 1: Desktop Vertical Menu */}
-          <div className="hidden lg:flex lg:col-span-3 lg:sticky lg:top-8 z-20 lg:flex-col lg:justify-start lg:gap-3 h-fit">
+          {/* Column 1: Desktop Vertical Menu (Sticky to avoid double scroll) */}
+          <div className="hidden lg:flex lg:col-span-3 z-20 lg:flex-col lg:justify-start lg:gap-2 h-fit sticky top-[160px]">
             {tabs.map((tab, index) => {
               const isActive = activeTab === index;
               return (
                 <button 
                   key={tab.id} 
                   onClick={() => handleTabClick(index)}
-                  className={`text-left flex items-center lg:gap-5 transition-all duration-300 group lg:min-w-0 lg:rounded-none lg:border-l-4 ${
-                    isActive 
-                      ? 'lg:p-6 lg:bg-white lg:shadow-xl lg:border-primary lg:scale-[1.02] z-10' 
-                      : 'lg:p-6 lg:bg-transparent lg:border-transparent lg:hover:bg-white/50 lg:hover:border-slate-200'
-                  }`}
+                  className={`text-left p-6 flex items-center gap-6 border-l-4 transition-all duration-300 group min-w-0 ${isActive ? 'bg-white shadow-2xl border-primary scale-[1.02] z-10' : 'bg-transparent border-transparent hover:bg-slate-100/50'}`}
                 >
-                  <div className={`lg:w-12 lg:h-12 lg:rounded-none flex flex-shrink-0 items-center justify-center font-black transition-colors duration-300 ${
-                    isActive 
-                      ? 'bg-primary text-white' 
-                      : 'lg:bg-slate-200 text-slate-500 group-hover:text-primary lg:group-hover:bg-primary/20'
-                  }`}>
-                    <span className="material-symbols-outlined lg:text-xl">{tab.icon}</span>
+                  <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
+                    <span className="material-symbols-outlined text-xl">{tab.icon}</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className={`font-display font-black uppercase lg:text-sm tracking-widest ${
-                      isActive 
-                        ? 'lg:text-slate-900' 
-                        : 'text-slate-500 group-hover:text-slate-700'
-                    }`}>{tab.title}</h3>
+                    <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>{tab.title}</h3>
                     {isActive && (
-                      <motion.p initial={{opacity:0, h:0}} animate={{opacity:1, h:'auto'}} className="hidden lg:block text-[10px] text-slate-400 font-body uppercase tracking-wider mt-1">
+                      <motion.p initial={{opacity:0, height:0}} animate={{opacity:1, height:'auto'}} className="text-[10px] text-slate-400 font-body uppercase tracking-wider mt-1 block">
                         {tab.desc}
                       </motion.p>
                     )}
@@ -157,9 +143,9 @@ export default function ServiciosPage() {
             })}
           </div>
 
-          {/* Mobile Single-Pill Carousel */}
+          {/* Mobile Carousel (Standardized) */}
           <div className="lg:hidden w-full flex items-center justify-between pb-6 gap-2 z-20">
-             <button onClick={handlePrev} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
+             <button onClick={handlePrev} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors">
                  <span className="material-symbols-outlined text-xl">chevron_left</span>
              </button>
              
@@ -173,34 +159,32 @@ export default function ServiciosPage() {
                      transition={{ duration: 0.2, ease: "easeOut" }}
                      className="absolute inset-0 flex items-center justify-center w-full"
                    >
-                     <div className="bg-slate-900 mx-auto p-2 pr-5 rounded-full flex items-center gap-3 transition-all shadow-xl max-w-full cursor-pointer" onClick={handleNext}>
+                     <div className="bg-slate-900 mx-auto p-2 pr-5 rounded-full flex items-center gap-3 shadow-xl max-w-full cursor-pointer" onClick={handleNext}>
                          <div className="w-8 h-8 rounded-full bg-primary text-white flex flex-shrink-0 items-center justify-center font-black shadow-inner">
                             <span className="material-symbols-outlined text-[1rem]">{tabs[activeTab].icon}</span>
                          </div>
-                         <div className="flex-1 overflow-hidden">
-                            <h3 className="font-display font-black uppercase text-[10px] sm:text-xs tracking-widest text-white whitespace-nowrap truncate w-full pr-2">
-                               {tabs[activeTab].title}
-                            </h3>
-                         </div>
+                         <h3 className="font-display font-black uppercase text-[10px] sm:text-xs tracking-widest text-white whitespace-nowrap truncate w-full pr-2">
+                            {tabs[activeTab].title}
+                         </h3>
                       </div>
                    </motion.div>
                  </AnimatePresence>
              </div>
              
-             <button onClick={handleNext} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
+             <button onClick={handleNext} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors">
                  <span className="material-symbols-outlined text-xl">chevron_right</span>
              </button>
           </div>
 
-          {/* Column 2: Viewport Activo */}
-          <div className="lg:col-span-5 w-full mb-8 lg:mb-0">
+          {/* Column 2: Active Card Viewport (Integrated with page scroll) */}
+          <div className="lg:col-span-5 w-full">
              <AnimatePresence mode="wait">
                <motion.div
                  key={activeTab}
-                 initial={{ opacity: 0, x: -20 }}
-                 animate={{ opacity: 1, x: 0 }}
-                 exit={{ opacity: 0, x: 20 }}
-                 transition={{ duration: 0.3, ease: "easeOut" }}
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 exit={{ opacity: 0, y: -20 }}
+                 transition={{ duration: 0.4, ease: "easeOut" }}
                  className="w-full h-full"
                >
                  {activeTab === 0 && <MainServiceView data={mainService} />}
@@ -211,100 +195,87 @@ export default function ServiciosPage() {
              </AnimatePresence>
           </div>
 
-          {/* Column 3: The Sticky Conversion Panel */}
+          {/* Column 3: Conversion Panel (Standardized) */}
           <div className="lg:col-span-4 h-full relative z-20">
-            <div className="relative p-6 lg:p-8 md:p-12 bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between border border-white/10 group">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none group-hover:scale-110 transition-transform duration-1000" />
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(circle,_white_1px,_transparent_1px)] bg-[size:20px_20px]" />
+            <div className="relative p-8 md:p-12 rounded-none bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(57,101,66,0.25)_0%,_transparent_75%)] pointer-events-none" />
               
-              <div className="relative z-10 flex flex-col h-full space-y-10">
-                
+              <div className="relative z-10 flex flex-col h-full space-y-8">
                 <div className="space-y-4">
-                  <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/10 px-4 py-2 rounded-none border border-primary/20">
-                    Oportunidad de Escala
+                  <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+                    Consulta Exclusiva
                   </span>
                   <h2 className="text-4xl xl:text-5xl font-display font-black uppercase tracking-tight leading-[0.9] text-white">
-                    Diagn&oacute;stico <br />
-                    <span className="text-primary italic opacity-90">Gratuito</span>
+                    Diagnostico <br />
+                    <span className="text-primary italic">Sin Costo</span>
                   </h2>
-                  <p className="text-sm text-slate-300 font-body leading-relaxed">
-                    Evaluamos tu marca sin costo alguno. Descubre fisuras en tu ecosistema actual e identifica el verdadero potencial estrat&eacute;gico.
+                  <p className="text-sm text-slate-400 font-body leading-relaxed max-w-sm">
+                    Analizamos tu marca y te compartimos una lectura estrategica clara. Sin compromiso, con el mismo criterio con el que trabajamos cada cuenta.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 flex-1 content-center">
+                <div className="flex-1 content-center">
                    <div className="p-4 bg-white/5 border border-white/10 flex flex-col items-center text-center justify-center">
                      <span className="material-symbols-outlined text-primary mb-2 text-3xl">insights</span>
-                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-300">Auditor&iacute;a Visual</p>
-                   </div>
-                   <div className="p-4 bg-white/5 border border-white/10 flex flex-col items-center text-center justify-center">
-                     <span className="material-symbols-outlined text-primary mb-2 text-3xl">schema</span>
-                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-300">Roadmap T&aacute;ctico</p>
+                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Diagnostico visual</p>
                    </div>
                 </div>
 
-                {/* ROI Action Button */}
-                <div className="pt-4 mt-auto">
-                  <div className="relative block w-full">
+                <div className="pt-2 mt-auto">
+                  <div className="relative group block w-full">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-500 blur-sm opacity-0 group-hover:opacity-40 transition duration-700"></div>
                     <Link
                       href="https://api.whatsapp.com/send?phone=50660060026"
                       target="_blank"
-                      className="group relative flex items-center justify-center gap-3 bg-white text-slate-900 px-4 py-5 w-full rounded-none font-display font-bold uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.5)]"
+                      className="relative flex items-center justify-center gap-3 bg-slate-950 border border-slate-800 text-white px-4 py-5 w-full rounded-none font-display font-bold uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)]"
                     >
                       <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
-                      <span className="relative z-10 flex-shrink-0 text-center group-hover:text-white transition-colors duration-300">Solicitar An&aacute;lisis ROI</span>
-                      <div className="relative z-10 w-6 h-6 bg-slate-900/10 group-hover:bg-white/20 flex items-center justify-center overflow-hidden flex-shrink-0 transition-colors duration-300">
-                        <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%] group-hover:text-white">
-                          north_east
+                      <span className="relative z-10 flex-shrink-0 text-center">Quiero Trabajar con S2</span>
+                      <div className="relative z-10 w-6 h-6 bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-none hidden sm:flex">
+                        <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
+                          arrow_outward
                         </span>
-                        <span className="material-symbols-outlined text-xs absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0 text-white">
-                          north_east
+                        <span className="material-symbols-outlined text-xs absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0">
+                          arrow_outward
                         </span>
                       </div>
                     </Link>
                   </div>
                 </div>
-                
               </div>
             </div>
           </div>
 
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 
 function MainServiceView({ data }) {
   return (
-    <div className="p-8 md:p-12 lg:p-14 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between relative overflow-hidden group">
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
-      
-      <div className="relative z-10 space-y-6 flex-1">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-          </span>
-          {data.subtitle}
+    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
+      <div className="space-y-6 flex-1">
+        <div className="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary">
+          <span className="material-symbols-outlined text-3xl">layers</span>
         </div>
-        
-        <h3 className="text-3xl lg:text-4xl xl:text-5xl font-display font-black uppercase tracking-tighter leading-none text-slate-900 pr-8">
+        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
           {data.title}
         </h3>
-        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed">
+        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-md">
           {data.description}
         </p>
         
-        <div className="pt-8 space-y-3">
-          {data.features.map((feature, i) => (
-             <div key={i} className="flex items-center gap-4 p-4 border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                <div className="w-8 h-8 rounded-full bg-slate-200/50 text-primary flex items-center justify-center flex-shrink-0">
-                  <span className="material-symbols-outlined text-sm">done</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 pt-4">
+           {data.features.map((feature, i) => (
+             <div key={i} className="flex gap-4">
+                <span className="text-primary font-black opacity-30 font-display">0{i+1}</span>
+                <div>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-900">{feature}</h4>
+                  <p className="text-[10px] text-slate-500">Optimizado para resultados</p>
                 </div>
-                <span className="text-xs font-black uppercase tracking-widest text-slate-700">{feature}</span>
              </div>
-          ))}
+           ))}
         </div>
       </div>
     </div>
@@ -313,37 +284,26 @@ function MainServiceView({ data }) {
 
 function SecondaryServiceView({ data, icon }) {
   return (
-    <div className="p-8 md:p-12 lg:p-14 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col relative overflow-hidden group">
-      
-      <div className="relative z-10 flex-1 flex flex-col">
-        <div className="w-20 h-20 bg-slate-50 flex items-center justify-center text-primary mb-8 border border-slate-100">
-          <span className="material-symbols-outlined text-4xl">{icon}</span>
+    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
+      <div className="space-y-6 flex-1">
+        <div className="w-16 h-16 bg-slate-900 flex items-center justify-center text-white">
+          <span className="material-symbols-outlined text-3xl">{icon}</span>
         </div>
+        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+          {data.title}
+        </h3>
+        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-md pb-4">
+          {data.description}
+        </p>
         
-        <div className="space-y-4">
-          <h3 className="text-3xl lg:text-5xl font-display font-black uppercase tracking-tighter leading-[0.9] text-slate-900">
-            {data.title}
-          </h3>
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary bg-primary/5 inline-block px-3 py-1">
-            {data.subtitle}
-          </p>
-          <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed pt-2">
-            {data.description}
-          </p>
+        <div className="space-y-4 flex-1 border-t border-slate-100 pt-6">
+           {data.features.map((feature, i) => (
+             <div key={i} className="flex items-center gap-4">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                <span className="text-xs font-bold text-slate-700 tracking-tight">{feature}</span>
+             </div>
+           ))}
         </div>
-        
-        <div className="pt-10 flex-1 flex flex-col justify-end">
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 border-b border-slate-100 pb-2">Capacidades Analíticas</p>
-          <div className="space-y-3">
-            {data.features.map((feature, i) => (
-               <div key={i} className="flex items-center gap-3">
-                  <div className="w-4 h-[1px] bg-primary/40"></div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-600">{feature}</span>
-               </div>
-            ))}
-          </div>
-        </div>
-
       </div>
     </div>
   );
