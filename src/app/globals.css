@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Symbols+Outlined');
 /* Deployment: 2026-04-24 12:32 — Monitor Adjustments Standardized */
 @import "tailwindcss";
-@import "./home.css";
 
 @layer base {
 
