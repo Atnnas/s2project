@@ -1,3 +1,4 @@
+// Deployment Trigger: Standardized Site Architecture
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
