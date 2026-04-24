@@ -77,6 +77,24 @@
     box-shadow: 0 0 100px rgba(0,0,0,0.05); /* Sutil sombra en los bordes en pantallas gigantes */
   }
 
+  /* Ajuste específico para el Top Menu en pantallas grandes */
+  @media (min-width: 1700px) {
+    header .relative.h-\[140px\] {
+      height: 100px !important; /* Reducimos la altura del menú */
+    }
+    
+    header nav span, 
+    header .hidden.md\:flex.items-center span {
+      font-size: 1rem !important; /* Hacemos el texto un 20% más pequeño adicional */
+      letter-spacing: 0.05em;
+    }
+
+    /* Ajuste para el logo en pantallas gigantes */
+    header .hidden.md\:flex.items-center.absolute.h-\[400px\] {
+      height: 280px !important; 
+    }
+  }
+
   html:not([data-scroll-behavior="smooth"]) {
     scroll-behavior: auto;
   }
