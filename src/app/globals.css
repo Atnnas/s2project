@@ -80,18 +80,20 @@
     font-weight: 800;
   }
 
-  /* Ajuste preciso del contenedor del logo */
-  header .hidden.md\:flex.items-center.absolute.h-\[400px\] {
-    height: 250px !important;
-    top: 80% !important;
+  /* Ajuste preciso del contenedor del logo - Simplificado */
+  header div.absolute.h-\[400px\] {
+    height: 180px !important;
+    top: 50% !important;
     transform: translateY(-50%) !important;
+    display: flex !important; /* Asegurar que sea visible */
   }
 
-  /* Asegurar que el Link y la Imagen dentro también se encojan */
-  header .hidden.md\:flex.items-center.absolute.h-\[400px\] a,
-  header .hidden.md\:flex.items-center.absolute.h-\[400px\] img {
-    height: 250px !important;
+  /* Asegurar que el Link y la Imagen dentro también se ajusten */
+  header div.absolute.h-\[400px\] a,
+  header div.absolute.h-\[400px\] img {
+    height: 180px !important;
     width: auto !important;
+    display: block !important;
   }
 }
 
