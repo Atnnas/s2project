@@ -78,9 +78,9 @@ export default function HomeInteractiveBoard() {
   };
 
   return (
-    <section className="w-full relative pb-12 bg-white flex-1 flex flex-col justify-center">
+    <section id="home-interactive-board" className="w-full relative pb-12 bg-white flex-1 flex flex-col justify-center">
       <div 
-        className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
+        className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch relative px-[clamp(1.2rem,4vw,4.5rem)]"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >

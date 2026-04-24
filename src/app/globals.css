@@ -2,8 +2,9 @@
 @import "tailwindcss";
 
 @layer base {
+
   /* Forzar la carga y visualización de iconos */
-  .material-symbols-outlined, 
+  .material-symbols-outlined,
   [class*="material-symbols"] {
     font-family: 'Material Symbols Outlined' !important;
     font-weight: normal;
@@ -36,7 +37,8 @@
 }
 
 :root {
-  --navbar-height: 8.75rem; /* 140px / 16 */
+  --navbar-height: 8.75rem;
+  /* 140px / 16 */
 }
 
 @custom-variant dark (&.dark);
@@ -48,67 +50,59 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  /* Ajuste para pantallas grandes (Monitores Externos y TVs de 60") */
-  /* Forzamos el "zoom out" al 75% que el usuario prefiere */
-  @media (min-width: 1440px) {
+  /* ============================================================
+     AJUSTES EXCLUSIVOS PARA PANTALLAS GIGANTES (>1600px)
+     Esto NO afecta a la laptop (1536px)
+     ============================================================ */
+  @media (min-width: 1600px) {
     html {
-      font-size: 85%; 
+      font-size: 85% !important; /* Nuevo estándar global del 85% para todo el sitio */
     }
-  }
 
-  @media (min-width: 1700px) {
-    html {
-      font-size: 75%; /* El punto dulce para pantallas grandes */
+    body {
+      max-width: 1920px !important; /* Contenido concentrado */
+      margin: 0 auto;
+      box-shadow: 0 0 100px rgba(0,0,0,0.1);
     }
-  }
 
-  @media (min-width: 2560px) {
-    html {
-      font-size: 70%; /* Para pantallas 4K o TVs muy grandes */
-    }
-  }
-
-  /* Evitar que el contenido se "desparrame" en pantallas ultra-anchas */
-  body {
-    max-width: 2560px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    box-shadow: 0 0 100px rgba(0,0,0,0.05); /* Sutil sombra en los bordes en pantallas gigantes */
-  }
-
-  /* Ajuste específico para el Top Menu en pantallas grandes */
-  @media (min-width: 1700px) {
+    /* Top Menu Estándar */
     header .relative.h-\[140px\] {
-      height: 80px !important; /* Reducimos la altura a 80px */
+      height: 100px !important;
     }
-    
     header nav span, 
     header .hidden.md\:flex.items-center span {
-      font-size: 0.8rem !important; /* Texto aún más pequeño y estilizado */
-      letter-spacing: 0.08em;
+      font-size: 1.5rem !important;
+      font-weight: 800;
     }
 
-    /* Ajuste para el logo en pantallas gigantes */
+    /* Ajuste de logo Estándar */
     header .hidden.md\:flex.items-center.absolute.h-\[400px\] {
-      height: 220px !important; 
+      height: 250px !important;
+      top: 80% !important;
     }
   }
 
   html:not([data-scroll-behavior="smooth"]) {
     scroll-behavior: auto;
   }
+
   html[data-scroll-behavior="smooth"] {
     scroll-behavior: smooth;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-clash), sans-serif;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
