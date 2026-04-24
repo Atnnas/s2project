@@ -78,30 +78,30 @@ export default function HomeInteractiveBoard() {
   };
 
   return (
-    <section className="w-full relative pb-12 bg-white flex-1 flex flex-col justify-center">
+    <section className="w-full relative pb-10 bg-white flex-1 flex flex-col justify-center">
       <div 
-        className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
+        className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch relative px-[clamp(1.2rem,5vw,4.5rem)]"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
         
-        {/* Column 1: Interactive Menu */}
-        <div className="hidden lg:flex lg:col-span-3 lg:sticky lg:top-16 space-y-2 z-20 flex-col snap-x lg:pb-0 h-fit">
+        {/* Column 1: Interactive Menu (Compact) */}
+        <div className="hidden lg:flex lg:col-span-3 lg:sticky lg:top-16 space-y-1.5 z-20 flex-col snap-x lg:pb-0 h-fit">
            {tabs.map((tab, index) => {
              const isActive = activeTab === index;
              return (
                <button 
                  key={tab.id} 
                  onClick={() => handleTabClick(index)}
-                 className={`text-left p-6 flex items-center gap-6 border-l-4 transition-all duration-300 group min-w-[280px] lg:min-w-0 snap-start ${isActive ? 'bg-white shadow-2xl border-primary scale-[1.02]' : 'bg-transparent border-transparent hover:bg-slate-100/50 hover:border-slate-200'}`}
+                 className={`text-left p-4.5 flex items-center gap-5 border-l-4 transition-all duration-300 group min-w-[260px] lg:min-w-0 snap-start ${isActive ? 'bg-white shadow-xl border-primary scale-[1.02] z-10' : 'bg-transparent border-transparent hover:bg-slate-100/50 hover:border-slate-200'}`}
                >
-                 <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
-                   <span className="material-symbols-outlined text-xl">{tab.icon}</span>
+                 <div className={`w-10 h-10 flex flex-shrink-0 items-center justify-center font-black text-lg transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
+                   <span className="material-symbols-outlined text-lg">{tab.icon}</span>
                  </div>
                  <div className="flex-1">
-                   <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>{tab.title}</h3>
+                   <h3 className={`font-display font-black uppercase text-[10px] md:text-xs tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>{tab.title}</h3>
                    {isActive && (
-                     <motion.p initial={{opacity:0, height:0}} animate={{opacity:1, height:'auto'}} className="text-[10px] text-slate-400 font-body uppercase tracking-wider mt-1 block">
+                     <motion.p initial={{opacity:0, height:0}} animate={{opacity:1, height:'auto'}} className="text-[9px] text-slate-400 font-body uppercase tracking-wider mt-0.5 block">
                        {tab.desc}
                      </motion.p>
                    )}
@@ -111,28 +111,28 @@ export default function HomeInteractiveBoard() {
            })}
         </div>
 
-        {/* Mobile Single-Pill Carousel */}
+        {/* Mobile Single-Pill Carousel (Compact) */}
         <div className="lg:hidden w-full flex items-center justify-between pb-6 gap-2 z-20">
-           <button onClick={handlePrev} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
-               <span className="material-symbols-outlined text-xl">chevron_left</span>
+           <button onClick={handlePrev} className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
+               <span className="material-symbols-outlined text-lg">chevron_left</span>
            </button>
            
-           <div className="flex-1 overflow-hidden relative min-h-[50px] flex items-center justify-center">
+           <div className="flex-1 overflow-hidden relative min-h-[40px] flex items-center justify-center">
                <AnimatePresence mode="wait">
                  <motion.div
                    key={activeTab}
-                   initial={{ opacity: 0, x: 20 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   exit={{ opacity: 0, x: -20 }}
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   exit={{ opacity: 0, y: -10 }}
                    transition={{ duration: 0.2, ease: "easeOut" }}
                    className="absolute inset-0 flex items-center justify-center w-full"
                  >
-                   <div className="bg-slate-900 mx-auto p-2 pr-5 rounded-full flex items-center gap-3 transition-all shadow-xl max-w-full cursor-pointer" onClick={handleNext}>
-                       <div className="w-8 h-8 rounded-full bg-primary text-white flex flex-shrink-0 items-center justify-center font-black shadow-inner">
-                          <span className="material-symbols-outlined text-[1rem]">{tabs[activeTab].icon}</span>
+                   <div className="bg-slate-900 mx-auto p-1.5 pr-4 rounded-full flex items-center gap-2.5 transition-all shadow-lg max-w-full cursor-pointer" onClick={handleNext}>
+                       <div className="w-6 h-6 rounded-full bg-primary text-white flex flex-shrink-0 items-center justify-center font-black shadow-inner">
+                          <span className="material-symbols-outlined text-[0.8rem]">{tabs[activeTab].icon}</span>
                        </div>
                        <div className="flex-1 overflow-hidden">
-                          <h3 className="font-display font-black uppercase text-[10px] sm:text-xs tracking-widest text-white whitespace-nowrap truncate w-full pr-2">
+                          <h3 className="font-display font-black uppercase text-[9px] tracking-widest text-white whitespace-nowrap truncate w-full pr-1">
                              {tabs[activeTab].title}
                           </h3>
                        </div>
@@ -141,19 +141,19 @@ export default function HomeInteractiveBoard() {
                </AnimatePresence>
            </div>
            
-           <button onClick={handleNext} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
-               <span className="material-symbols-outlined text-xl">chevron_right</span>
+           <button onClick={handleNext} className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none">
+               <span className="material-symbols-outlined text-lg">chevron_right</span>
            </button>
         </div>
 
-        {/* Column 2: Active Card Viewport */}
+        {/* Column 2: Active Card Viewport (Compact) */}
         <div className="lg:col-span-5 w-full mb-8 lg:mb-0">
            <AnimatePresence mode="wait">
              <motion.div
                key={activeTab}
-               initial={{ opacity: 0, x: -30 }}
-               animate={{ opacity: 1, x: 0 }}
-               exit={{ opacity: 0, x: 30 }}
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: -20 }}
                transition={{ duration: 0.4, ease: "easeOut" }}
                className="w-full h-full flex flex-col"
              >
@@ -173,56 +173,56 @@ export default function HomeInteractiveBoard() {
            </AnimatePresence>
         </div>
 
-        {/* Column 3: The Sticky Global Summary & CTA */}
+        {/* Column 3: The Sticky Global Summary & CTA (Compact) */}
         <div className="lg:col-span-4 h-full relative z-20">
-          <div className="relative p-6 lg:p-8 md:p-12 rounded-none bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between">
+          <div className="relative p-6 md:p-8 lg:p-10 rounded-none bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(57,101,66,0.25)_0%,_transparent_75%)] pointer-events-none" />
             
-            <div className="relative z-10 flex flex-col h-full space-y-8">
+            <div className="relative z-10 flex flex-col h-full space-y-6">
               
-              <div className="space-y-4">
-                <span className="inline-block text-[8px] sm:text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+              <div className="space-y-3">
+                <span className="inline-block text-[8px] sm:text-[9px] font-black uppercase tracking-[0.3em] text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
                   Agencia Boutique
                 </span>
-                <h2 className="text-4xl xl:text-5xl font-display font-black uppercase tracking-tight leading-[0.9] text-white">
+                <h2 className="text-3xl xl:text-4xl font-display font-black uppercase tracking-tight leading-[0.9] text-white">
                   Resultados
                 </h2>
-                <p className="text-sm text-slate-400 font-body leading-relaxed max-w-sm">
+                <p className="text-[11px] text-slate-400 font-body leading-relaxed max-w-xs">
                   Las marcas que trabajan con nosotros crecen. Asi de simple.
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 flex-1 content-center py-4">
-                 <div className="p-4 bg-white/5 border border-white/10 flex flex-col justify-between">
-                   <div className="text-3xl font-display font-black text-white">+185%</div>
-                   <p className="text-[8px] font-black uppercase tracking-widest text-slate-400 mt-2 truncate">Interacci&oacute;n</p>
+              <div className="grid grid-cols-2 gap-3 flex-1 content-center py-2">
+                 <div className="p-3 bg-white/5 border border-white/10 flex flex-col justify-between">
+                   <div className="text-2xl font-display font-black text-white">+185%</div>
+                   <p className="text-[7px] font-black uppercase tracking-widest text-slate-400 mt-1 truncate">Interacci&oacute;n</p>
                  </div>
-                 <div className="p-4 bg-white/5 border border-white/10 flex flex-col justify-between">
-                   <div className="text-3xl font-display font-black text-white">+42%</div>
-                   <p className="text-[8px] font-black uppercase tracking-widest text-slate-400 mt-2 truncate">Alcance</p>
+                 <div className="p-3 bg-white/5 border border-white/10 flex flex-col justify-between">
+                   <div className="text-2xl font-display font-black text-white">+42%</div>
+                   <p className="text-[7px] font-black uppercase tracking-widest text-slate-400 mt-1 truncate">Alcance</p>
                  </div>
-                 <div className="col-span-2 p-4 bg-white/5 border border-white/10 flex flex-col justify-between">
-                   <div className="text-3xl font-display font-black text-white">+35%</div>
-                   <p className="text-[8px] font-black uppercase tracking-widest text-slate-400 mt-2 truncate">Consultas</p>
+                 <div className="col-span-2 p-3 bg-white/5 border border-white/10 flex flex-col justify-between">
+                   <div className="text-2xl font-display font-black text-white">+35%</div>
+                   <p className="text-[7px] font-black uppercase tracking-widest text-slate-400 mt-1 truncate">Consultas</p>
                  </div>
               </div>
 
-              {/* Fully Integrated ROI Action Button */}
+              {/* Fully Integrated ROI Action Button (Compact) */}
               <div className="pt-2 mt-auto">
                 <div className="relative group block w-full">
                   <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-500 blur-sm opacity-0 group-hover:opacity-40 transition duration-700"></div>
                   <Link
                     href="https://api.whatsapp.com/send?phone=50660060026"
                     target="_blank"
-                    className="relative flex items-center justify-center gap-3 bg-slate-950 border border-slate-800 text-white px-4 py-5 w-full rounded-none font-display font-bold uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)]"
+                    className="relative flex items-center justify-center gap-3 bg-slate-950 border border-slate-800 text-white px-4 py-4 w-full rounded-none font-display font-bold uppercase tracking-[0.1em] text-[10px] transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_25px_-5px_rgba(var(--primary),0.5)]"
                   >
                     <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
                     <span className="relative z-10 flex-shrink-0 text-center">Quiero Trabajar con S2</span>
-                    <div className="relative z-10 w-6 h-6 bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-none hidden sm:flex">
-                      <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
+                    <div className="relative z-10 w-5 h-5 bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-none hidden sm:flex">
+                      <span className="material-symbols-outlined text-[10px] absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
                         arrow_outward
                       </span>
-                      <span className="material-symbols-outlined text-xs absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0">
+                      <span className="material-symbols-outlined text-[10px] absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0">
                         arrow_outward
                       </span>
                     </div>
@@ -241,25 +241,25 @@ export default function HomeInteractiveBoard() {
 
 function ServicesView() {
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
-      <div className="space-y-6 flex-1">
-        <div className="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary">
-          <span className="material-symbols-outlined justify-center items-center text-3xl">layers</span>
+    <div className="p-6 md:p-10 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
+      <div className="space-y-5 flex-1">
+        <div className="w-14 h-14 bg-primary/10 flex items-center justify-center text-primary">
+          <span className="material-symbols-outlined justify-center items-center text-2xl">layers</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+        <h3 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
           Todo lo que tu marca <br /> Necesita
         </h3>
-        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-md">
+        <p className="text-xs md:text-sm text-slate-500 font-body leading-relaxed max-w-sm">
           Un servicio mensual completo. Todo cubierto.
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-4 pt-4">
            {servicesList.map((srv, i) => (
-             <div key={i} className="flex gap-4">
-                <span className="text-primary font-black opacity-30 font-display">0{i+1}</span>
+             <div key={i} className="flex gap-3">
+                <span className="text-primary font-black opacity-30 font-display text-sm">0{i+1}</span>
                 <div>
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-900">{srv.title}</h4>
-                  <p className="text-[10px] text-slate-500">{srv.desc}</p>
+                  <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-900">{srv.title}</h4>
+                  <p className="text-[8px] text-slate-500">{srv.desc}</p>
                 </div>
              </div>
            ))}
@@ -271,31 +271,31 @@ function ServicesView() {
 
 function ContactView() {
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
-      <div className="space-y-6 flex-1 flex flex-col">
-        <div className="w-16 h-16 bg-slate-900 flex items-center justify-center text-white">
-          <span className="material-symbols-outlined justify-center items-center text-3xl">forum</span>
+    <div className="p-6 md:p-10 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
+      <div className="space-y-5 flex-1 flex flex-col">
+        <div className="w-14 h-14 bg-slate-900 flex items-center justify-center text-white">
+          <span className="material-symbols-outlined justify-center items-center text-2xl">forum</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+        <h3 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
           <span className="text-primary italic">Hablemos</span>
         </h3>
-        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-md pb-4">
+        <p className="text-xs md:text-sm text-slate-500 font-body leading-relaxed max-w-sm pb-2">
           Trabajamos con marcas en Costa Rica, Panama y toda Latinoamerica.
         </p>
         
-        <div className="space-y-4 flex-1">
-          <a href="mailto:info@s2-project.com" className="group flex items-center gap-4 p-6 bg-slate-50 border border-slate-100 hover:border-primary/20 transition-all">
-             <span className="material-symbols-outlined text-primary">mail</span>
+        <div className="space-y-3 flex-1">
+          <a href="mailto:info@s2-project.com" className="group flex items-center gap-3 p-4 bg-slate-50 border border-slate-100 hover:border-primary/20 transition-all">
+             <span className="material-symbols-outlined text-primary text-xl">mail</span>
              <div>
-               <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Escr&iacute;benos</p>
-               <p className="text-sm font-bold text-slate-900">info@s2-project.com</p>
+               <p className="text-[7px] font-black uppercase tracking-widest text-slate-400">Escr&iacute;benos</p>
+               <p className="text-xs font-bold text-slate-900">info@s2-project.com</p>
              </div>
           </a>
-          <a href="https://api.whatsapp.com/send?phone=50660060026" target="_blank" className="group flex items-center gap-4 p-6 bg-[#25D366]/5 border border-[#25D366]/20 hover:border-[#25D366]/40 transition-all">
-             <span className="material-symbols-outlined text-[#25D366]">chat</span>
+          <a href="https://api.whatsapp.com/send?phone=50660060026" target="_blank" className="group flex items-center gap-3 p-4 bg-[#25D366]/5 border border-[#25D366]/20 hover:border-[#25D366]/40 transition-all">
+             <span className="material-symbols-outlined text-[#25D366] text-xl">chat</span>
              <div>
-               <p className="text-[8px] font-black uppercase tracking-widest text-[#25D366]">WhatsApp Directo</p>
-               <p className="text-sm font-bold text-slate-900">+506 6006 0026</p>
+               <p className="text-[7px] font-black uppercase tracking-widest text-[#25D366]">WhatsApp Directo</p>
+               <p className="text-xs font-bold text-slate-900">+506 6006 0026</p>
              </div>
           </a>
         </div>
@@ -308,83 +308,85 @@ function BookingView({ step, onBooking, onReset }) {
   const calendarUrl = "https://calendar.app.google/zadeELEGddkDxJ829";
 
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between group overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32" />
+    <div className="p-6 md:p-10 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between group overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl -mr-24 -mt-24" />
       
-      <div className="container mx-auto px-[clamp(1.5rem,6vw,6rem)] relative z-10 flex flex-col h-full">
-        <div className="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary">
-          <span className="material-symbols-outlined text-3xl">event_available</span>
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="w-14 h-14 bg-primary/10 flex items-center justify-center text-primary">
+          <span className="material-symbols-outlined text-2xl">event_available</span>
         </div>
         
-        <AnimatePresence mode="wait">
-          {step === 'initial' ? (
-            <motion.div
-              key="initial"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              className="space-y-6"
-            >
-              <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
-                Agenda tu <br /> <span className="text-primary italic">Sesión Directa</span>
-              </h3>
-              <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-sm">
-                Sin intermediarios. Selecciona el espacio que mejor te funcione y hablemos de tu visión.
-              </p>
-              
-              <button
-                onClick={onBooking}
-                className="group w-full py-6 bg-slate-900 text-white font-display font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-4 hover:bg-primary transition-all shadow-xl shadow-slate-200 mt-4"
+        <div className="flex-1 flex flex-col justify-center">
+          <AnimatePresence mode="wait">
+            {step === 'initial' ? (
+              <motion.div
+                key="initial"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="space-y-5"
               >
-                Ver Disponibilidad
-                <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">calendar_month</span>
-              </button>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="redirected"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="space-y-6 text-center py-6"
-            >
-              <div className="w-14 h-14 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="material-symbols-outlined text-3xl animate-pulse">check_circle</span>
-              </div>
-              <h3 className="text-2xl font-display font-bold text-slate-900 uppercase tracking-tight">
-                ¡Calendario Abierto!
-              </h3>
-              <p className="text-sm text-slate-500 font-body leading-relaxed">
-                Hemos abierto el sistema en una <span className="font-bold text-primary">nueva ventana</span> para garantizar seguridad total en tu dispositivo.
-              </p>
-              <div className="pt-4 space-y-4">
-                <a 
-                  href={calendarUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block text-primary font-black uppercase tracking-widest text-[10px] hover:underline"
+                <h3 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+                  Agenda tu <br /> <span className="text-primary italic">Sesión Directa</span>
+                </h3>
+                <p className="text-xs md:text-sm text-slate-500 font-body leading-relaxed max-w-sm">
+                  Sin intermediarios. Selecciona el espacio que mejor te funcione y hablemos de tu visión.
+                </p>
+                
+                <button
+                  onClick={onBooking}
+                  className="group w-full py-4 bg-slate-900 text-white font-display font-bold uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:bg-primary transition-all shadow-xl shadow-slate-200 mt-2"
                 >
-                  Abrir de nuevo <span className="material-symbols-outlined text-sm align-middle">open_in_new</span>
-                </a>
-                <button 
-                  onClick={onReset}
-                  className="flex items-center gap-2 mx-auto text-slate-300 hover:text-slate-500 transition-colors text-[10px] font-black uppercase tracking-widest"
-                >
-                  <span className="material-symbols-outlined text-xs">arrow_back</span>
-                  Volver al inicio
+                  Ver Disponibilidad
+                  <span className="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">calendar_month</span>
                 </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="redirected"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="space-y-5 text-center py-4"
+              >
+                <div className="w-12 h-12 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="material-symbols-outlined text-2xl animate-pulse">check_circle</span>
+                </div>
+                <h3 className="text-xl font-display font-bold text-slate-900 uppercase tracking-tight">
+                  ¡Calendario Abierto!
+                </h3>
+                <p className="text-xs text-slate-500 font-body leading-relaxed">
+                  Hemos abierto el sistema en una <span className="font-bold text-primary">nueva ventana</span> para garantizar seguridad total.
+                </p>
+                <div className="pt-2 space-y-3">
+                  <a 
+                    href={calendarUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block text-primary font-black uppercase tracking-widest text-[9px] hover:underline"
+                  >
+                    Abrir de nuevo <span className="material-symbols-outlined text-xs align-middle">open_in_new</span>
+                  </a>
+                  <button 
+                    onClick={onReset}
+                    className="flex items-center gap-2 mx-auto text-slate-300 hover:text-slate-500 transition-colors text-[9px] font-black uppercase tracking-widest"
+                  >
+                    <span className="material-symbols-outlined text-[10px]">arrow_back</span>
+                    Volver al inicio
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-        <div className="mt-auto pt-8 flex items-center gap-6 opacity-30">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-xs text-primary">verified</span>
-            <span className="text-[8px] font-black uppercase tracking-widest">Google Sync</span>
+        <div className="mt-auto pt-6 flex items-center gap-4 opacity-30">
+          <div className="flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-[10px] text-primary">verified</span>
+            <span className="text-[7px] font-black uppercase tracking-widest">Google Sync</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-xs text-primary">lock</span>
-            <span className="text-[8px] font-black uppercase tracking-widest">Secure Link</span>
+          <div className="flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-[10px] text-primary">lock</span>
+            <span className="text-[7px] font-black uppercase tracking-widest">Secure Link</span>
           </div>
         </div>
       </div>
