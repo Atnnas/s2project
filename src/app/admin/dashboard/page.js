@@ -414,7 +414,7 @@ function DashboardContent() {
         )}
       </AnimatePresence>
 
-      <main className="flex flex-col max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12 w-full pb-8">
+      <main className="flex flex-col max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12 w-full pb-8 mt-[20vh]">
         {/* Spacer for fixed navbar */}
         <div className="shrink-0 h-[var(--navbar-height)]" />
 

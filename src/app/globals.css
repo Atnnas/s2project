@@ -70,6 +70,13 @@
   }
 
   /* Navbar y Logo */
+  /* Forzar que nada corte el logo */
+  header, 
+  header .relative.h-\[140px\],
+  header .max-w-\[1920px\] {
+    overflow: visible !important;
+  }
+
   header .relative.h-\[140px\] {
     height: 100px !important;
   }
@@ -80,18 +87,19 @@
     font-weight: 800;
   }
 
-  /* Ajuste preciso del contenedor del logo - Simplificado */
-  header div.absolute.h-\[400px\] {
-    height: 180px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    display: flex !important; /* Asegurar que sea visible */
+  /* Posicionamiento en la esquina superior izquierda con padding de seguridad - Ajustado 5% arriba */
+  #main-logo-container {
+    height: 400px !important;
+    top: 80px !important;
+    left: 40px !important;
+    transform: none !important;
+    display: flex !important;
+    z-index: 99999 !important;
+    overflow: visible !important;
   }
 
-  /* Asegurar que el Link y la Imagen dentro también se ajusten */
-  header div.absolute.h-\[400px\] a,
-  header div.absolute.h-\[400px\] img {
-    height: 180px !important;
+  #desktop-logo-img {
+    height: 400px !important;
     width: auto !important;
     display: block !important;
   }

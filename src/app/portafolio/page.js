@@ -61,7 +61,7 @@ export default function PortafolioPage() {
   return (
     <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-screen w-full">
       {/* Hero Header Standardized */}
-      <section className="relative w-full pt-[clamp(160px,18vh,220px)] pb-12 px-6 shrink-0 text-center">
+      <section className="relative w-full pt-[clamp(160px,28vh,350px)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
