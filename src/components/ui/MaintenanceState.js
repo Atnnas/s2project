@@ -34,7 +34,7 @@ export default function MaintenanceState({
           <span className="material-symbols-outlined text-5xl text-primary">{icon}</span>
         </motion.div>
 
-        <p className="text-primary text-xs font-black uppercase tracking-[0.5em] mb-6">S2 PROJECT • PRÓXIMAMENTE</p>
+        <p className="text-primary text-xs font-black uppercase tracking-[0.5em] mb-6">PRÓXIMAMENTE</p>
         
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-black uppercase tracking-tighter text-slate-900 mb-8 leading-none">
           {category} <br/>

@@ -104,16 +104,6 @@ export default function ProcesoPage() {
       {/* Hero Header Standardized */}
       <section className="relative w-full pt-[clamp(160px,23vh,300px)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-4 pt-2 mb-4"
-          >
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-            <span className="text-[10px] font-black uppercase tracking-[1em] text-primary">S2 PROJECT</span>
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-          </motion.div>
           <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block">
             Así <span className="text-primary italic">Trabajamos</span>
           </h1>

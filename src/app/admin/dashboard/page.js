@@ -184,7 +184,6 @@ function DashboardContent() {
   };
 
   const tabs = [
-    { id: 'projects-photography', label: 'Fotografía', icon: 'photo_camera', category: 'Fotografía', categories: ['Fotografía', 'Photography'] },
     { id: 'projects-reels', label: 'Reels', icon: 'movie_filter', category: 'Reels', categories: ['Reels', 'Reel'] },
     { id: 'projects-digital-arts', label: 'Artes Digitales', icon: 'polyline', category: 'Arte Digital', categories: ['Arte Digital', 'Digital Arts', 'Artes Digitales'] },
     { id: 'clients', label: 'Clientes', icon: 'business_center' },

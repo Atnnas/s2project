@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const tabs = [
-  { id: "fotografia", label: "Fotografía", icon: "photo_camera", category: "Fotografía", href: "/photography", desc: "Capturando la esencia de cada momento." },
   { id: "reels", label: "Reels", icon: "movie", category: "Reels", href: "/reels", desc: "Narrativa dinamica de alto impacto." },
   { id: "artes", label: "Artes Digitales", icon: "draw", category: "Arte Digital", href: "/digital-arts", desc: "Creatividad sin limites tecnicos." },
 ];
@@ -63,16 +62,6 @@ export default function PortafolioPage() {
       {/* Hero Header Standardized */}
       <section className="relative w-full pt-[clamp(160px,28vh,350px)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-4 pt-2 mb-4"
-          >
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-            <span className="text-[10px] font-black uppercase tracking-[1em] text-primary">S2 PROJECT</span>
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-          </motion.div>
         </div>
       </section>
 

@@ -30,16 +30,6 @@ export default function HeroSection() {
       <div className="container mx-auto px-[clamp(1.5rem,6vw,6rem)] relative z-10 text-center">
         <div className="max-w-5xl mx-auto space-y-1">
           {/* Tagline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-4 pt-2"
-          >
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-            <span className="text-[10px] font-black uppercase tracking-[1em] text-primary">S2 PROJECT</span>
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-          </motion.div>
 
           {/* Main Title - Ethereal & Powerful */}
           <motion.h1 

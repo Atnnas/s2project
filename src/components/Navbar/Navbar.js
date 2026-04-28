@@ -114,8 +114,8 @@ export default function Navbar() {
           >
             <div className="max-w-[1920px] mx-auto w-full flex items-center justify-between px-2 md:px-4 relative h-[140px]">
               
-              {/* Logo - Massive Authority Overlay (400px) as per user request for "100% bigger" */}
-              <div id="main-logo-container" className="hidden md:flex items-center justify-start absolute top-1/2 -translate-y-1/2 left-2 z-[100] h-[400px] pointer-events-none">
+              {/* Logo - Massive Authority Overlay (190px) as per user request for 5% smaller */}
+              <div id="main-logo-container" className="hidden md:flex items-center justify-start absolute top-1/2 -translate-y-1/2 left-2 z-[100] h-[190px] pointer-events-none">
                 <Link 
                   href="/" 
                   onClick={handleLogoClick}
@@ -123,7 +123,7 @@ export default function Navbar() {
                 >
                   <motion.img 
                     id="desktop-logo-img"
-                    src="/logo_top_bar.png"
+                    src="/logo-final.png"
                     alt="S2 PROJECT" 
                     initial={{ opacity: 0, x: -10, scale: 1 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -252,7 +252,7 @@ export default function Navbar() {
                   className="inline-block group"
                 >
                   <img 
-                    src="/logo_top_bar.png" 
+                    src="/logo-final.png" 
                     alt="S2 PROJECT" 
                     className="h-20 w-auto object-contain"
                   />

@@ -44,7 +44,7 @@ const secondaryServices = [
 const tabs = [
   { id: "01", title: "Gestión Integral", desc: "Todo lo que tu marca necesita, mes a mes.", icon: "layers" },
   { id: "02", title: "Identidad de Marca", desc: "Tu marca, desde cero o desde reinvencion.", icon: "architecture" },
-  { id: "03", title: "Real Estate", desc: "Fotografia, video y drone para proyectos de alto nivel.", icon: "domain" },
+  { id: "03", title: "Real Estate", desc: "Video y drone para proyectos de alto nivel.", icon: "domain" },
   { id: "04", title: "Contenido Corporativo", desc: "Video institucional y eventos.", icon: "business_center" }
 ];
 
@@ -93,16 +93,6 @@ export default function ServiciosPage() {
       {/* Hero Header Standardized */}
       <section className="relative w-full pt-[clamp(10rem,18vh,13.75rem)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-4 pt-2 mb-4"
-          >
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-            <span className="text-[10px] font-black uppercase tracking-[1em] text-primary">S2 PROJECT</span>
-            <span className="h-[1px] w-8 bg-primary/40"></span>
-          </motion.div>
           <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block">
             Servicios
           </h1>

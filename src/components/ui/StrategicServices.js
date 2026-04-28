@@ -13,7 +13,7 @@ const services = [
   },
   {
     title: "Producción Multi-Formato",
-    desc: "Videos, reels y fotografía con estándares de alta fidelidad y ejecución cinematográfica."
+    desc: "Videos y reels con estándares de alta fidelidad y ejecución cinematográfica."
   },
   {
     title: "Edición & Post-Producción",

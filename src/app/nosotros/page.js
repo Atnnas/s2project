@@ -20,16 +20,6 @@ export default function NosotrosPage() {
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[300px] bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
         
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-4 pt-2 mb-3"
-          >
-            <span className="h-[1px] w-6 bg-primary/40"></span>
-            <span className="text-[9px] font-black uppercase tracking-[1em] text-primary">S2 PROJECT</span>
-            <span className="h-[1px] w-6 bg-primary/40"></span>
-          </motion.div>
         </div>
       </section>
 
@@ -46,7 +36,7 @@ export default function NosotrosPage() {
           >
             <div className="relative w-full h-full"> 
               <Image
-                src="/foto_nosotros_final.png"
+                src="/foto_nosotros_transp.png"
                 alt="S2 Project Identidad de Marca"
                 fill
                 className="object-contain object-bottom pointer-events-none" 
