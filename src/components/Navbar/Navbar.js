@@ -114,8 +114,8 @@ export default function Navbar() {
           >
             <div className="max-w-[1920px] mx-auto w-full flex items-center justify-between px-2 md:px-4 relative h-[140px]">
               
-              {/* Logo - Massive Authority Overlay (110px) as per user request for 10% smaller */}
-              <div id="main-logo-container" className="hidden md:flex items-center justify-start absolute top-1/2 -translate-y-1/2 left-2 z-[100] h-[110px] pointer-events-none">
+              {/* Logo - Massive Authority Overlay (116px) as per user request for 5% larger */}
+              <div id="main-logo-container" className="hidden md:flex items-center justify-start absolute top-1/2 -translate-y-1/2 left-2 z-[100] h-[116px] pointer-events-none">
                 <Link 
                   href="/" 
                   onClick={handleLogoClick}

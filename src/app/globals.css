@@ -89,7 +89,7 @@
 
   /* Posicionamiento en la esquina superior izquierda con padding de seguridad - Ajustado 5% arriba */
   #main-logo-container {
-    height: 110px !important;
+    height: 116px !important;
     top: 70px !important;
     left: 40px !important;
     transform: none !important;
