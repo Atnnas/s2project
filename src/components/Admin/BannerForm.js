@@ -134,6 +134,15 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
               ))}
             </div>
           </div>
+
+          <div className="bg-amber-50 px-6 py-4 rounded-2xl border border-amber-100 min-h-[80px] flex flex-col justify-center">
+            <p className="text-[10px] text-amber-700 leading-relaxed">
+              <span className="font-bold block mb-1">💡 Recomendación</span>
+              {formData.type === 'hero' 
+                ? 'Usa fotos horizontales (1920x1080px). Ideal para impacto visual.' 
+                : 'Usa fotos horizontales (1200x800px). Ideal para balance.'}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -162,15 +171,6 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
                  <span className="ml-3 text-[10px] font-black uppercase tracking-widest text-slate-500">Activo</span>
                </label>
             </div>
-          </div>
-
-          <div className="bg-amber-50 px-6 py-4 rounded-2xl border border-amber-100 max-w-sm">
-            <p className="text-[10px] text-amber-700 leading-relaxed">
-              <span className="font-bold block mb-1">💡 Recomendación</span>
-              {formData.type === 'hero' 
-                ? 'Usa fotos horizontales (1920x1080px). Ideal para impacto visual.' 
-                : 'Usa fotos horizontales (1200x800px). Ideal para balance.'}
-            </p>
           </div>
         </div>
 
