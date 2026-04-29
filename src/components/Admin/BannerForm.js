@@ -48,15 +48,43 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
         </div>
 
         <div>
-          <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">URL de la Imagen</label>
-          <input
-            type="text"
-            required
-            value={formData.imageUrl}
-            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
-            placeholder="https://ejemplo.com/imagen.jpg"
-          />
+          <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Imagen del Banner</label>
+          <div className="flex flex-col gap-4">
+            {formData.imageUrl && (
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200">
+                <img src={formData.imageUrl} className="w-full h-full object-cover" alt="Preview" />
+                <button 
+                  type="button"
+                  onClick={() => setFormData({ ...formData, imageUrl: '' })}
+                  className="absolute top-4 right-4 w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+                >
+                  <span className="material-symbols-outlined text-lg">delete</span>
+                </button>
+              </div>
+            )}
+            
+            {!formData.imageUrl && (
+              <label className="w-full aspect-video rounded-2xl border-2 border-dashed border-slate-200 hover:border-primary/40 flex flex-col items-center justify-center cursor-pointer text-slate-400 group transition-all">
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setFormData({ ...formData, imageUrl: reader.result });
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }} 
+                  className="hidden" 
+                />
+                <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add_a_photo</span>
+                <span className="text-[10px] uppercase font-bold mt-2">Seleccionar imagen del equipo</span>
+              </label>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
