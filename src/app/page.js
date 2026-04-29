@@ -1,5 +1,5 @@
-import HeroSection from "@/components/ui/HeroSection";
-import HomeInteractiveBoard from "@/components/ui/HomeInteractiveBoard";
+import MainHeroCarousel from "@/components/ui/MainHeroCarousel";
+import HomeDynamicGrid from "@/components/ui/HomeDynamicGrid";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 
@@ -29,9 +29,9 @@ export const revalidate = 3600;
 
 export default async function Home() {
   return (
-    <main className="flex flex-col w-full bg-background-light">
-      <HeroSection />
-      <HomeInteractiveBoard />
+    <main className="flex flex-col w-full bg-white">
+      <MainHeroCarousel />
+      <HomeDynamicGrid />
     </main>
   );
 }
