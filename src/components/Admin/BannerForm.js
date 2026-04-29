@@ -193,5 +193,3 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
     </form>
   );
 }
-  );
-}
