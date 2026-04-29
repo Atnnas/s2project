@@ -418,7 +418,7 @@ function DashboardContent() {
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white w-full max-w-lg rounded-3xl p-10 shadow-2xl border border-primary/10"
+              className="bg-white w-full max-w-2xl rounded-3xl p-10 shadow-2xl border border-primary/10 max-h-[90vh] overflow-y-auto"
             >
               <h3 className="text-3xl font-display font-bold text-slate-900 mb-8">
                 {editingBanner ? 'Editar Banner' : 'Nuevo Banner'}
