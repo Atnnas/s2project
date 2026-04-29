@@ -21,7 +21,10 @@ export default function HomeDynamicGrid() {
     fetch('/api/home-banners')
       .then(res => res.json())
       .then(data => {
-        if (data.success) setBanners(data.data);
+        if (data.success) {
+          const gridBanners = data.data.filter(b => b.type === 'grid');
+          setBanners(gridBanners);
+        }
       });
 
     // Auto-rotate route carousel

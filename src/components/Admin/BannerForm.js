@@ -8,6 +8,7 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
     subtitle: '',
     imageUrl: '',
     active: true,
+    type: 'grid',
     order: 0
   });
 
@@ -45,6 +46,25 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
             className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all h-24"
             placeholder="Breve descripción del contenido"
           />
+        </div>
+        <div>
+          <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Ubicación del Banner</label>
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, type: 'hero' })}
+              className={`px-4 py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest border-2 transition-all ${formData.type === 'hero' ? 'bg-primary text-white border-primary shadow-lg' : 'bg-transparent text-slate-400 border-slate-100 hover:border-primary/20'}`}
+            >
+              Banner Superior (Hero)
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, type: 'grid' })}
+              className={`px-4 py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest border-2 transition-all ${formData.type === 'grid' ? 'bg-primary text-white border-primary shadow-lg' : 'bg-transparent text-slate-400 border-slate-100 hover:border-primary/20'}`}
+            >
+              Banner Inferior (Grid 2/3)
+            </button>
+          </div>
         </div>
 
         <div>

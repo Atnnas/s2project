@@ -3,42 +3,39 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const slides = [
-  {
-    id: 1,
-    title: "Estrategia de Legado",
-    subtitle: "No solo creamos contenido, construimos imperios digitales.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000",
-  },
-  {
-    id: 2,
-    title: "Producción de Élite",
-    subtitle: "Reels y Artes Digitales que capturan la esencia de tu marca.",
-    image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=2000",
-  },
-  {
-    id: 3,
-    title: "Impacto Real",
-    subtitle: "Resultados que se traducen en crecimiento y autoridad.",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=2000",
-  }
-];
-
 export default function MainHeroCarousel() {
   const [current, setCurrent] = useState(0);
+  const [banners, setBanners] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetch('/api/home-banners')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const heroBanners = data.data.filter(b => b.type === 'hero');
+          setBanners(heroBanners);
+        }
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (banners.length <= 1) return;
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
+      setCurrent((prev) => (prev + 1) % banners.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [banners.length]);
+
+  if (loading) return <div className="w-full h-[85vh] bg-slate-900 animate-pulse" />;
+  if (banners.length === 0) return null;
 
   return (
     <section className="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-slate-900">
       <AnimatePresence mode="wait">
         <motion.div
-          key={current}
+          key={banners[current]._id}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -54,7 +51,7 @@ export default function MainHeroCarousel() {
           >
             <div 
               className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${slides[current].image})` }}
+              style={{ backgroundImage: `url(${banners[current].imageUrl})` }}
             />
           </motion.div>
 
@@ -79,8 +76,8 @@ export default function MainHeroCarousel() {
                 transition={{ delay: 0.7, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[clamp(2.5rem,8vw,6rem)] font-display font-black uppercase text-white leading-[0.85] tracking-tighter mb-6"
               >
-                {slides[current].title.split(' ').map((word, i) => (
-                  <span key={i} className={i === slides[current].title.split(' ').length - 1 ? "text-primary italic block" : "block"}>
+                {banners[current].title.split(' ').map((word, i) => (
+                  <span key={i} className={i === banners[current].title.split(' ').length - 1 ? "text-primary italic block" : "block"}>
                     {word}
                   </span>
                 ))}
@@ -91,7 +88,7 @@ export default function MainHeroCarousel() {
                 transition={{ delay: 1.2, duration: 1 }}
                 className="text-lg md:text-xl text-slate-300 font-body max-w-xl leading-relaxed"
               >
-                {slides[current].subtitle}
+                {banners[current].subtitle}
               </motion.p>
             </div>
           </div>
@@ -100,7 +97,7 @@ export default function MainHeroCarousel() {
 
       {/* Progress Indicators */}
       <div className="absolute bottom-12 right-[clamp(1.5rem,6vw,6rem)] z-30 flex gap-4">
-        {slides.map((_, i) => (
+        {banners.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}

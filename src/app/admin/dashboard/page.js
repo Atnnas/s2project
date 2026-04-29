@@ -695,7 +695,12 @@ function DashboardContent() {
                               <td className="py-4 px-4">
                                 <div>
                                   <p className="font-bold text-slate-800">{banner.title}</p>
-                                  <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">Orden: {banner.order}</p>
+                                  <div className="flex gap-2 items-center mt-1">
+                                    <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">Orden: {banner.order}</p>
+                                    <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${banner.type === 'hero' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>
+                                      {banner.type === 'hero' ? 'Superior' : 'Inferior'}
+                                    </span>
+                                  </div>
                                 </div>
                               </td>
                               <td className="py-4 px-4">

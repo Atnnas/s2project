@@ -16,6 +16,11 @@ const HomeBannerSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  type: {
+    type: String,
+    enum: ['hero', 'grid'],
+    default: 'grid',
+  },
   order: {
     type: Number,
     default: 0,
