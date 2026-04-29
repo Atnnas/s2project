@@ -50,8 +50,11 @@ export default function MainHeroCarousel() {
             className="absolute inset-0 w-full h-full"
           >
             <div 
-              className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${banners[current].imageUrl})` }}
+              className="w-full h-full bg-cover"
+              style={{ 
+                backgroundImage: `url(${banners[current].imageUrl})`,
+                backgroundPosition: banners[current].focalPoint === 'top' ? 'center top' : banners[current].focalPoint === 'bottom' ? 'center bottom' : 'center center'
+              }}
             />
           </motion.div>
 

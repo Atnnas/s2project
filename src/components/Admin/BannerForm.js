@@ -9,6 +9,7 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
     imageUrl: '',
     active: true,
     type: 'grid',
+    focalPoint: 'center',
     order: 0
   });
 
@@ -105,6 +106,28 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
               </label>
             )}
           </div>
+        </div>
+
+        <div>
+          <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Punto de Enfoque (Ajuste de foto)</label>
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { id: 'top', label: 'Superior', icon: 'align_vertical_top' },
+              { id: 'center', label: 'Centro', icon: 'align_vertical_center' },
+              { id: 'bottom', label: 'Inferior', icon: 'align_vertical_bottom' },
+            ].map((point) => (
+              <button
+                key={point.id}
+                type="button"
+                onClick={() => setFormData({ ...formData, focalPoint: point.id })}
+                className={`flex flex-col items-center justify-center py-3 px-2 rounded-2xl border-2 transition-all ${formData.focalPoint === point.id ? 'bg-primary/10 border-primary text-primary' : 'bg-transparent border-slate-100 text-slate-400 hover:border-primary/20'}`}
+              >
+                <span className="material-symbols-outlined text-xl mb-1">{point.icon}</span>
+                <span className="text-[9px] font-bold uppercase tracking-tighter">{point.label}</span>
+              </button>
+            ))}
+          </div>
+          <p className="text-[9px] text-slate-400 mt-2 italic px-1">Define qué parte de la foto se mantendrá visible si es necesario recortar.</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">

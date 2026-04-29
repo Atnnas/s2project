@@ -68,8 +68,11 @@ export default function HomeDynamicGrid() {
                   className="w-full h-full"
                 >
                   <div 
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${banners[currentBanner].imageUrl})` }}
+                    className="w-full h-full bg-cover"
+                    style={{ 
+                      backgroundImage: `url(${banners[currentBanner].imageUrl})`,
+                      backgroundPosition: banners[currentBanner].focalPoint === 'top' ? 'center top' : banners[currentBanner].focalPoint === 'bottom' ? 'center bottom' : 'center center'
+                    }}
                   />
                 </motion.div>
                 

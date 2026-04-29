@@ -21,6 +21,11 @@ const HomeBannerSchema = new mongoose.Schema({
     enum: ['hero', 'grid'],
     default: 'grid',
   },
+  focalPoint: {
+    type: String,
+    enum: ['center', 'top', 'bottom'],
+    default: 'center',
+  },
   order: {
     type: Number,
     default: 0,
