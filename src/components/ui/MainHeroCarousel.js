@@ -44,8 +44,8 @@ export default function MainHeroCarousel() {
         >
           {/* Ken Burns Effect Image */}
           <motion.div
-            initial={{ scale: 1.1, x: -20 }}
-            animate={{ scale: 1, x: 0 }}
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
             transition={{ duration: 8, ease: "linear" }}
             className="absolute inset-0 w-full h-full"
           >

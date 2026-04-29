@@ -127,7 +127,14 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
               </button>
             ))}
           </div>
-          <p className="text-[9px] text-slate-400 mt-2 italic px-1">Define qué parte de la foto se mantendrá visible si es necesario recortar.</p>
+          <div className="mt-4 p-4 bg-amber-50 border border-amber-100 rounded-2xl">
+            <p className="text-[10px] text-amber-700 leading-relaxed">
+              <span className="font-black uppercase tracking-widest block mb-1">📐 Dimensiones Recomendadas</span>
+              {formData.type === 'hero' 
+                ? 'Para el Banner Superior (Hero), usa fotos de alta resolución en formato horizontal. Recomendado: 1920x1080 px o superior.' 
+                : 'Para el Banner Inferior (Grid), usa fotos claras de formato horizontal o cuadrado. Recomendado: 1200x800 px.'}
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
