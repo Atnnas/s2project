@@ -32,6 +32,10 @@
   --color-background-light: #f7f7f6;
   --color-background-dark: #1d2729;
   --color-accent: #9eb5b2;
+  --color-slate-700: #1d2729;
+  --color-slate-800: #1d2729;
+  --color-slate-900: #1d2729;
+  --color-slate-950: #1d2729;
   --font-display: var(--font-clash), sans-serif;
   --font-body: var(--font-roundo), sans-serif;
   --font-clash: var(--font-clash);
