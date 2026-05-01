@@ -9,9 +9,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary": "#3b512f",
+        "primary": "#396542",
         "background-light": "#f7f7f6",
-        "background-dark": "#181c16",
+        "background-dark": "#1d2729",
+        "accent": "#9eb5b2",
+        "slate": {
+          "900": "#1d2729",
+          "950": "#1d2729"
+        }
       },
       fontFamily: {
         "display": ["var(--font-clash)", "sans-serif"],

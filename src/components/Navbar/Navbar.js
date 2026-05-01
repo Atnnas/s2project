@@ -226,7 +226,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 z-[44] bg-black/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-[44] bg-[#1d2729]/60 backdrop-blur-sm md:hidden"
             />
             
             {/* Side Drawer */}

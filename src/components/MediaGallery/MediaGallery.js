@@ -205,7 +205,7 @@ function GalleryContent({ projects }) {
                     <span className="material-symbols-outlined text-slate-300">image</span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-center justify-center">
+                <div className="absolute inset-0 bg-[#1d2729]/20 group-hover:bg-[#1d2729]/40 transition-all flex items-center justify-center">
                   <div className="bg-white/20 backdrop-blur-md p-5 rounded-full border border-white/30 scale-90 group-hover:scale-100 transition-transform">
                     <span className="material-symbols-outlined text-white text-4xl">
                       {project.gallery?.some(m => m.type === 'video') ? 'play_arrow' : 'visibility'}
@@ -213,7 +213,7 @@ function GalleryContent({ projects }) {
                   </div>
                 </div>
                 {project.gallery?.length > 1 && (
-                  <div className="absolute top-4 left-4 px-2 py-1 bg-black/40 backdrop-blur-md rounded-lg border border-white/10 text-[10px] text-white font-bold">
+                  <div className="absolute top-4 left-4 px-2 py-1 bg-[#1d2729]/40 backdrop-blur-md rounded-lg border border-white/10 text-[10px] text-white font-bold">
                     {project.gallery.length} ASSETS
                   </div>
                 )}
@@ -236,7 +236,7 @@ function GalleryContent({ projects }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10"
+            className="fixed inset-0 z-[100] bg-[#1d2729]/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10">
             onClick={closeProject}
           >
             {/* Controls */}

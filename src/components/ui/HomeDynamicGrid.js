@@ -55,10 +55,10 @@ export default function HomeDynamicGrid() {
             {banners.length > 0 ? (
               <motion.div
                 key={banners[currentBanner]._id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
+                initial={{ opacity: 0, scale: 1.15, filter: 'blur(15px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 w-full h-full"
               >
                 <motion.div
@@ -77,7 +77,8 @@ export default function HomeDynamicGrid() {
                 </motion.div>
                 
                 {/* Overlay with Glassmorphism Text */}
-                <div className="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/20 transition-colors duration-500" />
+                {/* Solid Overlay */}
+                <div className="absolute inset-0 bg-[#1d2729]/40 group-hover:bg-[#1d2729]/30 transition-colors duration-500" />
                 <div className="absolute bottom-12 left-12 right-12 z-20">
                   <motion.div
                     initial={{ y: 20, opacity: 0 }}
@@ -102,8 +103,8 @@ export default function HomeDynamicGrid() {
           </AnimatePresence>
         </div>
 
-        {/* 1/3 Route Carousel Section */}
-        <div className="lg:col-span-1 bg-slate-900 overflow-hidden relative flex flex-col justify-center min-h-[400px]">
+        {/* 1/3 Route Carousel Section — Apple Dark Material */}
+        <div className="lg:col-span-1 bg-[#1d2729] overflow-hidden relative flex flex-col justify-center min-h-[400px]">
            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mt-16 -mr-16" />
            <div className="relative z-10 px-8">
               <span className="text-primary font-black uppercase tracking-[0.3em] text-[8px] mb-8 block">Explora el sitio</span>
@@ -111,9 +112,10 @@ export default function HomeDynamicGrid() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentRoute}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+                  transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
                   className="space-y-6"
                 >
                   <div className="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center text-primary mb-8">

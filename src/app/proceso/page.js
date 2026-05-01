@@ -102,31 +102,35 @@ export default function ProcesoPage() {
   return (
     <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-screen w-full">
       {/* Hero Header Standardized */}
-      <section className="relative w-full pt-[clamp(160px,23vh,300px)] pb-12 px-6 shrink-0 text-center">
+      <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block">
+          <span className="text-primary font-black uppercase tracking-[0.4em] text-[8px] mb-3 block">Metodología</span>
+          <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block">
             Así <span className="text-primary italic">Trabajamos</span>
           </h1>
+          <p className="mt-8 text-[10px] md:text-xs font-body uppercase tracking-[0.3em] text-accent max-w-lg mx-auto leading-relaxed">
+            Metodología de alto impacto diseñada para la excelencia visual y resultados medibles
+          </p>
         </div>
       </section>
 
-      {/* DASHBOARD GRID — Standardized Geometry from Home */}
-      <section className="w-full relative pb-20 bg-white flex-1 flex flex-col justify-center">
+      {/* DASHBOARD GRID — Expanded to fill horizontal space */}
+      <section className="w-full relative pb-12 bg-white flex-1 flex flex-col justify-center">
         <div 
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           
-          {/* Column 1: Interactive Menu (Sticky to avoid double scroll) */}
-          <div className="hidden lg:flex lg:col-span-3 space-y-2 z-20 flex-col h-fit sticky top-[160px]">
+          {/* Column 1: Interactive Menu (Expanded to 6 columns) */}
+          <div className="hidden lg:flex lg:col-span-6 space-y-2 z-20 flex-col h-fit sticky top-[160px]">
              {steps.map((step, index) => {
                const isActive = activeStep === index;
                return (
                  <button 
                    key={step.id} 
                    onClick={() => handleStepClick(index)}
-                   className={`text-left p-6 flex items-center gap-6 border-l-4 transition-all duration-300 group min-w-0 relative ${isActive ? 'bg-white shadow-2xl border-primary scale-[1.02] z-10' : 'bg-transparent border-transparent hover:bg-slate-100/50'}`}
+                   className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 relative rounded-[30px] ${isActive ? 'bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] scale-[1.03] z-10' : 'bg-transparent hover:bg-slate-50'}`}
                  >
                    <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
                      <span className="material-symbols-outlined text-xl">{step.icon}</span>
@@ -177,84 +181,78 @@ export default function ProcesoPage() {
              </button>
           </div>
 
-          {/* Column 2: Active Card Viewport (Integrated with page scroll) */}
-          <div className="lg:col-span-5 w-full">
+          {/* Column 2: Active Card Viewport (Expanded to 6 columns) */}
+          <div className="lg:col-span-6 w-full">
              <AnimatePresence mode="wait">
-               <motion.div
-                 key={activeStep}
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 exit={{ opacity: 0, y: -20 }}
-                 transition={{ duration: 0.4, ease: "easeOut" }}
-                 className="w-full h-full flex flex-col"
-               >
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+                  className="w-full h-full flex flex-col"
+                >
                  <ProcessCard step={steps[activeStep]} />
                </motion.div>
              </AnimatePresence>
           </div>
 
-          {/* Column 3: Results & CTA (Standardized) */}
-          <div className="lg:col-span-4 h-full relative z-20">
-            <div className="relative p-8 md:p-12 rounded-none bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(57,101,66,0.25)_0%,_transparent_75%)] pointer-events-none" />
-              
-              <div className="relative z-10 flex flex-col h-full space-y-8">
-                <div className="space-y-4">
-                  <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
-                    Nuestra Metodología
-                  </span>
-                  <h2 className="text-4xl xl:text-5xl font-display font-black uppercase tracking-tight leading-[0.9] text-white">
-                    Resultados <br />
-                    <span className="text-primary italic">Probados</span>
-                  </h2>
-                  <p className="text-sm text-slate-400 font-body leading-relaxed max-w-sm">
-                    Lo que logramos para nuestras marcas a traves de este proceso estrategico.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 flex-1 content-center">
-                  {metrics.slice(0, 4).map((metric, idx) => (
-                    <div key={idx} className="p-4 bg-white/5 border border-white/10 flex flex-col justify-between">
-                      <div className="text-2xl font-display font-black text-white">{metric.value}</div>
-                      <p className="text-[8px] font-black uppercase tracking-widest text-slate-400 mt-2 truncate">{metric.label}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-2 mt-auto">
-                  <div className="relative group block w-full">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-500 blur-sm opacity-0 group-hover:opacity-40 transition duration-700"></div>
-                    <Link
-                      href="https://api.whatsapp.com/send?phone=50660060026"
-                      target="_blank"
-                      className="relative flex items-center justify-center gap-3 bg-slate-950 border border-slate-800 text-white px-4 py-5 w-full rounded-none font-display font-bold uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)]"
-                    >
-                      <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
-                      <span className="relative z-10 flex-shrink-0 text-center">Inicia tu Proceso</span>
-                      <div className="relative z-10 w-6 h-6 bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-none hidden sm:flex">
-                        <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
-                          arrow_outward
-                        </span>
-                        <span className="material-symbols-outlined text-xs absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0">
-                          arrow_outward
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </section>
+
+      {/* Results Section (Standardized — Now below grid) */}
+      <section className="w-full pb-20 px-[clamp(1.5rem,6vw,6rem)]">
+        <div className="relative p-8 md:p-12 lg:p-16 bg-slate-900 text-white overflow-hidden shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-12 group">
+          <div className="absolute inset-0 bg-slate-900/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:40px_40px] pointer-events-none" />
+          
+          <div className="relative z-10 flex flex-col space-y-6 max-w-3xl">
+            <div className="flex items-center gap-4">
+              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+                Nuestra Metodología
+              </span>
+              <div className="h-[1px] w-12 bg-primary/30" />
+            </div>
+            
+            <h2 className="text-4xl xl:text-6xl font-display font-black uppercase tracking-tight leading-[0.85] text-white">
+              Resultados <br />
+              <span className="text-primary italic">Probados</span>
+            </h2>
+            
+            <p className="text-sm md:text-base text-slate-400 font-body leading-relaxed max-w-xl">
+              Lo que logramos para nuestras marcas a través de este proceso estratégico. Cada paso está diseñado para convertir visibilidad en crecimiento.
+            </p>
+          </div>
+
+          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 gap-6 w-full lg:w-auto">
+             {metrics.slice(0, 6).map((metric, idx) => (
+               <div key={idx} className="p-6 bg-white/5 border border-white/10 flex flex-col items-center text-center justify-center group-hover:bg-white/10 transition-colors duration-500 rounded-[20px] md:rounded-[30px]">
+                 <div className="text-xl md:text-2xl font-display font-black text-white">{metric.value}</div>
+                 <p className="text-[8px] font-black uppercase tracking-widest text-accent mt-2">{metric.label}</p>
+               </div>
+             ))}
+          </div>
+
+          <div className="relative z-10 w-full lg:w-auto">
+             <Link
+               href="https://api.whatsapp.com/send?phone=50660060026"
+               target="_blank"
+               className="relative flex items-center justify-center gap-4 bg-primary text-white px-10 py-6 w-full lg:w-auto rounded-none font-display font-bold uppercase tracking-[0.2em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:bg-slate-950"
+             >
+               <span className="relative z-10">Inicia tu Proceso</span>
+               <span className="material-symbols-outlined text-sm relative z-10">arrow_outward</span>
+             </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
 
 function ProcessCard({ step }) {
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between relative overflow-hidden">
+    <div className="p-10 md:p-16 rounded-[60px] bg-white border border-slate-50 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-700">
       <div className="absolute top-0 right-0 p-8 text-primary/5 font-display font-black text-[120px] pointer-events-none select-none">
         {step.id}
       </div>
@@ -262,12 +260,29 @@ function ProcessCard({ step }) {
         <div className="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary">
           <span className="material-symbols-outlined text-3xl">{step.icon}</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+        <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
           {step.title}
         </h3>
-        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-md">
+        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-2xl">
           {step.desc}
         </p>
+        
+        <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+           <div className="flex gap-4">
+              <span className="text-primary font-black opacity-30 font-display italic text-lg">01</span>
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">Eficiencia</p>
+                <p className="text-[10px] text-slate-400">Optimizado por S2</p>
+              </div>
+           </div>
+           <div className="flex gap-4">
+              <span className="text-primary font-black opacity-30 font-display italic text-lg">02</span>
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">Escalabilidad</p>
+                <p className="text-[10px] text-slate-400">Diseñado para crecer</p>
+              </div>
+           </div>
+        </div>
       </div>
       <div className="mt-auto pt-8 border-t border-slate-50 relative z-10">
         <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Metodología de Alto Impacto</span>

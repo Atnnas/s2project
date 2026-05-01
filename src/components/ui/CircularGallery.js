@@ -171,7 +171,7 @@ function MediaModal({ project, onClose }) {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10"
     >
-      <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#1d2729]/95 backdrop-blur-xl" onClick={onClose} />
       
       <motion.button
         initial={{ scale: 0 }}
@@ -186,10 +186,10 @@ function MediaModal({ project, onClose }) {
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        className="relative z-[205] w-full max-w-6xl h-full flex flex-col md:flex-row bg-[#0a0a0a] rounded-[40px] overflow-hidden border border-white/10 shadow-2xl"
+        className="relative z-[205] w-full max-w-6xl h-full flex flex-col md:flex-row bg-[#1d2729] rounded-[40px] overflow-hidden border border-white/10 shadow-2xl"
       >
         {/* Media Side */}
-        <div className="flex-[1.5] bg-black relative flex items-center justify-center group/media overflow-hidden">
+        <div className="flex-[1.5] bg-[#1d2729] relative flex items-center justify-center group/media overflow-hidden">
           {project.videoUrl ? (
             <iframe
               src={getEmbedUrl(project.videoUrl)}

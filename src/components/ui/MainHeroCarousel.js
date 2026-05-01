@@ -36,10 +36,10 @@ export default function MainHeroCarousel() {
       <AnimatePresence mode="wait">
         <motion.div
           key={banners[current]._id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          initial={{ opacity: 0, scale: 1.15, filter: 'blur(15px)' }}
+          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0 w-full h-full"
         >
           {/* Ken Burns Effect Image */}
@@ -59,8 +59,9 @@ export default function MainHeroCarousel() {
           </motion.div>
 
           {/* Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/40 to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10" />
+          {/* Solid Overlays (No gradients as requested) */}
+          <div className="absolute inset-0 bg-[#1d2729]/60 z-10" />
+          <div className="absolute inset-0 bg-[#1d2729]/20 z-10" />
 
           {/* Content */}
           <div className="absolute inset-0 z-20 flex flex-col justify-center px-[clamp(1.5rem,6vw,6rem)]">
@@ -74,9 +75,9 @@ export default function MainHeroCarousel() {
                 S2 Project • Boutique Agency
               </motion.span>
               <motion.h1
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                transition={{ delay: 0.8, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[clamp(2.5rem,8vw,6rem)] font-display font-black uppercase text-white leading-[0.85] tracking-tighter mb-6"
               >
                 {banners[current].title.split(' ').map((word, i) => (

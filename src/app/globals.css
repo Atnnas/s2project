@@ -28,9 +28,10 @@
 }
 
 @theme {
-  --color-primary: #3b512f;
+  --color-primary: #396542;
   --color-background-light: #f7f7f6;
-  --color-background-dark: #181c16;
+  --color-background-dark: #1d2729;
+  --color-accent: #9eb5b2;
   --font-display: var(--font-clash), sans-serif;
   --font-body: var(--font-roundo), sans-serif;
   --font-clash: var(--font-clash);
