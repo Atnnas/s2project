@@ -153,7 +153,7 @@ function GalleryModal({ project, onClose }) {
 
               <div className="space-y-6">
                 <p className="text-slate-400 font-body text-lg leading-relaxed italic">
-                  "{project.description || "Una visión artística ejecutada con precisión técnica para elevar el estándar de la marca."}"
+                  &quot;{project.description || "Una visión artística ejecutada con precisión técnica para elevar el estándar de la marca."}&quot;
                 </p>
               </div>
 

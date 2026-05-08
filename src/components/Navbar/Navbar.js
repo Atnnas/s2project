@@ -17,6 +17,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -49,11 +50,7 @@ export default function Navbar() {
     };
   }, []);
 
-  const dropdownItems = [
-    { href: '/photography', label: 'Fotografía' },
-    { href: '/reels', label: 'Reels' },
-    { href: '/digital-arts', label: 'Artes Digitales' },
-  ];
+
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -80,7 +77,7 @@ export default function Navbar() {
     return true;
   };
 
-  const handleLogoClick = (e) => {
+  const handleLogoClick = () => {
     if (pathname === '/') {
       // If already on home, just scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -114,8 +111,8 @@ export default function Navbar() {
           >
             <div className="max-w-[1920px] mx-auto w-full flex items-center justify-between px-2 md:px-4 relative h-[140px]">
               
-              {/* Logo - Massive Authority Overlay (116px) as per user request for 5% larger */}
-              <div id="main-logo-container" className="hidden md:flex items-center justify-start absolute top-1/2 -translate-y-1/2 left-2 z-[100] h-[116px] pointer-events-none">
+              {/* Logo - Massive Authority Overlay (104px) - Reduced by 10% */}
+              <div id="main-logo-container" className="hidden md:flex items-center justify-start absolute top-1/2 -translate-y-1/2 left-2 z-[100] h-[104px] pointer-events-none">
                 <Link 
                   href="/" 
                   onClick={handleLogoClick}
@@ -220,141 +217,93 @@ export default function Navbar() {
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            {/* Backdrop */}
+            {/* Fullscreen WOW Mobile Menu */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 z-[44] bg-[#1d2729]/60 backdrop-blur-sm md:hidden"
-            />
-            
-            {/* Side Drawer */}
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-0 top-0 bottom-0 z-[45] w-[85%] max-w-[400px] md:hidden bg-primary flex flex-col items-start justify-start p-10 text-white overflow-y-auto pt-24"
+              initial={{ y: '-100%', borderBottomLeftRadius: '100%', borderBottomRightRadius: '100%' }}
+              animate={{ y: 0, borderBottomLeftRadius: '0%', borderBottomRightRadius: '0%' }}
+              exit={{ y: '-100%', borderBottomLeftRadius: '100%', borderBottomRightRadius: '100%' }}
+              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+              className="fixed inset-0 z-[45] w-full h-[100dvh] md:hidden bg-[#050505]/95 backdrop-blur-3xl flex flex-col items-center justify-start overflow-y-auto pt-24 pb-12"
             >
-              {/* Brand Logo Home Link */}
-              <motion.div
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                className="mb-8"
-              >
-                <Link 
-                  href="/" 
-                  onClick={(e) => {
-                    handleLogoClick(e);
-                    setIsMenuOpen(false);
-                  }}
-                  className="inline-block group"
-                >
-                  <img 
-                    src="/logo-final.png" 
-                    alt="S2 PROJECT" 
-                    className="h-20 w-auto object-contain"
-                  />
-                  <div className="h-0.5 w-full bg-white/20 mt-2 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                </Link>
-              </motion.div>
-
-              {/* User Profile Section */}
+              {/* Dynamic Noise Background */}
+              <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none mix-blend-overlay"></div>
+              
+              {/* Top Navigation Row (Login) */}
               <motion.div 
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                className="flex flex-col items-start mb-10 w-full"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="absolute top-8 right-8 z-10"
               >
                 {session?.user ? (
-                  <>
-                    <div className="relative group">
+                   <div className="flex items-center gap-4">
+                      <div className="text-right hidden sm:block">
+                        <p className="text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-1">Perfil</p>
+                        <p className="text-xs font-bold uppercase tracking-widest text-white">{session.user.name}</p>
+                      </div>
                       <img 
                         src={session.user.image || `https://ui-avatars.com/api/?name=${session.user.name || 'User'}&background=3b512f&color=fff`} 
                         alt="Profile" 
-                        className="w-16 h-16 rounded-full border-2 border-white/20 object-cover shadow-2xl transition-transform"
+                        className="w-10 h-10 rounded-full border border-white/20 object-cover"
                       />
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-primary rounded-full" />
-                    </div>
-                    <div className="text-left mt-4">
-                      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-1">Perfil</p>
-                      <p className="text-xl font-bold uppercase tracking-widest text-white mb-2">{session.user.name}</p>
                       <button 
                         onClick={() => signOut()}
-                        className="text-[9px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border border-white/10 hover:bg-white hover:text-primary transition-all duration-300"
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white hover:text-black transition-colors"
                       >
-                        Cerrar Sesión
+                         <span className="material-symbols-outlined text-sm">logout</span>
                       </button>
-                    </div>
-                  </>
+                   </div>
                 ) : (
-                  <div className="flex items-center gap-4 py-4">
-                     <span className="material-symbols-outlined text-4xl opacity-20">account_circle</span>
-                     <Link href="/admin/login" onClick={() => setIsMenuOpen(false)} className="text-[10px] font-black uppercase tracking-[0.4em] hover:text-white/100 transition-colors p-2">Iniciar Sesión</Link>
-                  </div>
+                  <Link href="/admin/login" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 group">
+                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50 group-hover:text-white transition-colors">Login</span>
+                     <span className="material-symbols-outlined text-sm text-white/50 group-hover:text-white transition-colors">lock</span>
+                  </Link>
                 )}
               </motion.div>
 
-              <Separator />
-
-              {/* Menu Links */}
-              <nav className="w-full flex flex-col gap-1 py-8">
+              {/* Massive Menu Links */}
+              <nav className="w-full flex flex-col items-center gap-4 sm:gap-6 z-10 px-6 mt-10">
                 <MobileNavLink href="/" active={pathname === "/"} onClick={() => setIsMenuOpen(false)} index={0}>
                   Inicio
                 </MobileNavLink>
                 <MobileNavLink href="/servicios" active={pathname === "/servicios"} onClick={() => setIsMenuOpen(false)} index={1}>
                   Servicios
                 </MobileNavLink>
-                
-                <div className="my-2" />
-                
                 <MobileNavLink href="/portafolio" active={pathname === "/portafolio"} onClick={handleRestrictedAccess} index={2}>
                   Portafolio
                 </MobileNavLink>
-
-                <div className="my-8 w-12 h-[1px] bg-white/10" />
-
-                <MobileNavLink href="/nosotros" active={pathname === "/nosotros"} onClick={() => setIsMenuOpen(false)} index={4}>
+                <MobileNavLink href="/nosotros" active={pathname === "/nosotros"} onClick={() => setIsMenuOpen(false)} index={3}>
                   Nosotros
                 </MobileNavLink>
-                
-                <MobileNavLink href="/proceso" active={pathname === "/proceso"} onClick={() => setIsMenuOpen(false)} index={5}>
+                <MobileNavLink href="/proceso" active={pathname === "/proceso"} onClick={() => setIsMenuOpen(false)} index={4}>
                   Proceso
                 </MobileNavLink>
-
-                <div className="my-4" />
-
-                <MobileNavLink href="/admin/dashboard" active={pathname === "/admin/dashboard"} onClick={() => setIsMenuOpen(false)} index={6}>
-                  Administración
+                <MobileNavLink href="/admin/dashboard" active={pathname === "/admin/dashboard"} onClick={() => setIsMenuOpen(false)} index={5}>
+                  Admin
                 </MobileNavLink>
               </nav>
 
-              <Separator />
-
+              {/* Bottom Info / Socials */}
               <motion.div 
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.7 }}
-                className="mt-auto flex flex-col items-start gap-6 pb-10"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+                className="relative mt-12 w-full px-10 flex flex-col items-center gap-6 z-10"
               >
-                <div className="flex gap-4">
-                  <a href="https://www.facebook.com/profile.php?id=61584523825008" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
-                    <i className="fa-brands fa-facebook-f text-lg"></i>
+                <div className="w-[1px] h-12 bg-white/20" />
+                <div className="flex gap-6">
+                  <a href="https://www.facebook.com/profile.php?id=61584523825008" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/50 hover:text-primary hover:border-primary transition-all duration-300">
+                    <i className="fa-brands fa-facebook-f text-sm"></i>
                   </a>
-                  <a href="https://www.instagram.com/s2project_marketing/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
-                    <i className="fa-brands fa-instagram text-lg"></i>
+                  <a href="https://www.instagram.com/s2project_marketing/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/50 hover:text-primary hover:border-primary transition-all duration-300">
+                    <i className="fa-brands fa-instagram text-sm"></i>
                   </a>
-                  <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
-                    <i className="fa-brands fa-whatsapp text-lg"></i>
-                  </a>
-                  <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white text-white hover:text-primary transition-all duration-300">
-                    <i className="fa-regular fa-envelope text-lg"></i>
+                  <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/50 hover:text-primary hover:border-primary transition-all duration-300">
+                    <i className="fa-brands fa-whatsapp text-sm"></i>
                   </a>
                 </div>
-                <div className="text-left opacity-30">
-                  <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">S2 PROJECT © 2026</p>
-                  <p className="text-[8px] uppercase tracking-widest font-bold">Inicia tu historia aquí</p>
+                <div className="text-center opacity-40">
+                  <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1 text-white">S2 PROJECT © 2026</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -483,26 +432,34 @@ function Separator({ className = "" }) {
 
 function MobileNavLink({ href, children, onClick, active, index }) {
   return (
-    <motion.div
-      initial={{ x: -20, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ delay: 0.2 + (index * 0.05) }}
-    >
-      <Link 
-        href={href} 
-        onClick={onClick}
-        className={`group flex items-center justify-start py-5 transition-all relative text-white font-bold text-xl uppercase tracking-widest ${active ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
+    <div className="overflow-hidden w-full flex justify-center">
+      <motion.div
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "100%", opacity: 0 }}
+        transition={{ 
+          duration: 0.8, 
+          delay: 0.2 + (index * 0.1), 
+          ease: [0.33, 1, 0.68, 1] 
+        }}
       >
-        <span className="relative">
-          {children}
-          {active && (
-            <motion.div 
-              layoutId="mobile-active-dot"
-              className="absolute -left-6 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full"
-            />
-          )}
-        </span>
-      </Link>
-    </motion.div>
+        <Link 
+          href={href} 
+          onClick={onClick}
+          className={`group flex items-center justify-center py-2 transition-colors duration-500 relative font-display font-black text-[2.5rem] sm:text-5xl md:text-7xl uppercase tracking-tighter leading-none ${active ? 'text-primary' : 'text-white/40 hover:text-white'}`}
+        >
+          <motion.span 
+             whileHover={{ scale: 1.05, x: 10 }}
+             transition={{ type: "spring", stiffness: 300, damping: 20 }}
+             className="relative inline-block"
+          >
+            {children}
+            {active && (
+              <span className="absolute -right-4 top-0 text-primary text-xl font-bold">•</span>
+            )}
+          </motion.span>
+        </Link>
+      </motion.div>
+    </div>
   );
 }

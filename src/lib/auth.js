@@ -10,7 +10,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       try {
         await connectDB();
         const existingUser = await User.findOne({ email: user.email });

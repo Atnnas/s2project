@@ -109,7 +109,7 @@ export default function ProcesoPage() {
             Así <span className="text-primary italic">Trabajamos</span>
           </h1>
           <p className="mt-8 text-[10px] md:text-xs font-body uppercase tracking-[0.3em] text-accent max-w-lg mx-auto leading-relaxed">
-            Metodología de alto impacto diseñada para la excelencia visual y resultados medibles
+            Un proceso claro de 5 pasos para llevar tu marca de donde esta a donde quiere llegar
           </p>
         </div>
       </section>

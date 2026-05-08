@@ -7,7 +7,7 @@ import Link from "next/link";
 const mainService = {
   title: "Gestión Integral",
   subtitle: "Pensado para marcas que quieren crecer",
-  description: "Nuestra arquitectura de gestión mensual no es solo contenido; es una infraestructura diseñada para dominar el mercado digital. Fusionamos narrativa de alta fidelidad con ingeniería de datos para asegurar resultados medibles.",
+  description: "Gestionamos tu presencia digital de forma integral: estrategia, produccion de contenido, diseno y seguimiento mensual. Todo con un objetivo claro: que tu marca crezca con consistencia y profesionalismo.",
   features: [
     "Estrategia y direccion de marca",
     "Planificacion mensual de contenido",
@@ -100,7 +100,7 @@ export default function ServiciosPage() {
             <div className="inline-flex items-center gap-3 bg-slate-50 border border-slate-100 px-4 py-2 rounded-full mb-3">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               <p className="text-[10px] font-display font-black uppercase tracking-[0.2em] text-slate-900">
-                Planes desde <span className="text-primary text-xs">499</span>/mes
+                Planes desde <span className="text-primary text-xs">500</span>/mes
               </p>
             </div>
             <p className="text-[9px] md:text-[10px] font-body uppercase tracking-[0.3em] text-accent max-w-lg leading-tight">
@@ -271,15 +271,26 @@ function MainServiceView({ data }) {
         </p>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 pt-4">
-           {data.features.map((feature, i) => (
-             <div key={i} className="flex gap-4">
-                <span className="text-primary font-black opacity-30 font-display">0{i+1}</span>
-                <div>
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-900">{feature}</h4>
-                  <p className="text-[10px] text-slate-500">Optimizado para resultados</p>
-                </div>
-             </div>
-           ))}
+           {data.features.map((feature, i) => {
+             const subtitles = [
+               "Objetivos claros desde el dia uno",
+               "Calendario, guiones y direccion creativa",
+               "Grabacion y edicion profesional",
+               "Pauta estrategica con seguimiento",
+               "Analisis mensual y mejora continua"
+             ];
+             return (
+               <div key={i} className="flex gap-4">
+                  <span className="text-primary font-black opacity-30 font-display">0{i+1}</span>
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-900">{feature}</h4>
+                    <p className="text-[10px] text-slate-500">
+                      {subtitles[i] || "Optimizado para resultados"}
+                    </p>
+                  </div>
+               </div>
+             );
+           })}
         </div>
       </div>
     </div>

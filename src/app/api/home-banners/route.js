@@ -7,7 +7,11 @@ import { authOptions } from "@/lib/auth";
 export async function GET(req) {
   try {
     await connectToDatabase();
-    const banners = await HomeBanner.find({ active: true }).sort({ order: 1, createdAt: -1 });
+    const { searchParams } = new URL(req.url);
+    const all = searchParams.get('all') === 'true';
+
+    const query = all ? {} : { active: true };
+    const banners = await HomeBanner.find(query).sort({ order: 1, createdAt: -1 });
     return NextResponse.json({ success: true, data: banners });
   } catch (error) {
     console.error('API Error:', error);

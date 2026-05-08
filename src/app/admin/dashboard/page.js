@@ -69,7 +69,7 @@ function DashboardContent() {
   const fetchBanners = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/home-banners');
+      const res = await fetch('/api/home-banners?all=true');
       const data = await res.json();
       if (data.success) setBanners(data.data);
     } catch (e) { console.error(e); }

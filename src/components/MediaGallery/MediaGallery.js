@@ -236,7 +236,7 @@ function GalleryContent({ projects }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-[#1d2729]/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10">
+            className="fixed inset-0 z-[100] bg-[#1d2729]/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10"
             onClick={closeProject}
           >
             {/* Controls */}

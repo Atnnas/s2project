@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable react-hooks/set-state-in-effect, react-hooks/exhaustive-deps */
 
 import { useState, useEffect, useRef, useCallback, useId } from "react";
 import gsap from "gsap";
@@ -100,7 +101,7 @@ export function CircularGallery({ items = [], category = "FOTOGRAFÍA" }) {
         
         {/* Layer 2: Overlay Navigation (Clean dots) */}
         <div className="absolute left-0 top-0 z-[100] h-full w-full pointer-events-none">
-          <Tabs items={items} onSelect={onClick} activeIndex={opened} galleryPrefix={galleryPrefix} bottomMargin={dotMargin} />
+          <Tabs items={items} onSelect={onClick} activeIndex={opened} bottomMargin={dotMargin} />
         </div>
 
         {/* Info Overlay */}
@@ -333,7 +334,7 @@ function GalleryItem({ url, open, inPlace, id, onInPlace, total, galleryPrefix, 
   );
 }
 
-function Tabs({ items, onSelect, activeIndex, galleryPrefix, bottomMargin = 50 }) {
+function Tabs({ items, onSelect, activeIndex, bottomMargin = 50 }) {
   const gap = 14;
   const circleRadius = 5;
   const width = 400;
