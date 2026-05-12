@@ -59,10 +59,36 @@
 }
 
 /* ============================================================
-   AJUSTES EXCLUSIVOS PARA PANTALLAS GIGANTES (>1600px)
-   Esto NO afecta a la laptop (1536px)
-   Desplegado: 2026-04-24 12:41
+   ESTILOS DE AUTORIDAD — LOGO MASIVO Y NAVBAR PREMIUM
+   Standardized for all screens with responsive adjustments
    ============================================================ */
+
+/* Forzar que nada corte el logo */
+header, 
+header .relative,
+header .max-w-\[1920px\] {
+  overflow: visible !important;
+}
+
+/* Logo - Massive Authority Overlay */
+#main-logo-container {
+  height: clamp(80px, 12vh, 120px) !important;
+  top: clamp(40px, 6vh, 70px) !important;
+  left: clamp(1rem, 4vw, 3rem) !important;
+  transform: none !important;
+  display: flex !important;
+  z-index: 99999 !important;
+  overflow: visible !important;
+  padding: 10px !important;
+}
+
+#desktop-logo-img {
+  height: 100% !important;
+  width: auto !important;
+  display: block !important;
+  object-fit: contain !important;
+}
+
 @media (min-width: 1600px) {
   html {
     font-size: 85% !important;
@@ -73,42 +99,11 @@
     margin: 0 auto;
     box-shadow: 0 0 100px rgba(0,0,0,0.1);
   }
-
-  /* Navbar y Logo */
-  /* Forzar que nada corte el logo */
-  header, 
-  header .relative.h-\[140px\],
-  header .max-w-\[1920px\] {
-    overflow: visible !important;
-  }
-
-  header .relative.h-\[140px\] {
-    height: 100px !important;
-  }
   
   header nav span, 
   header .hidden.md\:flex.items-center span {
     font-size: 1.5rem !important;
     font-weight: 800;
-  }
-
-  /* Posicionamiento en la esquina superior izquierda con padding de seguridad - Ajustado 5% arriba */
-  #main-logo-container {
-    height: 116px !important;
-    top: 70px !important;
-    left: 40px !important;
-    transform: none !important;
-    display: flex !important;
-    z-index: 99999 !important;
-    overflow: visible !important;
-    padding: 10px !important;
-  }
-
-  #desktop-logo-img {
-    height: 100% !important;
-    width: auto !important;
-    display: block !important;
-    object-contain: contain !important;
   }
 }
 

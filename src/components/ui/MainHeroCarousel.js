@@ -32,7 +32,7 @@ export default function MainHeroCarousel() {
   if (banners.length === 0) return null;
 
   return (
-    <section className="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-slate-900">
+    <section data-navbar-theme="dark" className="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-slate-900">
       <AnimatePresence mode="wait">
         <motion.div
           key={banners[current]._id}
