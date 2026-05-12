@@ -69,7 +69,7 @@ export const metadata = {
     default: "S2 Project | Agencia de Marketing Digital y Producción Audiovisual",
     template: "%s | S2 Project"
   },
-  description: "S2 Project. Agencia boutique de marketing digital. Estrategia, contenido, produccion y Meta Ads para marcas que quieren crecer.",
+  description: "S2 Project. Agencia boutique de marketing digital. Estrategia, contenido, producción y Meta Ads para marcas que quieren crecer.",
   keywords: ["marketing digital", "producción de reels", "fotografía comercial", "artes digitales", "branding", "estrategia de contenido", "S2 Project"],
   authors: [{ name: "S2 Project Team" }],
   creator: "S2 Project",
@@ -85,7 +85,7 @@ export const metadata = {
     url: "https://s2-project.com",
     siteName: "S2 Project",
     title: "S2 Project | Marketing Digital y Producción Audiovisual de Élite",
-    description: "S2 Project. Agencia boutique de marketing digital. Estrategia, contenido, produccion y Meta Ads para marcas que quieren crecer.",
+    description: "S2 Project. Agencia boutique de marketing digital. Estrategia, contenido, producción y Meta Ads para marcas que quieren crecer.",
     images: [
       {
         url: "/og-main.jpg",

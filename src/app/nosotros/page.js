@@ -61,7 +61,7 @@ export default function NosotrosPage() {
               <span className="text-primary italic">Nueva Generación</span>
             </h1>
             <p className="text-[clamp(0.9rem,1vw,1.15rem)] [@media(min-width:1600px)]:text-[clamp(1.2rem,1.5vw,1.8rem)] text-accent font-body leading-relaxed max-w-xl">
-              Somos una <strong>agencia boutique</strong> con un enfoque fresco del marketing digital. Trabajamos con marcas que buscan mas que publicaciones: buscan presencia, diferenciacion y crecimiento real.
+              Somos una <strong>agencia boutique</strong> con un enfoque fresco del marketing digital. Trabajamos con marcas que buscan más que publicaciones: buscan presencia, diferenciación y crecimiento real.
             </p>
           </motion.div>
 
@@ -73,9 +73,9 @@ export default function NosotrosPage() {
             className="space-y-5"
           >
             <div className="space-y-2">
-              <h3 className="text-[clamp(1.4rem,2vw,1.9rem)] [@media(min-width:1600px)]:text-[clamp(2rem,2.5vw,3rem)] font-display font-black uppercase tracking-tight text-slate-800">Como Trabajamos</h3>
+              <h3 className="text-[clamp(1.4rem,2vw,1.9rem)] [@media(min-width:1600px)]:text-[clamp(2rem,2.5vw,3rem)] font-display font-black uppercase tracking-tight text-slate-800">Cómo Trabajamos</h3>
               <p className="text-accent font-body leading-relaxed text-[clamp(0.85rem,1vw,1.05rem)] [@media(min-width:1600px)]:text-[clamp(1.1rem,1.2vw,1.4rem)] max-w-xl">
-                Cada cuenta recibe estrategia, produccion y seguimiento. No publicamos por publicar: cada pieza tiene un proposito dentro del crecimiento de tu marca.
+                Cada cuenta recibe estrategia, producción y seguimiento. No publicamos por publicar: cada pieza tiene un propósito dentro del crecimiento de tu marca.
               </p>
             </div>
             

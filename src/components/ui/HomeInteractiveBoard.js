@@ -26,12 +26,12 @@ const tabs = [
 ];
 
 const servicesList = [
-  { title: "Estrategia", desc: "Direccion clara con proposito." },
-  { title: "Planificacion", desc: "Cada publicacion pensada." },
-  { title: "Produccion", desc: "Video, foto, reels." },
-  { title: "Edicion", desc: "Ritmo, estilo, detalle." },
-  { title: "Meta Ads", desc: "Campanas que convierten." },
-  { title: "Analisis", desc: "Datos que informan decisiones." }
+  { title: "Estrategia", desc: "Dirección clara con propósito." },
+  { title: "Planificación", desc: "Cada publicación pensada." },
+  { title: "Producción", desc: "Video, foto, reels." },
+  { title: "Edición", desc: "Ritmo, estilo, detalle." },
+  { title: "Campañas", desc: "Campañas que convierten." },
+  { title: "Análisis", desc: "Datos que informan decisiones." }
 ];
 
 export default function HomeInteractiveBoard() {
@@ -188,7 +188,7 @@ export default function HomeInteractiveBoard() {
                   Resultados
                 </h2>
                 <p className="text-sm text-slate-400 font-body leading-relaxed max-w-sm">
-                  Las marcas que trabajan con nosotros crecen. Asi de simple.
+                  Las marcas que trabajan con nosotros crecen. Así de simple.
                 </p>
               </div>
 
@@ -280,7 +280,7 @@ function ContactView() {
           <span className="text-primary italic">Hablemos</span>
         </h3>
         <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-md pb-4">
-          Trabajamos con marcas en Costa Rica, Panama y toda Latinoamerica.
+          Trabajamos con marcas en Costa Rica, Panamá y toda Latinoamérica.
         </p>
         
         <div className="space-y-4 flex-1">

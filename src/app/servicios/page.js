@@ -7,12 +7,12 @@ import Link from "next/link";
 const mainService = {
   title: "Gestión Integral",
   subtitle: "Pensado para marcas que quieren crecer",
-  description: "Gestionamos tu presencia digital de forma integral: estrategia, produccion de contenido, diseno y seguimiento mensual. Todo con un objetivo claro: que tu marca crezca con consistencia y profesionalismo.",
+  description: "Gestionamos tu presencia digital de forma integral: estrategia, producción de contenido, diseño y seguimiento mensual. Todo con un objetivo claro: que tu marca crezca con consistencia y profesionalismo.",
   features: [
-    "Estrategia y direccion de marca",
-    "Planificacion mensual de contenido",
-    "Produccion de video, foto y reels",
-    "Campanas de Meta Ads",
+    "Estrategia y dirección de marca",
+    "Planificación mensual de contenido",
+    "Producción de video, foto y reels",
+    "Campañas de Meta Ads",
     "Análisis y ajustes continuos"
   ]
 };
@@ -23,21 +23,23 @@ const secondaryServices = [
     title: "Identidad de Marca",
     subtitle: "Brand Kit con Proposito Estrategico",
     description: "Disenamos la identidad visual de tu marca: logo, colores, tipografia y guia de uso. Todo lo que necesitas para proyectar presencia desde el primer dia.",
-    features: ["Diseno de logotipo", "Paleta de colores", "Sistema tipografico", "Manual de marca", "Assets para redes sociales"]
+    subtitle: "Brand Kit con Propósito Estratégico",
+    description: "Diseñamos la identidad visual de tu marca: logo, colores, tipografía y guía de uso. Todo lo que necesitas para proyectar presencia desde el primer día.",
+    features: ["Diseño de logotipo", "Paleta de colores", "Sistema tipográfico", "Manual de marca", "Assets para redes sociales"]
   },
   {
     id: "real-estate",
     title: "Real Estate",
-    subtitle: "La propiedad merece verse asi",
-    description: "Produccion audiovisual de alto nivel para proyectos inmobiliarios. Cinematografia, drone y fotografia que transforman propiedades en experiencias.",
+    subtitle: "La propiedad merece verse así",
+    description: "Producción audiovisual de alto nivel para proyectos inmobiliarios. Cinematografía, drone y fotografía que transforman propiedades en experiencias.",
     features: ["Cinematografía Inmobiliaria", "Fotografía Aérea con Dron", "Recorridos Visuales Fluidos", "Edición Dinámica Musical", "Optimizados para Meta Ads"]
   },
   {
     id: "corporate",
     title: "Contenido Corporativo",
     subtitle: "Para empresas que comunican con estilo",
-    description: "Video institucional, entrevistas, casos de exito y cobertura de eventos. Producciones pensadas para empresas que entienden el valor de comunicar bien.",
-    features: ["Video institucional", "Entrevistas y testimonios", "Casos de exito", "Cobertura de eventos", "Comunicacion interna y ejecutiva"]
+    description: "Video institucional, entrevistas, casos de éxito y cobertura de eventos. Producciones pensadas para empresas que entienden el valor de comunicar bien.",
+    features: ["Video institucional", "Entrevistas y testimonios", "Casos de éxito", "Cobertura de eventos", "Comunicación interna y ejecutiva"]
   }
 ];
 
