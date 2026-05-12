@@ -55,18 +55,6 @@ export default function HomeCTA() {
 
       </div>
       
-      {/* Subtext separator - Elegant Detail */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
-        className="mt-10 flex items-center gap-4 opacity-20"
-      >
-        <div className="w-12 h-[1px] bg-slate-900" />
-        <span className="text-[8px] font-black uppercase tracking-[0.5em] text-slate-900">S2 Project • Legacy</span>
-        <div className="w-12 h-[1px] bg-slate-900" />
-      </motion.div>
     </section>
   );
 }
