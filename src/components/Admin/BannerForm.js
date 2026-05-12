@@ -15,7 +15,10 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      const timer = setTimeout(() => {
+        setFormData(initialData);
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [initialData]);
 

@@ -15,7 +15,10 @@ const eslintConfig = defineConfig([
     "tmp/**",
     "team_manager.js",
     "team_manager.py",
-    "seed.js"
+    "seed.js",
+    "get_lint.js",
+    "lint*.json",
+    "lint_output.txt"
   ]),
 ]);
 

@@ -17,9 +17,12 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+  // Sync mounted state to avoid hydration mismatch, wrapped in timeout to avoid cascading renders
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {

@@ -29,8 +29,11 @@ function GalleryContent({ projects }) {
     if (projectId) {
       const project = projects.find(p => p._id === projectId || p._id.toString() === projectId);
       if (project) {
-        setSelectedProject(project);
-        setActiveIndex(0);
+        const timer = setTimeout(() => {
+          setSelectedProject(project);
+          setActiveIndex(0);
+        }, 0);
+        return () => clearTimeout(timer);
       }
     }
   }, [searchParams, projects]);

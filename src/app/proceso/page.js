@@ -56,7 +56,9 @@ export default function ProcesoPage() {
     if (isPaused) return;
     
     // Reset progress when step changes
-    setProgress(0);
+    const resetTimer = setTimeout(() => {
+      setProgress(0);
+    }, 0);
     
     const duration = 5000;
     const interval = 50; 
@@ -71,6 +73,7 @@ export default function ProcesoPage() {
     }, duration);
 
     return () => {
+      clearTimeout(resetTimer);
       clearInterval(progressInterval);
       clearInterval(stepInterval);
     };

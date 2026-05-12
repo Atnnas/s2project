@@ -80,20 +80,26 @@ function DashboardContent() {
     // Sync with query param if it changes
     const tabParam = searchParams.get('tab');
     if (tabParam && tabParam !== activeTab) {
-      setActiveTab(tabParam);
+      const timer = setTimeout(() => {
+        setActiveTab(tabParam);
+      }, 0);
+      return () => clearTimeout(timer);
     }
-  }, [searchParams]);
+  }, [searchParams, activeTab]);
 
   useEffect(() => {
-    if (activeTab.startsWith('projects-')) {
-      fetchProjects();
-    } else if (activeTab === 'users') {
-      fetchUsers();
-    } else if (activeTab === 'clients') {
-      fetchClients();
-    } else if (activeTab === 'home-banners') {
-      fetchBanners();
-    }
+    const timer = setTimeout(() => {
+      if (activeTab.startsWith('projects-')) {
+        fetchProjects();
+      } else if (activeTab === 'users') {
+        fetchUsers();
+      } else if (activeTab === 'clients') {
+        fetchClients();
+      } else if (activeTab === 'home-banners') {
+        fetchBanners();
+      }
+    }, 0);
+    return () => clearTimeout(timer);
   }, [activeTab]);
 
   const initiateDelete = (item, type) => {
@@ -258,7 +264,7 @@ function DashboardContent() {
               </div>
               <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">¿Confirmar eliminación?</h3>
               <p className="text-slate-500 mb-8 leading-relaxed">
-                Estás a punto de borrar <span className="font-bold text-slate-900">"{itemToDelete?.title || itemToDelete?.name || itemToDelete?.email}"</span>. Esta acción no se puede deshacer.
+                Estás a punto de borrar <span className="font-bold text-slate-900">&quot;{itemToDelete?.title || itemToDelete?.name || itemToDelete?.email}&quot;</span>. Esta acción no se puede deshacer.
               </p>
               <div className="flex gap-3">
                 <button 
