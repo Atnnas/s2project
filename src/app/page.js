@@ -32,8 +32,8 @@ export default async function Home() {
   return (
     <main className="flex flex-col w-full bg-white">
       <MainHeroCarousel />
-      <HomeDynamicGrid />
       <HomeCTA />
+      <HomeDynamicGrid />
     </main>
   );
 }
