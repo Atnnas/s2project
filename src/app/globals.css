@@ -89,21 +89,30 @@ header .max-w-\[1920px\] {
   object-fit: contain !important;
 }
 
+/* ============================================================
+   OPTIMIZACIÓN PARA PANTALLAS GRANDES Y ULTRA-WIDE
+   Garantiza que en monitores >17" el sitio se vea expansivo y equilibrado
+   ============================================================ */
 @media (min-width: 1600px) {
   html {
-    font-size: 85% !important;
+    font-size: 100% !important; /* Mantener legibilidad total */
   }
 
   body {
-    max-width: 1920px !important;
+    max-width: none !important; /* Liberar el sitio para que sea expansivo */
+    margin: 0;
+    box-shadow: none;
+  }
+
+  header .max-w-\[1920px\] {
+    max-width: 2560px !important; /* Soporte para Ultra-Wide */
     margin: 0 auto;
-    box-shadow: 0 0 100px rgba(0,0,0,0.1);
   }
   
   header nav span, 
   header .hidden.md\:flex.items-center span {
-    font-size: 1.5rem !important;
-    font-weight: 800;
+    font-size: 1.25rem !important;
+    font-weight: 700;
   }
 }
 
