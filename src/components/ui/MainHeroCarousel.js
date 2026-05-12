@@ -42,24 +42,27 @@ export default function MainHeroCarousel() {
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0 w-full h-full"
         >
-          {/* Ken Burns Reveal Effect */}
-          <motion.div
-            initial={{ scale: 1.3 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 10, ease: [0.33, 1, 0.68, 1] }}
-            style={{ 
-              originY: banners[current].focalPoint === 'top' ? 0 : banners[current].focalPoint === 'bottom' ? 1 : 0.5 
-            }}
-            className="absolute inset-0 w-full h-full"
-          >
-            <div 
-              className="w-full h-full bg-cover"
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-900">
+            {/* Background Blur layer */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              transition={{ duration: 2 }}
+              className="absolute inset-0 w-full h-full bg-cover bg-center blur-3xl scale-110"
+              style={{ backgroundImage: `url(${banners[current].imageUrl})` }}
+            />
+            
+            {/* Foreground Main Image - Complete Reveal */}
+            <motion.div
+              initial={{ scale: 1.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 10, ease: [0.33, 1, 0.68, 1] }}
+              className="relative w-full h-full bg-contain bg-no-repeat bg-center"
               style={{ 
                 backgroundImage: `url(${banners[current].imageUrl})`,
-                backgroundPosition: banners[current].focalPoint === 'top' ? 'center top' : banners[current].focalPoint === 'bottom' ? 'center bottom' : 'center center'
               }}
             />
-          </motion.div>
+          </div>
 
           {/* Overlays */}
           {/* Solid Overlays (No gradients as requested) */}
