@@ -1,5 +1,6 @@
 import MainHeroCarousel from "@/components/ui/MainHeroCarousel";
 import HomeDynamicGrid from "@/components/ui/HomeDynamicGrid";
+import HomeCTA from "@/components/ui/HomeCTA";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 
@@ -32,6 +33,7 @@ export default async function Home() {
     <main className="flex flex-col w-full bg-white">
       <MainHeroCarousel />
       <HomeDynamicGrid />
+      <HomeCTA />
     </main>
   );
 }
