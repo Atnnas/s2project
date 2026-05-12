@@ -82,7 +82,14 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
             <div className="flex flex-col gap-4">
               {formData.imageUrl ? (
                 <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200 group">
-                  <img src={formData.imageUrl} className="w-full h-full object-cover" alt="Preview" />
+                  <img 
+                    src={formData.imageUrl} 
+                    className="w-full h-full object-cover" 
+                    style={{ 
+                      objectPosition: formData.focalPoint === 'top' ? 'center top' : formData.focalPoint === 'bottom' ? 'center bottom' : 'center center' 
+                    }}
+                    alt="Preview" 
+                  />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <button 
                       type="button"

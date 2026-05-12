@@ -42,11 +42,14 @@ export default function MainHeroCarousel() {
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0 w-full h-full"
         >
-          {/* Ken Burns Effect Image */}
+          {/* Ken Burns Reveal Effect */}
           <motion.div
-            initial={{ scale: 1.1 }}
+            initial={{ scale: 1.3 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 8, ease: "linear" }}
+            transition={{ duration: 10, ease: [0.33, 1, 0.68, 1] }}
+            style={{ 
+              originY: banners[current].focalPoint === 'top' ? 0 : banners[current].focalPoint === 'bottom' ? 1 : 0.5 
+            }}
             className="absolute inset-0 w-full h-full"
           >
             <div 

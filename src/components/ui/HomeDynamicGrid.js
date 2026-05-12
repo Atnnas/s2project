@@ -62,9 +62,12 @@ export default function HomeDynamicGrid() {
                 className="absolute inset-0 w-full h-full"
               >
                 <motion.div
-                  initial={{ scale: 1.1 }}
+                  initial={{ scale: 1.3 }}
                   animate={{ scale: 1 }}
-                  transition={{ duration: 10, ease: "linear" }}
+                  transition={{ duration: 10, ease: [0.33, 1, 0.68, 1] }}
+                  style={{ 
+                    originY: banners[currentBanner].focalPoint === 'top' ? 0 : banners[currentBanner].focalPoint === 'bottom' ? 1 : 0.5 
+                  }}
                   className="w-full h-full"
                 >
                   <div 
