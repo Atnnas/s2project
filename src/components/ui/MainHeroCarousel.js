@@ -29,7 +29,7 @@ export default function MainHeroCarousel() {
   }, [banners.length]);
 
   if (loading) return <div className="w-full h-[85vh] bg-slate-900 animate-pulse" />;
-  if (banners.length === 0) return null;
+  if (banners.length === 0) return <div className="w-full h-[140px] md:h-[180px] bg-white" />;
 
   return (
     <section data-navbar-theme="dark" className="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-slate-900">
