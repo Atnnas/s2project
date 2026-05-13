@@ -35,7 +35,7 @@ export default function PortafolioPage() {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 md:mb-10 text-center relative z-10 px-6"
       >
-        <span className="text-primary font-black uppercase tracking-[0.4em] text-[8px] mb-3 block">Portafolio</span>
+
         <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85]">
           Nuestro <br className="md:hidden" /> <span className="text-primary italic">Trabajo</span>
         </h1>
@@ -91,7 +91,7 @@ export default function PortafolioPage() {
               <div className="pt-3">
                 <Link 
                   href={cat.href}
-                  className="inline-flex items-center gap-3 bg-slate-900 text-white px-8 py-4 rounded-full font-display font-black uppercase tracking-[0.2em] text-[9px] transition-all duration-500 hover:bg-primary hover:scale-105 active:scale-95 shadow-lg group/btn overflow-hidden relative"
+                  className="inline-flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-full font-display font-black uppercase tracking-[0.2em] text-[9px] transition-all duration-500 hover:bg-primary/90 hover:scale-105 active:scale-95 shadow-lg shadow-primary/20 group/btn overflow-hidden relative"
                 >
                   <span className="relative z-10">Ver Trabajo</span>
                   <span className="material-symbols-outlined text-xs relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1">arrow_forward</span>

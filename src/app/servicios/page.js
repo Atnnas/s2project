@@ -21,8 +21,6 @@ const secondaryServices = [
   {
     id: "branding",
     title: "Identidad de Marca",
-    subtitle: "Brand Kit con Proposito Estrategico",
-    description: "Disenamos la identidad visual de tu marca: logo, colores, tipografia y guia de uso. Todo lo que necesitas para proyectar presencia desde el primer dia.",
     subtitle: "Brand Kit con Propósito Estratégico",
     description: "Diseñamos la identidad visual de tu marca: logo, colores, tipografía y guía de uso. Todo lo que necesitas para proyectar presencia desde el primer día.",
     features: ["Diseño de logotipo", "Paleta de colores", "Sistema tipográfico", "Manual de marca", "Assets para redes sociales"]
@@ -45,7 +43,7 @@ const secondaryServices = [
 
 const tabs = [
   { id: "01", title: "Gestión Integral", desc: "Todo lo que tu marca necesita, mes a mes.", icon: "layers" },
-  { id: "02", title: "Identidad de Marca", desc: "Tu marca, desde cero o desde reinvencion.", icon: "architecture" },
+  { id: "02", title: "Identidad de Marca", desc: "Tu marca, desde cero o desde reinvención.", icon: "architecture" },
   { id: "03", title: "Real Estate", desc: "Video y drone para proyectos de alto nivel.", icon: "domain" },
   { id: "04", title: "Contenido Corporativo", desc: "Video institucional y eventos.", icon: "business_center" }
 ];
@@ -53,7 +51,21 @@ const tabs = [
 export default function ServiciosPage() {
   const [activeTab, setActiveTab] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [pricingTag, setPricingTag] = useState("Planes desde $500/mes");
   const interactionTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/site-settings?key=pricing_tag');
+        const data = await res.json();
+        if (data.success && data.data) {
+          setPricingTag(data.data.value);
+        }
+      } catch (e) { console.error(e); }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     if (isPaused) return;
@@ -94,15 +106,15 @@ export default function ServiciosPage() {
     <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-screen w-full">
       <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
-          <span className="text-primary font-black uppercase tracking-[0.4em] text-[8px] mb-3 block">Servicios</span>
-          <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block">
+
+          <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.95] relative inline-block">
             Servicios
           </h1>
           <div className="mt-6 flex flex-col items-center">
             <div className="inline-flex items-center gap-3 bg-slate-50 border border-slate-100 px-4 py-2 rounded-full mb-3">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               <p className="text-[10px] font-display font-black uppercase tracking-[0.2em] text-slate-900">
-                Planes desde <span className="text-primary text-xs">500</span>/mes
+                {pricingTag}
               </p>
             </div>
             <p className="text-[9px] md:text-[10px] font-body uppercase tracking-[0.3em] text-accent max-w-lg leading-tight">
@@ -113,7 +125,7 @@ export default function ServiciosPage() {
       </section>
 
       {/* DASHBOARD GRID — Apple Material Design */}
-      <section className="w-full relative pb-24 bg-white flex-1 flex flex-col justify-center">
+      <section className="w-full relative pb-24 bg-white flex-1 flex flex-col justify-start pt-12">
         <div 
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
           onMouseEnter={() => setIsPaused(true)}
@@ -200,56 +212,44 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      {/* Conversion Panel (Standardized - Now below tabs) */}
+      {/* Conversion Panel - Unified with Home style */}
       <section className="w-full pb-20 px-[clamp(1.5rem,6vw,6rem)]">
-        <div className="relative p-8 md:p-12 lg:p-16 bg-slate-900 text-white overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-12 group">
-          <div className="absolute inset-0 bg-slate-900/50 pointer-events-none" />
-          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:40px_40px] pointer-events-none" />
+        <div className="relative p-10 md:p-14 lg:p-20 bg-accent-pastel/20 border border-pastel rounded-[3rem] overflow-hidden shadow-2xl shadow-accent-pastel/10 flex flex-col lg:flex-row items-center justify-between gap-12 group transition-all duration-700 hover:shadow-accent-pastel/20">
           
-          <div className="relative z-10 flex flex-col space-y-6 max-w-4xl">
+          <div className="relative z-10 flex flex-col space-y-8 max-w-4xl">
             <div className="flex items-center gap-4">
-              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-white px-5 py-2 rounded-full border border-pastel shadow-sm">
                 Consulta Exclusiva
               </span>
-              <div className="h-[1px] w-12 bg-accent/30" />
             </div>
             
-            <h2 className="text-4xl xl:text-6xl font-display font-black uppercase tracking-tight leading-[0.85] text-white">
-              Diagnostico <br />
-              <span className="text-primary italic">Sin Costo</span>
+            <h2 className="text-primary-dark">
+              Diagnóstico <br />
+              <span className="text-primary italic text-6xl xl:text-8xl">Sin Costo</span>
             </h2>
             
-            <p className="text-sm md:text-base text-accent font-body leading-relaxed max-w-3xl">
-              Analizamos tu marca y te compartimos una lectura estrategica clara. Sin compromiso, con el mismo criterio con el que trabajamos cada cuenta.
+            <p className="text-lg md:text-xl text-primary-dark opacity-70 font-body leading-relaxed max-w-3xl">
+              Analizamos tu marca y te compartimos una lectura estratégica clara. Sin compromiso, con el mismo criterio con el que trabajamos cada cuenta.
             </p>
           </div>
 
-          <div className="relative z-10 flex flex-col sm:flex-row items-stretch md:items-center gap-6 shrink-0 w-full md:w-auto">
-             <div className="p-8 bg-white/5 border border-white/10 flex flex-col items-center text-center justify-center group-hover:bg-white/10 transition-colors duration-500">
-               <span className="material-symbols-outlined text-primary mb-3 text-4xl">insights</span>
-               <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Estrategia</p>
-               <p className="text-[12px] font-bold text-white uppercase tracking-tight">Diagnostico visual</p>
+          <div className="relative z-10 flex flex-col sm:flex-row items-stretch lg:items-center gap-8 shrink-0 w-full lg:w-auto">
+             <div className="p-10 bg-white border border-pastel rounded-[2.5rem] flex flex-col items-center text-center justify-center shadow-sm">
+               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+                 <span className="material-symbols-outlined text-4xl">insights</span>
+               </div>
+               <p className="text-[10px] font-black uppercase tracking-widest text-primary-dark/50 mb-1">Estrategia</p>
+               <p className="text-sm font-bold text-primary-dark uppercase tracking-tight">Diagnóstico visual</p>
              </div>
              
-             <div className="relative group/btn flex-1 sm:flex-none">
-                <div className="absolute -inset-1 bg-primary/20 blur-sm opacity-0 group-hover/btn:opacity-40 transition duration-700"></div>
-                <Link
-                  href="https://api.whatsapp.com/send?phone=50660060026"
-                  target="_blank"
-                  className="relative flex items-center justify-center gap-4 bg-slate-950 border border-slate-800 text-white px-10 py-6 w-full rounded-none font-display font-bold uppercase tracking-[0.2em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)]"
-                >
-                  <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
-                  <span className="relative z-10">Quiero Trabajar con S2</span>
-                  <div className="relative z-10 w-6 h-6 bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover/btn:translate-x-[150%] group-hover/btn:-translate-y-[150%]">
-                      arrow_outward
-                    </span>
-                    <span className="material-symbols-outlined text-xs absolute -translate-x-[150%] translate-y-[150%] transition-transform duration-500 group-hover/btn:translate-x-0 group-hover/btn:translate-y-0">
-                      arrow_outward
-                    </span>
-                  </div>
-                </Link>
-             </div>
+             <Link
+               href="https://api.whatsapp.com/send?phone=50660060026"
+               target="_blank"
+               className="relative flex items-center justify-center gap-4 bg-primary text-white px-12 py-8 w-full lg:w-auto rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 active:scale-95 shadow-xl shadow-primary/20 hover:bg-primary/90"
+             >
+               <span className="relative z-10">Quiero Trabajar con S2</span>
+               <span className="material-symbols-outlined text-sm relative z-10">arrow_outward</span>
+             </Link>
           </div>
         </div>
       </section>
@@ -260,26 +260,26 @@ export default function ServiciosPage() {
 
 function MainServiceView({ data }) {
   return (
-    <div className="p-10 md:p-16 rounded-[60px] bg-white border border-slate-50 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] w-full h-full flex flex-col justify-between transition-all duration-700">
+    <div className="p-10 md:p-16 rounded-[3rem] bg-cream border border-pastel shadow-[0_40px_80px_-20px_rgba(202,222,221,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
       <div className="space-y-6 flex-1">
-        <div className="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
           <span className="material-symbols-outlined text-3xl">layers</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
           {data.title}
         </h3>
-        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-2xl">
+        <p className="text-sm md:text-base text-primary-dark opacity-80 font-body leading-relaxed max-w-2xl">
           {data.description}
         </p>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 pt-4">
            {data.features.map((feature, i) => {
              const subtitles = [
-               "Objetivos claros desde el dia uno",
-               "Calendario, guiones y direccion creativa",
-               "Grabacion y edicion profesional",
-               "Pauta estrategica con seguimiento",
-               "Analisis mensual y mejora continua"
+               "Objetivos claros desde el día uno",
+               "Calendario, guiones y dirección creativa",
+               "Grabación y edición profesional",
+               "Pauta estratégica con seguimiento",
+               "Análisis mensual y mejora continua"
              ];
              return (
                <div key={i} className="flex gap-4">
@@ -301,23 +301,23 @@ function MainServiceView({ data }) {
 
 function SecondaryServiceView({ data, icon }) {
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
+    <div className="p-10 md:p-16 rounded-[3rem] bg-cream border border-pastel shadow-[0_40px_80px_-20px_rgba(202,222,221,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
       <div className="space-y-6 flex-1">
-        <div className="w-16 h-16 bg-slate-900 flex items-center justify-center text-white">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
           <span className="material-symbols-outlined text-3xl">{icon}</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
           {data.title}
         </h3>
-        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-2xl pb-4">
+        <p className="text-sm md:text-base text-primary-dark opacity-80 font-body leading-relaxed max-w-2xl pb-4">
           {data.description}
         </p>
         
-        <div className="space-y-4 flex-1 border-t border-slate-100 pt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 pt-4 border-t border-pastel/50 pt-8">
            {data.features.map((feature, i) => (
              <div key={i} className="flex items-center gap-4">
-                <div className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-xs font-bold text-slate-700 tracking-tight">{feature}</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-primary-dark">{feature}</span>
              </div>
            ))}
         </div>

@@ -235,6 +235,7 @@ function DashboardContent() {
     { id: 'home-banners', label: 'Inicio', icon: 'home_app_logo' },
     { id: 'clients', label: 'Clientes', icon: 'business_center' },
     { id: 'users', label: 'Usuarios', icon: 'group' },
+    { id: 'settings', label: 'Configuración', icon: 'settings' },
     { id: 'stats', label: 'Métricas', icon: 'analytics' },
   ];
 
@@ -660,7 +661,7 @@ function DashboardContent() {
                     <div className="flex items-center justify-between mb-8">
                       <h2 className="text-2xl font-display font-bold flex items-center gap-3">
                         <span className="material-symbols-outlined text-primary">home_app_logo</span>
-                        Banners de Inicio (Sección 2/3)
+                        Banners de Inicio
                       </h2>
                       <button 
                         onClick={() => {
@@ -701,12 +702,7 @@ function DashboardContent() {
                               <td className="py-4 px-4">
                                 <div>
                                   <p className="font-bold text-slate-800">{banner.title}</p>
-                                  <div className="flex gap-2 items-center mt-1">
                                     <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">Orden: {banner.order}</p>
-                                    <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${banner.type === 'hero' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>
-                                      {banner.type === 'hero' ? 'Superior' : 'Inferior'}
-                                    </span>
-                                  </div>
                                 </div>
                               </td>
                               <td className="py-4 px-4">
@@ -911,6 +907,16 @@ function DashboardContent() {
                   </section>
                 </motion.div>
               )}
+              {activeTab === 'settings' && (
+                <motion.div
+                  key="settings"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                >
+                  <SettingsView />
+                </motion.div>
+              )}
               {activeTab === 'stats' && (
                 <motion.div
                   key="stats"
@@ -928,6 +934,85 @@ function DashboardContent() {
         </div>
       </main>
     </>
+  );
+}
+
+function SettingsView() {
+  const [settings, setSettings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [status, setStatus] = useState({ type: '', message: '' });
+
+  const fetchSettings = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/site-settings');
+      const data = await res.json();
+      if (data.success) setSettings(data.data);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const handleUpdate = async (key, value) => {
+    setSaving(true);
+    setStatus({ type: '', message: '' });
+    try {
+      const res = await fetch('/api/site-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key, value })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus({ type: 'success', message: '¡Guardado correctamente! ✨' });
+        fetchSettings();
+      } else {
+        setStatus({ type: 'error', message: data.error });
+      }
+    } catch (e) {
+      setStatus({ type: 'error', message: 'Error de conexión' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) return <p className="text-slate-400 py-20 text-center">Cargando configuración...</p>;
+
+  return (
+    <section className="bg-white p-8 rounded-3xl border border-primary/10">
+      <h2 className="text-2xl font-display font-bold flex items-center gap-3 mb-8">
+        <span className="material-symbols-outlined text-primary">settings</span>
+        Configuración Global
+      </h2>
+
+      <div className="space-y-8 max-w-2xl">
+        {settings.map((s) => (
+          <div key={s.key} className="space-y-3">
+            <label className="text-xs font-black uppercase tracking-widest text-slate-400 block px-1">
+              {s.description || s.key}
+            </label>
+            <div className="flex gap-4">
+              <input 
+                type="text" 
+                defaultValue={s.value}
+                onBlur={(e) => handleUpdate(s.key, e.target.value)}
+                className="flex-1 px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {status.message && (
+        <p className={`mt-6 text-sm font-bold ${status.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+          {status.message}
+        </p>
+      )}
+    </section>
   );
 }
 

@@ -1,145 +1,139 @@
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Symbols+Outlined');
-/* Deployment: 2026-04-24 12:32 — Monitor Adjustments Standardized */
 @import "tailwindcss";
 
-@layer base {
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
-  /* Forzar la carga y visualización de iconos */
-  .material-symbols-outlined,
-  [class*="material-symbols"] {
-    font-family: 'Material Symbols Outlined' !important;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'liga';
-  }
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @theme {
+  /* Colores Exclusivos S2 */
   --color-primary: #396542;
-  --color-background-light: #f7f7f6;
-  --color-background-dark: #1d2729;
-  --color-accent: #9eb5b2;
-  --color-slate-700: #1d2729;
-  --color-slate-800: #1d2729;
+  --color-primary-dark: #1d2729;
+  --color-accent-light: #9eb5b2;
+  --color-accent-pastel: #cadedd;
+  --color-cream: #fdf9e1;
+  --color-background: #ffffff;
+  
   --color-slate-900: #1d2729;
-  --color-slate-950: #1d2729;
-  --font-display: var(--font-clash), sans-serif;
-  --font-body: var(--font-roundo), sans-serif;
-  --font-clash: var(--font-clash);
-  --font-roundo: var(--font-roundo);
+  --color-slate-950: #000000;
+
+  --font-display: 'ClashGrotesk', sans-serif;
+  --font-body: var(--font-body), sans-serif;
+  --font-sans: var(--font-body), sans-serif;
+  --font-clash: 'ClashGrotesk';
 }
 
 :root {
   --navbar-height: 8.75rem;
-  /* 140px / 16 */
 }
-
-@custom-variant dark (&.dark);
 
 @layer base {
   html {
+    /* Responsividad Apple de alta fidelidad */
     font-size: 16px;
-    color-scheme: light only;
     -webkit-text-size-adjust: 100%;
-  }
-
-}
-
-/* ============================================================
-   ESTILOS DE AUTORIDAD — LOGO MASIVO Y NAVBAR PREMIUM
-   Standardized for all screens with responsive adjustments
-   ============================================================ */
-
-/* Forzar que nada corte el logo */
-header, 
-header .relative,
-header .max-w-\[1920px\] {
-  overflow: visible !important;
-}
-
-/* Logo - Massive Authority Overlay */
-#main-logo-container {
-  height: clamp(80px, 12vh, 120px) !important;
-  top: clamp(40px, 6vh, 70px) !important;
-  left: clamp(1rem, 4vw, 3rem) !important;
-  transform: none !important;
-  display: flex !important;
-  z-index: 99999 !important;
-  overflow: visible !important;
-  padding: 10px !important;
-}
-
-#desktop-logo-img {
-  height: 100% !important;
-  width: auto !important;
-  display: block !important;
-  object-fit: contain !important;
-}
-
-/* ============================================================
-   OPTIMIZACIÓN PARA PANTALLAS GRANDES Y ULTRA-WIDE
-   Garantiza que en monitores >17" el sitio se vea expansivo y equilibrado
-   ============================================================ */
-@media (min-width: 1600px) {
-  html {
-    font-size: 100% !important; /* Mantener legibilidad total */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    background-color: var(--color-background);
   }
 
   body {
-    max-width: none !important; /* Liberar el sitio para que sea expansivo */
-    margin: 0;
-    box-shadow: none;
+    font-family: var(--font-body), sans-serif;
+    color: var(--color-primary-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
   }
 
-  header .max-w-\[1920px\] {
-    max-width: 2560px !important; /* Soporte para Ultra-Wide */
-    margin: 0 auto;
-  }
-  
-  header nav span, 
-  header .hidden.md\:flex.items-center span {
-    font-size: 1.25rem !important;
-    font-weight: 700;
-  }
-}
-
-@layer base {
-  html:not([data-scroll-behavior="smooth"]) {
-    scroll-behavior: auto;
+  /* Tipografía Fluida con clamp() - Garantía de Silueta Invariable */
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7.5vw, 6.5rem) !important;
+    font-weight: 900 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.05em !important;
+    text-transform: uppercase !important;
+    color: var(--color-primary-dark) !important;
+    max-width: 15ch; /* Limita el ancho para evitar saltos de línea erráticos */
   }
 
-  html[data-scroll-behavior="smooth"] {
-    scroll-behavior: smooth;
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 5.5vw, 4.5rem) !important;
+    font-weight: 900 !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.04em !important;
+    text-transform: uppercase !important;
+    color: var(--color-primary-dark) !important;
+    max-width: 20ch;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-clash), sans-serif;
+  h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3.5vw, 2.5rem) !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    color: var(--color-primary-dark) !important;
   }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  p {
+    font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+    color: var(--color-primary-dark);
+    opacity: 0.85;
+    max-width: 65ch; /* Longitud de línea óptima para legibilidad */
+  }
+
+  /* Asegurar que los contenedores no colapsen */
+  section {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
   }
 
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Clases de Utilidad de Armonía */
+.bg-cream-glass {
+  background-color: rgba(253, 249, 225, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.border-pastel {
+  border-color: rgba(202, 222, 221, 0.4);
 }

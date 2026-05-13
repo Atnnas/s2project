@@ -12,12 +12,13 @@ export default function MainHeroCarousel() {
     fetch('/api/home-banners')
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
+        if (data.success && Array.isArray(data.data)) {
           const heroBanners = data.data.filter(b => b.type === 'hero');
           setBanners(heroBanners);
         }
-        setLoading(false);
-      });
+      })
+      .catch(err => console.error("Error fetching banners:", err))
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -28,11 +29,11 @@ export default function MainHeroCarousel() {
     return () => clearInterval(timer);
   }, [banners.length]);
 
-  if (loading) return <div className="w-full h-[85vh] bg-slate-900 animate-pulse" />;
+  if (loading) return <div className="w-full h-[85vh] bg-[#fdf9e1] animate-pulse" />;
   if (banners.length === 0) return <div className="w-full h-[140px] md:h-[180px] bg-white" />;
 
   return (
-    <section data-navbar-theme="dark" className="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-slate-900">
+    <section data-navbar-theme="dark" className="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-[#fdf9e1]">
       <AnimatePresence mode="wait">
         <motion.div
           key={banners[current]._id}
@@ -42,7 +43,7 @@ export default function MainHeroCarousel() {
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0 w-full h-full"
         >
-          <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-900">
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#fdf9e1]">
             {/* Background Blur layer */}
             <motion.div 
               initial={{ opacity: 0 }}
@@ -66,11 +67,11 @@ export default function MainHeroCarousel() {
 
           {/* Overlays */}
           {/* Solid Overlays (No gradients as requested) */}
-          <div className="absolute inset-0 bg-[#1d2729]/60 z-10" />
-          <div className="absolute inset-0 bg-[#1d2729]/20 z-10" />
+          <div className="absolute inset-0 bg-[#9eb5b2]/60 z-10" />
+          <div className="absolute inset-0 bg-[#9eb5b2]/20 z-10" />
 
           {/* Content */}
-          <div className="absolute inset-0 z-20 flex flex-col justify-center px-[clamp(1.5rem,6vw,6rem)]">
+          <div className="absolute inset-0 z-20 flex flex-col justify-center pt-[80px] px-[clamp(1.5rem,6vw,6rem)]">
             <div className="max-w-4xl">
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
@@ -78,17 +79,18 @@ export default function MainHeroCarousel() {
                 transition={{ delay: 0.5, duration: 0.8 }}
                 className="inline-block text-primary font-black uppercase tracking-[0.4em] text-[10px] mb-4 bg-primary/10 px-4 py-2 rounded-full border border-primary/20 backdrop-blur-md"
               >
-                S2 Project • Boutique Agency
+                {banners[current].topText || 'S2 Project • Boutique Agency'}
               </motion.span>
               <motion.h1
                 initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 transition={{ delay: 0.8, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[clamp(2.5rem,8vw,6rem)] font-display font-black uppercase text-white leading-[0.85] tracking-tighter mb-6"
+                className="text-[clamp(2.5rem,8vw,6rem)] font-display font-black uppercase text-white leading-[0.95] tracking-tighter mb-6"
               >
-                {banners[current].title.split(' ').map((word, i) => (
-                  <span key={i} className={i === banners[current].title.split(' ').length - 1 ? "text-primary italic block" : "block"}>
-                    {word}
+                {banners[current].title.split('\n').map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    {i !== banners[current].title.split('\n').length - 1 && <br />}
                   </span>
                 ))}
               </motion.h1>

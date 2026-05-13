@@ -41,12 +41,12 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs font-black uppercase tracking-widest text-slate-400 px-1 text-left block">Nombre de Empresa</label>
-          <input
-            type="text"
+          <textarea
             required
+            rows={2}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+            className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 resize-none"
             placeholder="Nombre oficial"
           />
         </div>

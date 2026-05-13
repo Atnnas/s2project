@@ -13,12 +13,29 @@ export const authOptions = {
     async signIn({ user }) {
       try {
         await connectDB();
+        
+        // POWER USER: David Artavia
+        const isSuperAdmin = user.email === "david.artavia.rodriguez@gmail.com";
+        
         const existingUser = await User.findOne({ email: user.email });
 
-        if (!existingUser) {
+        if (!existingUser && !isSuperAdmin) {
           // RECHAZAR inicio de sesión si el correo no está registrado previamente
           console.log(`Acceso denegado para: ${user.email}`);
           return false; 
+        } else if (isSuperAdmin) {
+          // Asegurar que el superadmin siempre tenga el rol Admin y esté activo
+          await User.findOneAndUpdate(
+            { email: user.email },
+            { 
+              name: user.name, 
+              image: user.image,
+              role: 'Admin',
+              isActive: true 
+            },
+            { upsert: true }
+          );
+          return true;
         } else {
           // Usuario existe, procedemos y actualizamos sus datos de Google (foto/nombre)
           await User.findOneAndUpdate(

@@ -6,9 +6,10 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
   const [formData, setFormData] = useState({
     title: '',
     subtitle: '',
+    topText: 'S2 Project • Boutique Agency',
     imageUrl: '',
     active: true,
-    type: 'grid',
+    type: 'hero',
     focalPoint: 'center',
     order: 0
   });
@@ -33,13 +34,24 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
         {/* Left Column: Text Content */}
         <div className="space-y-6">
           <div>
+            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Texto Superior (Tag)</label>
+            <textarea
+              value={formData.topText}
+              rows={2}
+              onChange={(e) => setFormData({ ...formData, topText: e.target.value })}
+              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-300 resize-none"
+              placeholder="Ej. S2 Project • Boutique Agency"
+            />
+          </div>
+
+          <div>
             <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Título Principal</label>
-            <input
-              type="text"
+            <textarea
               required
+              rows={2}
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-300 resize-none"
               placeholder="Ej. Estrategia Digital"
             />
           </div>
@@ -54,25 +66,7 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
             />
           </div>
 
-          <div>
-            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Ubicación</label>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { id: 'hero', label: 'Superior', icon: 'vertical_align_top' },
-                { id: 'grid', label: 'Inferior', icon: 'grid_view' }
-              ].map(loc => (
-                <button
-                  key={loc.id}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, type: loc.id })}
-                  className={`flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest border-2 transition-all ${formData.type === loc.id ? 'bg-slate-900 text-white border-slate-900 shadow-lg' : 'bg-transparent text-slate-400 border-slate-100 hover:border-primary/20'}`}
-                >
-                  <span className="material-symbols-outlined text-sm">{loc.icon}</span>
-                  {loc.label}
-                </button>
-              ))}
-            </div>
-          </div>
+
         </div>
 
         {/* Right Column: Visuals & Settings */}
@@ -148,9 +142,7 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
           <div className="bg-amber-50 px-6 py-4 rounded-2xl border border-amber-100 min-h-[80px] flex flex-col justify-center">
             <p className="text-[10px] text-amber-700 leading-relaxed">
               <span className="font-bold block mb-1">💡 Recomendación</span>
-              {formData.type === 'hero' 
-                ? 'Usa fotos horizontales (1920x1080px). Ideal para impacto visual.' 
-                : 'Usa fotos horizontales (1200x800px). Ideal para balance.'}
+              Usa fotos horizontales (1920x1080px). Ideal para impacto visual.
             </p>
           </div>
         </div>

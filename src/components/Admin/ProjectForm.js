@@ -190,12 +190,12 @@ export default function ProjectForm({
           <label className="block text-sm font-bold text-slate-700 mb-2 mt-2 uppercase tracking-wide">
             {mode === 'reels' ? 'Nombre del Reel' : 'Título'}
           </label>
-          <input
+          <textarea
             required
-            type="text"
+            rows={2}
             value={formData.title}
             onChange={(e) => setFormData({...formData, title: e.target.value})}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all text-slate-900 placeholder:text-slate-300"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all text-slate-900 placeholder:text-slate-300 resize-none"
             placeholder={mode === 'reels' ? 'Ej. Detrás de cámaras #01' : 'Título del proyecto'}
           />
         </div>

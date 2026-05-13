@@ -8,6 +8,10 @@ const HomeBannerSchema = new mongoose.Schema({
   subtitle: {
     type: String,
   },
+  topText: {
+    type: String,
+    default: 'S2 Project • Boutique Agency',
+  },
   imageUrl: {
     type: String,
     required: [true, 'Por favor proporciona una URL de imagen.'],
@@ -18,8 +22,8 @@ const HomeBannerSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['hero', 'grid'],
-    default: 'grid',
+    enum: ['hero'],
+    default: 'hero',
   },
   focalPoint: {
     type: String,

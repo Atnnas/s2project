@@ -5,51 +5,84 @@ import Link from 'next/link';
 
 export default function HomeCTA() {
   return (
-    <section className="w-full py-10 px-[clamp(1.5rem,6vw,6rem)] bg-white">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+    <section className="w-full py-16 px-[clamp(1.5rem,6vw,6rem)] bg-background">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-[1920px] mx-auto">
         
-        {/* Calendar Action - Wide Horizontal Pill */}
+        {/* Card 1: Contacto & Cita — Premium Cream/Dark Harmony */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="w-full"
+          className="relative group overflow-hidden bg-cream rounded-[3rem] p-10 md:p-14 border border-pastel flex flex-col justify-between min-h-[480px] transition-all duration-500 hover:shadow-2xl hover:shadow-accent-pastel/20"
         >
+          <div className="relative z-10">
+            <h2 className="text-primary-dark mb-8">
+              Estrategia & <br />
+              <span className="text-primary italic">Planificación</span>
+            </h2>
+            
+            <div className="space-y-6 mb-12">
+              <a href="tel:+50660060026" className="flex items-center gap-5 text-primary-dark hover:text-primary transition-colors group/item">
+                <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-primary border border-pastel shadow-sm group-hover/item:border-primary/50 transition-all">
+                  <span className="material-symbols-outlined text-2xl">call</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase tracking-widest font-black opacity-50">Llámanos</span>
+                  <span className="text-lg font-body font-bold">+506 6006 0026</span>
+                </div>
+              </a>
+              
+              <a href="mailto:info@s2-project.com" className="flex items-center gap-5 text-primary-dark hover:text-primary transition-colors group/item">
+                <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-primary border border-pastel shadow-sm group-hover/item:border-primary/50 transition-all">
+                  <span className="material-symbols-outlined text-2xl">mail</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase tracking-widest font-black opacity-50">Escríbenos</span>
+                  <span className="text-lg font-body font-bold">info@s2-project.com</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
           <Link 
             href="https://calendar.app.google/zadeELEGddkDxJ829"
             target="_blank"
-            className="group flex items-center justify-between px-10 py-6 bg-[#1d2729] rounded-full border border-white/10 hover:border-primary/50 transition-all duration-500 shadow-xl w-full"
+            className="relative z-10 w-full py-6 bg-primary text-white font-display font-black uppercase tracking-widest text-center rounded-2xl hover:bg-primary/90 transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
           >
-            <div className="flex flex-col">
-              <span className="text-primary font-black uppercase tracking-[0.3em] text-[9px] leading-none mb-1">Disponibilidad 1:1</span>
-              <span className="text-white font-display font-black uppercase tracking-widest text-sm md:text-base">Agendar Estrategia Digital</span>
-            </div>
-            <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
-              <span className="material-symbols-outlined text-xl">calendar_month</span>
-            </div>
+            Agende su cita
           </Link>
         </motion.div>
 
-        {/* WhatsApp Action - Wide Horizontal Pill */}
+        {/* Card 2: WhatsApp — Clean & High Contrast Harmony */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="w-full"
+          className="relative group overflow-hidden bg-accent-pastel/20 rounded-[3rem] p-10 md:p-14 border border-pastel flex flex-col justify-between min-h-[480px] transition-all duration-500 hover:shadow-2xl hover:shadow-accent-pastel/20"
         >
+          <div className="relative z-10">
+            <h2 className="text-primary-dark mb-8">
+              Atención <br />
+              <span className="text-primary italic">Inmediata</span>
+            </h2>
+            
+            <p className="text-primary-dark opacity-70 font-body text-lg max-w-sm leading-relaxed mb-12">
+              ¿Tienes un proyecto en mente o una urgencia creativa? Chatea con nuestro equipo ahora mismo para una respuesta prioritaria.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mb-8">
+              <span className="px-5 py-2 bg-white border border-pastel rounded-full text-[10px] font-black uppercase tracking-widest text-primary-dark/60">Respuesta rápida</span>
+              <span className="px-5 py-2 bg-white border border-pastel rounded-full text-[10px] font-black uppercase tracking-widest text-primary-dark/60">Consultas 24/7</span>
+            </div>
+          </div>
+
           <Link 
             href="https://api.whatsapp.com/send?phone=50660060026"
             target="_blank"
-            className="group flex items-center justify-between px-10 py-6 bg-white rounded-full border border-slate-200 hover:border-primary/50 transition-all duration-500 shadow-lg w-full"
+            className="relative z-10 w-full py-6 bg-primary text-white font-display font-black uppercase tracking-widest text-center rounded-2xl hover:bg-primary/90 transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-lg shadow-primary/20"
           >
-            <div className="flex flex-col">
-              <span className="text-primary font-black uppercase tracking-[0.3em] text-[9px] leading-none mb-1">Atención Inmediata</span>
-              <span className="text-slate-900 font-display font-black uppercase tracking-widest text-sm md:text-base">Contacto Directo por WhatsApp</span>
-            </div>
-            <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-              <span className="material-symbols-outlined text-xl">chat</span>
-            </div>
+            <i className="fab fa-whatsapp text-xl"></i>
+            Iniciar Conversación
           </Link>
         </motion.div>
 

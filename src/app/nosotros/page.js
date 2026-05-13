@@ -56,7 +56,7 @@ export default function NosotrosPage() {
             transition={{ duration: 0.8 }}
             className="space-y-3"
           >
-            <h1 className="text-[clamp(1.8rem,4.5vw,3.8rem)] [@media(min-width:1600px)]:text-[clamp(3.5rem,6vw,6rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.9]">
+            <h1 className="">
               La Agencia de la <br />
               <span className="text-primary italic">Nueva Generación</span>
             </h1>
@@ -106,11 +106,10 @@ export default function NosotrosPage() {
               <Link
                 href="https://api.whatsapp.com/send?phone=50660060026"
                 target="_blank"
-                className="group relative inline-flex items-center gap-3 bg-slate-900 text-white px-7 py-3.5 rounded-none font-display font-black uppercase tracking-widest text-[10px] transition-all duration-500 overflow-hidden hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] active:scale-95"
+                className="group relative inline-flex items-center gap-4 bg-primary text-white px-10 py-5 rounded-2xl font-display font-black uppercase tracking-widest text-[10px] transition-all duration-500 overflow-hidden shadow-lg shadow-primary/20 hover:bg-primary/90 active:scale-95"
               >
-                <div className="absolute inset-0 bg-primary translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-                <span className="relative z-10 group-hover:text-white transition-colors duration-300">Agenda tu consulta</span>
-                <span className="material-symbols-outlined relative z-10 text-xs group-hover:rotate-45 transition-transform duration-500">north_east</span>
+                <span className="relative z-10">Agenda tu consulta</span>
+                <span className="material-symbols-outlined relative z-10 text-sm transition-transform duration-500 group-hover:rotate-45">north_east</span>
               </Link>
             </motion.div>
           </motion.div>

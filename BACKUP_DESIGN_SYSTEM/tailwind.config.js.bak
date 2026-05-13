@@ -9,15 +9,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary": "#396542",     /* Verde Institucional */
-        "primary-dark": "#1d2729", /* Texto Principal y Títulos */
-        "accent-light": "#9eb5b2", /* Fondos Secundarios / Cards */
-        "accent-pastel": "#cadedd",/* Overlays / Bordes suaves */
-        "cream": "#fdf9e1",        /* Navbar / Fondos Especiales */
-        "background": "#ffffff",   /* Base Limpia */
+        "primary": "#396542",
+        "background-light": "#f7f7f6",
+        "background-dark": "#9eb5b2",
+        "primary-dark": "#1d2729",
+        "accent": "#9eb5b2",
         "slate": {
+          "700": "#9eb5b2",
+          "800": "#9eb5b2",
           "900": "#1d2729",
-          "950": "#000000"
+          "950": "#1d2729"
         }
       },
       fontFamily: {

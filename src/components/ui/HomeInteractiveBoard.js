@@ -175,7 +175,7 @@ export default function HomeInteractiveBoard() {
 
         {/* Column 3: The Sticky Global Summary & CTA */}
         <div className="lg:col-span-4 h-full relative z-20">
-          <div className="relative p-6 lg:p-8 md:p-12 rounded-none bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between">
+          <div className="relative p-6 lg:p-8 md:p-12 rounded-[2.5rem] bg-slate-900 text-white overflow-hidden shadow-2xl h-full flex flex-col justify-between">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(57,101,66,0.25)_0%,_transparent_75%)] pointer-events-none" />
             
             <div className="relative z-10 flex flex-col h-full space-y-8">
@@ -214,11 +214,10 @@ export default function HomeInteractiveBoard() {
                   <Link
                     href="https://api.whatsapp.com/send?phone=50660060026"
                     target="_blank"
-                    className="relative flex items-center justify-center gap-3 bg-slate-950 border border-slate-800 text-white px-4 py-5 w-full rounded-none font-display font-bold uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)]"
+                    className="relative flex items-center justify-center gap-3 bg-primary text-white px-8 py-5 w-full rounded-2xl font-display font-black uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl shadow-primary/30 hover:bg-primary/90"
                   >
-                    <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
                     <span className="relative z-10 flex-shrink-0 text-center">Quiero Trabajar con S2</span>
-                    <div className="relative z-10 w-6 h-6 bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-none hidden sm:flex">
+                    <div className="relative z-10 w-6 h-6 bg-white/20 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-full hidden sm:flex">
                       <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
                         arrow_outward
                       </span>
@@ -241,7 +240,7 @@ export default function HomeInteractiveBoard() {
 
 function ServicesView() {
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
+    <div className="p-8 md:p-12 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
       <div className="space-y-6 flex-1">
         <div className="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary">
           <span className="material-symbols-outlined justify-center items-center text-3xl">layers</span>
@@ -271,7 +270,7 @@ function ServicesView() {
 
 function ContactView() {
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
+    <div className="p-8 md:p-12 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between">
       <div className="space-y-6 flex-1 flex flex-col">
         <div className="w-16 h-16 bg-slate-900 flex items-center justify-center text-white">
           <span className="material-symbols-outlined justify-center items-center text-3xl">forum</span>
@@ -284,14 +283,14 @@ function ContactView() {
         </p>
         
         <div className="space-y-4 flex-1">
-          <a href="mailto:info@s2-project.com" className="group flex items-center gap-4 p-6 bg-slate-50 border border-slate-100 hover:border-primary/20 transition-all">
+          <a href="mailto:info@s2-project.com" className="group flex items-center gap-4 p-6 bg-slate-50 border border-slate-100 hover:border-primary/20 transition-all rounded-2xl">
              <span className="material-symbols-outlined text-primary">mail</span>
              <div>
                <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Escr&iacute;benos</p>
                <p className="text-sm font-bold text-slate-900">info@s2-project.com</p>
              </div>
           </a>
-          <a href="https://api.whatsapp.com/send?phone=50660060026" target="_blank" className="group flex items-center gap-4 p-6 bg-[#25D366]/5 border border-[#25D366]/20 hover:border-[#25D366]/40 transition-all">
+          <a href="https://api.whatsapp.com/send?phone=50660060026" target="_blank" className="group flex items-center gap-4 p-6 bg-[#25D366]/5 border border-[#25D366]/20 hover:border-[#25D366]/40 transition-all rounded-2xl">
              <span className="material-symbols-outlined text-[#25D366]">chat</span>
              <div>
                <p className="text-[8px] font-black uppercase tracking-widest text-[#25D366]">WhatsApp Directo</p>
@@ -308,7 +307,7 @@ function BookingView({ step, onBooking, onReset }) {
   const calendarUrl = "https://calendar.app.google/zadeELEGddkDxJ829";
 
   return (
-    <div className="p-8 md:p-12 rounded-none bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between group overflow-hidden relative">
+    <div className="p-8 md:p-12 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl w-full h-full flex flex-col justify-between group overflow-hidden relative">
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32" />
       
       <div className="container mx-auto px-[clamp(1.5rem,6vw,6rem)] relative z-10 flex flex-col h-full">
@@ -334,7 +333,7 @@ function BookingView({ step, onBooking, onReset }) {
               
               <button
                 onClick={onBooking}
-                className="group w-full py-6 bg-slate-900 text-white font-display font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-4 hover:bg-primary transition-all shadow-xl shadow-slate-200 mt-4"
+                className="group w-full py-6 bg-primary text-white font-display font-black uppercase tracking-widest text-xs flex items-center justify-center gap-4 hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 mt-4 rounded-2xl"
               >
                 Ver Disponibilidad
                 <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">calendar_month</span>

@@ -61,7 +61,7 @@ export default function HomeDynamicGrid() {
                 transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 w-full h-full"
               >
-                <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-900">
+                <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#fdf9e1]">
                   {/* Background Blur layer - Fills gaps for any aspect ratio */}
                   <motion.div 
                     initial={{ opacity: 0 }}
@@ -85,7 +85,7 @@ export default function HomeDynamicGrid() {
                 
                 {/* Overlay with Glassmorphism Text */}
                 {/* Solid Overlay */}
-                <div className="absolute inset-0 bg-[#1d2729]/40 group-hover:bg-[#1d2729]/30 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-[#9eb5b2]/40 group-hover:bg-[#9eb5b2]/30 transition-colors duration-500" />
                 <div className="absolute bottom-12 left-12 right-12 z-20">
                   <motion.div
                     initial={{ y: 20, opacity: 0 }}
@@ -111,7 +111,7 @@ export default function HomeDynamicGrid() {
         </div>
 
         {/* 1/3 Route Carousel Section — Apple Dark Material */}
-        <div className="lg:col-span-1 bg-[#1d2729] overflow-hidden relative flex flex-col justify-center min-h-[400px]">
+        <div className="lg:col-span-1 bg-[#9eb5b2] overflow-hidden relative flex flex-col justify-start py-12 min-h-[500px]">
            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mt-16 -mr-16" />
            <div className="relative z-10 px-8">
               <span className="text-primary font-black uppercase tracking-[0.3em] text-[8px] mb-8 block">Explora el sitio</span>

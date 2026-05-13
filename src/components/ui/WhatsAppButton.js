@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export default function WhatsAppButton() {
   // Número de WhatsApp proporcionado por el cliente
   const whatsappNumber = "50660060026";
-  const whatsappMessage = encodeURIComponent("Hola S2, me interesa conocer como trabajan con marcas como la mia.");
+  const whatsappMessage = encodeURIComponent("Hola S2, me interesa conocer cómo trabajan con marcas como la mía.");
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${whatsappMessage}`;
 
   return (

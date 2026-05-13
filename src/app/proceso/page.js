@@ -107,18 +107,18 @@ export default function ProcesoPage() {
       {/* Hero Header Standardized */}
       <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
-          <span className="text-primary font-black uppercase tracking-[0.4em] text-[8px] mb-3 block">Metodología</span>
-          <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block">
+
+          <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.95] relative inline-block">
             Así <span className="text-primary italic">Trabajamos</span>
           </h1>
           <p className="mt-8 text-[10px] md:text-xs font-body uppercase tracking-[0.3em] text-accent max-w-lg mx-auto leading-relaxed">
-            Un proceso claro de 5 pasos para llevar tu marca de donde esta a donde quiere llegar
+            Un proceso claro de 5 pasos para llevar tu marca de donde está a donde quiere llegar
           </p>
         </div>
       </section>
 
       {/* DASHBOARD GRID — Expanded to fill horizontal space */}
-      <section className="w-full relative pb-12 bg-white flex-1 flex flex-col justify-center">
+      <section className="w-full relative pb-12 bg-white flex-1 flex flex-col justify-start pt-12">
         <div 
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
           onMouseEnter={() => setIsPaused(true)}
@@ -203,35 +203,32 @@ export default function ProcesoPage() {
         </div>
       </section>
 
-      {/* Results Section (Standardized — Now below grid) */}
+      {/* Results Section - Unified with Home style */}
       <section className="w-full pb-20 px-[clamp(1.5rem,6vw,6rem)]">
-        <div className="relative p-8 md:p-12 lg:p-16 bg-slate-900 text-white overflow-hidden shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-12 group">
-          <div className="absolute inset-0 bg-slate-900/50 pointer-events-none" />
-          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:40px_40px] pointer-events-none" />
+        <div className="relative p-10 md:p-14 lg:p-20 bg-accent-pastel/20 border border-pastel rounded-[3rem] overflow-hidden shadow-2xl shadow-accent-pastel/10 flex flex-col lg:flex-row items-center justify-between gap-12 group transition-all duration-700 hover:shadow-accent-pastel/20">
           
-          <div className="relative z-10 flex flex-col space-y-6 max-w-3xl">
+          <div className="relative z-10 flex flex-col space-y-8 max-w-3xl">
             <div className="flex items-center gap-4">
-              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-white px-5 py-2 rounded-full border border-pastel shadow-sm">
                 Nuestra Metodología
               </span>
-              <div className="h-[1px] w-12 bg-primary/30" />
             </div>
             
-            <h2 className="text-4xl xl:text-6xl font-display font-black uppercase tracking-tight leading-[0.85] text-white">
+            <h2 className="text-primary-dark">
               Resultados <br />
-              <span className="text-primary italic">Probados</span>
+              <span className="text-primary italic text-6xl xl:text-8xl">Probados</span>
             </h2>
             
-            <p className="text-sm md:text-base text-slate-400 font-body leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-primary-dark opacity-70 font-body leading-relaxed max-w-xl">
               Lo que logramos para nuestras marcas a través de este proceso estratégico. Cada paso está diseñado para convertir visibilidad en crecimiento.
             </p>
           </div>
 
           <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 gap-6 w-full lg:w-auto">
              {metrics.slice(0, 6).map((metric, idx) => (
-               <div key={idx} className="p-6 bg-white/5 border border-white/10 flex flex-col items-center text-center justify-center group-hover:bg-white/10 transition-colors duration-500 rounded-[20px] md:rounded-[30px]">
-                 <div className="text-xl md:text-2xl font-display font-black text-white">{metric.value}</div>
-                 <p className="text-[8px] font-black uppercase tracking-widest text-accent mt-2">{metric.label}</p>
+               <div key={idx} className="p-6 bg-white border border-pastel flex flex-col items-center text-center justify-center transition-all duration-500 rounded-[2rem] shadow-sm">
+                 <div className="text-xl md:text-2xl font-display font-black text-primary-dark">{metric.value}</div>
+                 <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-2">{metric.label}</p>
                </div>
              ))}
           </div>
@@ -240,7 +237,7 @@ export default function ProcesoPage() {
              <Link
                href="https://api.whatsapp.com/send?phone=50660060026"
                target="_blank"
-               className="relative flex items-center justify-center gap-4 bg-primary text-white px-10 py-6 w-full lg:w-auto rounded-none font-display font-bold uppercase tracking-[0.2em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl hover:bg-slate-950"
+               className="relative flex items-center justify-center gap-4 bg-primary text-white px-12 py-8 w-full lg:w-auto rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 active:scale-95 shadow-xl shadow-primary/20 hover:bg-primary/90"
              >
                <span className="relative z-10">Inicia tu Proceso</span>
                <span className="material-symbols-outlined text-sm relative z-10">arrow_outward</span>
@@ -255,18 +252,18 @@ export default function ProcesoPage() {
 
 function ProcessCard({ step }) {
   return (
-    <div className="p-10 md:p-16 rounded-[60px] bg-white border border-slate-50 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-700">
+    <div className="p-10 md:p-16 rounded-[3rem] bg-cream border border-pastel shadow-[0_40px_80px_-20px_rgba(202,222,221,0.2)] w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-700">
       <div className="absolute top-0 right-0 p-8 text-primary/5 font-display font-black text-[120px] pointer-events-none select-none">
         {step.id}
       </div>
       <div className="space-y-6 flex-1 relative z-10">
-        <div className="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
           <span className="material-symbols-outlined text-3xl">{step.icon}</span>
         </div>
-        <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-slate-900 pr-8">
+        <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
           {step.title}
         </h3>
-        <p className="text-sm md:text-base text-slate-500 font-body leading-relaxed max-w-2xl">
+        <p className="text-sm md:text-base text-primary-dark opacity-80 font-body leading-relaxed max-w-2xl">
           {step.desc}
         </p>
         
