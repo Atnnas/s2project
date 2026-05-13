@@ -105,9 +105,11 @@
   }
 
   p {
-    font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
     color: var(--color-primary-dark);
-    opacity: 0.85;
+    opacity: 0.9;
+    line-height: 1.65;
+    font-weight: 450;
     max-width: 65ch; /* Longitud de línea óptima para legibilidad */
   }
 

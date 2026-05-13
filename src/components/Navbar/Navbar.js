@@ -17,7 +17,7 @@ const NavbarLink = ({ href, children, isActive, onClick }) => {
           : 'text-primary-dark hover:text-primary'
       }`}
     >
-      <span className="relative z-10 text-[12.5px] font-black uppercase tracking-[0.2em] font-display">
+      <span className="relative z-10 text-[15.5px] font-black uppercase tracking-[0.2em] font-display">
         {children}
       </span>
       {!isActive && (

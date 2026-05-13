@@ -104,28 +104,48 @@ export default function ServiciosPage() {
 
   return (
     <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-screen w-full">
-      <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-12 px-6 shrink-0 text-center">
+      <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-4 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
 
           <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.95] relative inline-block">
             Servicios
           </h1>
-          <div className="mt-6 flex flex-col items-center">
-            <div className="inline-flex items-center gap-3 bg-slate-50 border border-slate-100 px-4 py-2 rounded-full mb-3">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <p className="text-[10px] font-display font-black uppercase tracking-[0.2em] text-slate-900">
-                {pricingTag}
-              </p>
-            </div>
-            <p className="text-[9px] md:text-[10px] font-body uppercase tracking-[0.3em] text-accent max-w-lg leading-tight">
-              Diseñados según tu marca, tu objetivo y tu ritmo
-            </p>
+          <div className="mt-12 flex flex-col items-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative group cursor-default"
+            >
+              {/* Decorative Glow */}
+              <div className="absolute -inset-8 bg-primary/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              <div className="relative flex flex-col items-center">
+                <motion.span 
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.5, duration: 1.5, ease: "easeInOut" }}
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent mb-8"
+                />
+                
+                <h2 className="text-[clamp(2.5rem,8vw,6.5rem)] font-display font-black tracking-[-0.05em] text-primary-dark leading-none uppercase">
+                  {pricingTag.split(' ')[0]} <span className="text-primary italic font-medium lowercase tracking-tighter">{pricingTag.split(' ').slice(1).join(' ')}</span>
+                </h2>
+
+                <motion.span 
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.8, duration: 1.5, ease: "easeInOut" }}
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent mt-8"
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* DASHBOARD GRID — Apple Material Design */}
-      <section className="w-full relative pb-24 bg-white flex-1 flex flex-col justify-start pt-12">
+      <section className="w-full relative pb-24 bg-white flex-1 flex flex-col justify-start pt-0">
         <div 
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
           onMouseEnter={() => setIsPaused(true)}
@@ -133,25 +153,20 @@ export default function ServiciosPage() {
         >
           
           {/* Column 1: Desktop Vertical Menu (Sticky to avoid double scroll) */}
-          <div className="hidden lg:flex lg:col-span-6 z-20 lg:flex-col lg:justify-start lg:gap-2 h-fit sticky top-[160px]">
+          <div className="hidden lg:flex lg:col-span-6 z-20 lg:flex-col lg:justify-start gap-2 h-fit sticky top-[20px]">
             {tabs.map((tab, index) => {
               const isActive = activeTab === index;
               return (
                 <button 
                   key={tab.id} 
                   onClick={() => handleTabClick(index)}
-                  className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 rounded-[30px] ${isActive ? 'bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] scale-[1.03] z-10' : 'bg-transparent hover:bg-slate-50'}`}
+                  className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 rounded-[30px] border border-transparent ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] z-10' : 'bg-transparent hover:bg-slate-50'}`}
                 >
                   <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
                     <span className="material-symbols-outlined text-xl">{tab.icon}</span>
                   </div>
                   <div className="flex-1">
                     <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>{tab.title}</h3>
-                    {isActive && (
-                      <motion.p initial={{opacity:0, height:0}} animate={{opacity:1, height:'auto'}} className="text-[10px] text-accent font-body uppercase tracking-wider mt-1 block">
-                        {tab.desc}
-                      </motion.p>
-                    )}
                   </div>
                 </button>
               );
@@ -191,14 +206,17 @@ export default function ServiciosPage() {
              </button>
           </div>
           {/* Column 2: Active Card Viewport (Integrated with page scroll) */}
-          <div className="lg:col-span-6 w-full">
+          <div className="lg:col-span-6 w-full min-h-[500px]">
              <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTab}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+                  initial={{ opacity: 0, filter: 'blur(15px)', y: 20 }}
+                  animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                  exit={{ opacity: 0, filter: 'blur(15px)', y: -20 }}
+                  transition={{ 
+                    duration: 0.7, 
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
                   className="w-full h-full"
                 >
                   {activeTab === 0 && <MainServiceView data={mainService} />}
@@ -268,11 +286,11 @@ function MainServiceView({ data }) {
         <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
           {data.title}
         </h3>
-        <p className="text-sm md:text-base text-primary-dark opacity-80 font-body leading-relaxed max-w-2xl">
+        <p className="text-primary-dark font-body leading-relaxed max-w-2xl">
           {data.description}
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-pastel/30 mt-6">
            {data.features.map((feature, i) => {
              const subtitles = [
                "Objetivos claros desde el día uno",
@@ -282,11 +300,11 @@ function MainServiceView({ data }) {
                "Análisis mensual y mejora continua"
              ];
              return (
-               <div key={i} className="flex gap-4">
-                  <span className="text-primary font-black opacity-30 font-display">0{i+1}</span>
+               <div key={i} className="flex gap-4 items-start">
+                  <span className="text-primary font-black font-display text-lg opacity-40">0{i+1}</span>
                   <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-900">{feature}</h4>
-                    <p className="text-[10px] text-slate-500">
+                    <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">{feature}</h4>
+                    <p className="text-[10px] text-slate-500 font-body uppercase tracking-wider">
                       {subtitles[i] || "Optimizado para resultados"}
                     </p>
                   </div>
@@ -309,15 +327,18 @@ function SecondaryServiceView({ data, icon }) {
         <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
           {data.title}
         </h3>
-        <p className="text-sm md:text-base text-primary-dark opacity-80 font-body leading-relaxed max-w-2xl pb-4">
+        <p className="text-primary-dark font-body leading-relaxed max-w-2xl pb-4">
           {data.description}
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 pt-4 border-t border-pastel/50 pt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-pastel/30 mt-6">
            {data.features.map((feature, i) => (
-             <div key={i} className="flex items-center gap-4">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary-dark">{feature}</span>
+             <div key={i} className="flex gap-4 items-start">
+                <span className="text-primary font-black font-display text-lg opacity-40">0{i+1}</span>
+                <div className="flex flex-col">
+                  <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">{feature}</h4>
+                  <p className="text-[10px] text-slate-500 font-body uppercase tracking-wider">Servicio Especializado</p>
+                </div>
              </div>
            ))}
         </div>

@@ -133,7 +133,7 @@ export default function ProcesoPage() {
                  <button 
                    key={step.id} 
                    onClick={() => handleStepClick(index)}
-                   className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 relative rounded-[30px] ${isActive ? 'bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] scale-[1.03] z-10' : 'bg-transparent hover:bg-slate-50'}`}
+                   className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 relative rounded-[30px] border border-transparent ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] z-10' : 'bg-transparent hover:bg-slate-50'}`}
                  >
                    <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
                      <span className="material-symbols-outlined text-xl">{step.icon}</span>
@@ -142,9 +142,6 @@ export default function ProcesoPage() {
                      <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>
                        {step.id} {step.title}
                      </h3>
-                     {isActive && (
-                       <motion.div className="absolute left-0 bottom-0 h-[2px] bg-primary/20" initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ ease: "linear" }} />
-                     )}
                    </div>
                  </button>
                );
@@ -186,18 +183,21 @@ export default function ProcesoPage() {
 
           {/* Column 2: Active Card Viewport (Expanded to 6 columns) */}
           <div className="lg:col-span-6 w-full">
-             <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeStep}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-                  className="w-full h-full flex flex-col"
-                >
-                 <ProcessCard step={steps[activeStep]} />
-               </motion.div>
-             </AnimatePresence>
+              <AnimatePresence mode="wait">
+                 <motion.div
+                   key={activeStep}
+                   initial={{ opacity: 0, filter: 'blur(15px)', y: 20 }}
+                   animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                   exit={{ opacity: 0, filter: 'blur(15px)', y: -20 }}
+                   transition={{ 
+                     duration: 0.7, 
+                     ease: [0.22, 1, 0.36, 1]
+                   }}
+                   className="w-full h-full flex flex-col"
+                 >
+                  <ProcessCard step={steps[activeStep]} />
+                </motion.div>
+              </AnimatePresence>
           </div>
 
         </div>
@@ -263,7 +263,7 @@ function ProcessCard({ step }) {
         <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
           {step.title}
         </h3>
-        <p className="text-sm md:text-base text-primary-dark opacity-80 font-body leading-relaxed max-w-2xl">
+        <p className="text-primary-dark font-body leading-relaxed max-w-2xl">
           {step.desc}
         </p>
         
