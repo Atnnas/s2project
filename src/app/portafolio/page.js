@@ -23,7 +23,7 @@ const categories = [
 
 export default function PortafolioPage() {
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col items-center pt-[clamp(8rem,14vh,10rem)] pb-12 overflow-x-hidden relative">
+    <div className="min-h-screen w-full bg-background flex flex-col items-center pt-[clamp(8rem,14vh,10rem)] pb-12 overflow-x-hidden relative">
       
       {/* Brand Background Texture */}
       <div className="absolute inset-0 bg-grid-slate-900/[0.02] bg-[size:40px_40px] pointer-events-none" />

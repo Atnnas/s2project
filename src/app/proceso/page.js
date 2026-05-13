@@ -103,7 +103,7 @@ export default function ProcesoPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-screen w-full">
+    <div className="flex-1 flex flex-col bg-background relative overflow-x-hidden min-h-screen w-full">
       {/* Hero Header Standardized */}
       <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-12 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
@@ -118,7 +118,7 @@ export default function ProcesoPage() {
       </section>
 
       {/* DASHBOARD GRID — Expanded to fill horizontal space */}
-      <section className="w-full relative pb-12 bg-white flex-1 flex flex-col justify-start pt-12">
+      <section className="w-full relative pb-12 bg-background flex-1 flex flex-col justify-start pt-12">
         <div 
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
           onMouseEnter={() => setIsPaused(true)}
@@ -133,13 +133,13 @@ export default function ProcesoPage() {
                  <button 
                    key={step.id} 
                    onClick={() => handleStepClick(index)}
-                   className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 relative rounded-[30px] border border-transparent ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] z-10' : 'bg-transparent hover:bg-slate-50'}`}
+                   className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 relative rounded-[30px] border border-transparent ${isActive ? 'bg-[#fdf9e1] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] z-10' : 'bg-transparent hover:bg-[#fdf9e1]/10'}`}
                  >
-                   <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
+                   <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-[#fdf9e1]' : 'bg-[#fdf9e1]/20 text-[#fdf9e1]/50 group-hover:bg-primary/20 group-hover:text-primary'}`}>
                      <span className="material-symbols-outlined text-xl">{step.icon}</span>
                    </div>
                    <div className="flex-1 overflow-hidden">
-                     <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>
+                     <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-[#fdf9e1]/60 group-hover:text-[#fdf9e1]'}`}>
                        {step.id} {step.title}
                      </h3>
                    </div>
@@ -205,11 +205,11 @@ export default function ProcesoPage() {
 
       {/* Results Section - Unified with Home style */}
       <section className="w-full pb-20 px-[clamp(1.5rem,6vw,6rem)]">
-        <div className="relative p-10 md:p-14 lg:p-20 bg-accent-pastel/20 border border-pastel rounded-[3rem] overflow-hidden shadow-2xl shadow-accent-pastel/10 flex flex-col lg:flex-row items-center justify-between gap-12 group transition-all duration-700 hover:shadow-accent-pastel/20">
+        <div className="relative p-10 md:p-14 lg:p-20 bg-primary border border-primary/20 rounded-[3rem] overflow-hidden shadow-2xl shadow-primary/20 flex flex-col lg:flex-row items-center justify-between gap-12 group transition-all duration-700 hover:shadow-primary/30">
           
           <div className="relative z-10 flex flex-col space-y-8 max-w-3xl">
             <div className="flex items-center gap-4">
-              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-white px-5 py-2 rounded-full border border-pastel shadow-sm">
+              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-[#fdf9e1] px-5 py-2 rounded-full border border-[#fdf9e1]/20 shadow-sm">
                 Nuestra Metodología
               </span>
             </div>
@@ -252,40 +252,40 @@ export default function ProcesoPage() {
 
 function ProcessCard({ step }) {
   return (
-    <div className="p-10 md:p-16 rounded-[3rem] bg-cream border border-pastel shadow-[0_40px_80px_-20px_rgba(202,222,221,0.2)] w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-700">
-      <div className="absolute top-0 right-0 p-8 text-primary/5 font-display font-black text-[120px] pointer-events-none select-none">
+    <div className="p-10 md:p-16 rounded-[3rem] bg-primary border border-[#fdf9e1]/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-700">
+      <div className="absolute top-0 right-0 p-8 text-[#fdf9e1]/5 font-display font-black text-[120px] pointer-events-none select-none">
         {step.id}
       </div>
       <div className="space-y-6 flex-1 relative z-10">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+        <div className="w-16 h-16 bg-[#fdf9e1]/10 rounded-full flex items-center justify-center text-[#fdf9e1]">
           <span className="material-symbols-outlined text-3xl">{step.icon}</span>
         </div>
-        <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
+        <h3 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-tight text-[#fdf9e1] pr-8">
           {step.title}
         </h3>
-        <p className="text-primary-dark font-body leading-relaxed max-w-2xl">
+        <p className="text-[#fdf9e1] opacity-90 font-body leading-relaxed max-w-2xl">
           {step.desc}
         </p>
         
-        <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-[#fdf9e1]/10 mt-4">
            <div className="flex gap-4">
-              <span className="text-primary font-black opacity-30 font-display italic text-lg">01</span>
+              <span className="text-[#fdf9e1] font-black opacity-30 font-display italic text-lg">01</span>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">Eficiencia</p>
-                <p className="text-[10px] text-slate-400">Optimizado por S2</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#fdf9e1]">Eficiencia</p>
+                <p className="text-[10px] text-[#fdf9e1]/40">Optimizado por S2</p>
               </div>
            </div>
            <div className="flex gap-4">
-              <span className="text-primary font-black opacity-30 font-display italic text-lg">02</span>
+              <span className="text-[#fdf9e1] font-black opacity-30 font-display italic text-lg">02</span>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">Escalabilidad</p>
-                <p className="text-[10px] text-slate-400">Diseñado para crecer</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#fdf9e1]">Escalabilidad</p>
+                <p className="text-[10px] text-[#fdf9e1]/40">Diseñado para crecer</p>
               </div>
            </div>
         </div>
       </div>
-      <div className="mt-auto pt-8 border-t border-slate-50 relative z-10">
-        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Metodología de Alto Impacto</span>
+      <div className="mt-auto pt-8 border-t border-[#fdf9e1]/5 relative z-10">
+        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fdf9e1]/50">Metodología de Alto Impacto</span>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export const revalidate = 3600;
 
 export default async function Home() {
   return (
-    <main className="flex flex-col w-full bg-white">
+    <main className="flex flex-col w-full bg-background">
       <MainHeroCarousel />
       <HomeCTA />
     </main>

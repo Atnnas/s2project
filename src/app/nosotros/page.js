@@ -14,7 +14,7 @@ export default function NosotrosPage() {
   ];
 
   return (
-    <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden w-full">
+    <div className="flex-1 flex flex-col bg-background relative overflow-x-hidden w-full">
       {/* Premium Minimal Hero — Standardized Spacing (Compact) */}
       <section className="relative w-full pt-[clamp(8rem,14vh,11rem)] pb-[clamp(0.5rem,1vh,1rem)] px-6 shrink-0 text-center">
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[300px] bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none" />

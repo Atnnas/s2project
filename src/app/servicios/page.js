@@ -103,7 +103,7 @@ export default function ServiciosPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-white relative overflow-x-hidden min-h-screen w-full">
+    <div className="flex-1 flex flex-col bg-background relative overflow-x-hidden min-h-screen w-full">
       <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-4 px-6 shrink-0 text-center">
         <div className="max-w-4xl mx-auto">
 
@@ -117,26 +117,64 @@ export default function ServiciosPage() {
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative group cursor-default"
             >
-              {/* Decorative Glow */}
-              <div className="absolute -inset-8 bg-primary/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              {/* Shadow Latency Layer - Deep Cinematic Aura */}
+              <motion.div 
+                animate={{ 
+                  scale: [1.1, 1.3, 1.1],
+                  rotate: [0, 90, 0],
+                  opacity: [0.1, 0.2, 0.1]
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                className="absolute -inset-20 bg-slate-900 blur-[100px] rounded-full pointer-events-none" 
+              />
+
+              {/* Institutional Latency Glow - Infinite Pulse */}
+              <motion.div 
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.6, 0.3]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute -inset-12 bg-primary/20 blur-[60px] rounded-full pointer-events-none" 
+              />
               
               <div className="relative flex flex-col items-center">
                 <motion.span 
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
                   transition={{ delay: 0.5, duration: 1.5, ease: "easeInOut" }}
-                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent mb-8"
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent mb-8"
                 />
                 
-                <h2 className="text-[clamp(2.5rem,8vw,6.5rem)] font-display font-black tracking-[-0.05em] text-primary-dark leading-none uppercase">
-                  {pricingTag.split(' ')[0]} <span className="text-primary italic font-medium lowercase tracking-tighter">{pricingTag.split(' ').slice(1).join(' ')}</span>
-                </h2>
+                <motion.div
+                  animate={{ 
+                    filter: ['brightness(1) contrast(1)', 'brightness(1.1) contrast(1.1)', 'brightness(1) contrast(1)'],
+                    textShadow: [
+                      '0 0 20px rgba(57, 101, 66, 0)',
+                      '0 0 30px rgba(57, 101, 66, 0.3)',
+                      '0 0 20px rgba(57, 101, 66, 0)'
+                    ]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <h2 className="text-[clamp(2.5rem,8vw,6.5rem)] font-display font-black tracking-[-0.05em] text-primary-dark leading-none uppercase relative">
+                    {pricingTag.split(' ')[0]} <span className="text-primary italic font-medium lowercase tracking-tighter">{pricingTag.split(' ').slice(1).join(' ')}</span>
+                  </h2>
+                </motion.div>
 
                 <motion.span 
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
                   transition={{ delay: 0.8, duration: 1.5, ease: "easeInOut" }}
-                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent mt-8"
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent mt-8"
                 />
               </div>
             </motion.div>
@@ -145,7 +183,7 @@ export default function ServiciosPage() {
       </section>
 
       {/* DASHBOARD GRID — Apple Material Design */}
-      <section className="w-full relative pb-24 bg-white flex-1 flex flex-col justify-start pt-0">
+      <section className="w-full relative pb-24 bg-background flex-1 flex flex-col justify-start pt-0">
         <div 
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
           onMouseEnter={() => setIsPaused(true)}
@@ -160,7 +198,7 @@ export default function ServiciosPage() {
                 <button 
                   key={tab.id} 
                   onClick={() => handleTabClick(index)}
-                  className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 rounded-[30px] border border-transparent ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] z-10' : 'bg-transparent hover:bg-slate-50'}`}
+                  className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 rounded-[30px] border border-transparent ${isActive ? 'bg-[#fdf9e1] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] z-10' : 'bg-transparent hover:bg-[#fdf9e1]/10'}`}
                 >
                   <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
                     <span className="material-symbols-outlined text-xl">{tab.icon}</span>
@@ -226,44 +264,43 @@ export default function ServiciosPage() {
                 </motion.div>
              </AnimatePresence>
           </div>
-
         </div>
       </section>
 
       {/* Conversion Panel - Unified with Home style */}
       <section className="w-full pb-20 px-[clamp(1.5rem,6vw,6rem)]">
-        <div className="relative p-10 md:p-14 lg:p-20 bg-accent-pastel/20 border border-pastel rounded-[3rem] overflow-hidden shadow-2xl shadow-accent-pastel/10 flex flex-col lg:flex-row items-center justify-between gap-12 group transition-all duration-700 hover:shadow-accent-pastel/20">
+        <div className="relative p-10 md:p-14 lg:p-20 bg-primary border border-primary/20 rounded-[3rem] overflow-hidden shadow-2xl shadow-primary/20 flex flex-col lg:flex-row items-center justify-between gap-12 group transition-all duration-700 hover:shadow-primary/30">
           
           <div className="relative z-10 flex flex-col space-y-8 max-w-4xl">
             <div className="flex items-center gap-4">
-              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-white px-5 py-2 rounded-full border border-pastel shadow-sm">
+              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-white px-5 py-2 rounded-full border border-white/20 shadow-sm">
                 Consulta Exclusiva
               </span>
             </div>
             
-            <h2 className="text-primary-dark">
+            <h2 className="text-white">
               Diagnóstico <br />
-              <span className="text-primary italic text-6xl xl:text-8xl">Sin Costo</span>
+              <span className="text-white italic text-6xl xl:text-8xl">Sin Costo</span>
             </h2>
             
-            <p className="text-lg md:text-xl text-primary-dark opacity-70 font-body leading-relaxed max-w-3xl">
+            <p className="text-lg md:text-xl text-white opacity-90 font-body leading-relaxed max-w-3xl">
               Analizamos tu marca y te compartimos una lectura estratégica clara. Sin compromiso, con el mismo criterio con el que trabajamos cada cuenta.
             </p>
           </div>
 
           <div className="relative z-10 flex flex-col sm:flex-row items-stretch lg:items-center gap-8 shrink-0 w-full lg:w-auto">
-             <div className="p-10 bg-white border border-pastel rounded-[2.5rem] flex flex-col items-center text-center justify-center shadow-sm">
-               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+             <div className="p-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-[2.5rem] flex flex-col items-center text-center justify-center shadow-sm">
+               <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white mb-4">
                  <span className="material-symbols-outlined text-4xl">insights</span>
                </div>
-               <p className="text-[10px] font-black uppercase tracking-widest text-primary-dark/50 mb-1">Estrategia</p>
-               <p className="text-sm font-bold text-primary-dark uppercase tracking-tight">Diagnóstico visual</p>
+               <p className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">Estrategia</p>
+               <p className="text-sm font-bold text-white uppercase tracking-tight">Diagnóstico visual</p>
              </div>
              
              <Link
                href="https://api.whatsapp.com/send?phone=50660060026"
                target="_blank"
-               className="relative flex items-center justify-center gap-4 bg-primary text-white px-12 py-8 w-full lg:w-auto rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 active:scale-95 shadow-xl shadow-primary/20 hover:bg-primary/90"
+               className="relative flex items-center justify-center gap-4 bg-white text-primary px-12 py-8 w-full lg:w-auto rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 active:scale-95 shadow-xl shadow-black/10 hover:bg-slate-50"
              >
                <span className="relative z-10">Quiero Trabajar con S2</span>
                <span className="material-symbols-outlined text-sm relative z-10">arrow_outward</span>
@@ -278,19 +315,19 @@ export default function ServiciosPage() {
 
 function MainServiceView({ data }) {
   return (
-    <div className="p-10 md:p-16 rounded-[3rem] bg-cream border border-pastel shadow-[0_40px_80px_-20px_rgba(202,222,221,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
+    <div className="p-10 md:p-16 rounded-[3rem] bg-primary border border-[#fdf9e1]/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
       <div className="space-y-6 flex-1">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+        <div className="w-16 h-16 bg-[#fdf9e1]/10 rounded-full flex items-center justify-center text-[#fdf9e1]">
           <span className="material-symbols-outlined text-3xl">layers</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
+        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-[#fdf9e1] pr-8">
           {data.title}
         </h3>
-        <p className="text-primary-dark font-body leading-relaxed max-w-2xl">
+        <p className="text-[#fdf9e1] opacity-90 font-body leading-relaxed max-w-2xl">
           {data.description}
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-pastel/30 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-[#fdf9e1]/10 mt-6">
            {data.features.map((feature, i) => {
              const subtitles = [
                "Objetivos claros desde el día uno",
@@ -301,10 +338,10 @@ function MainServiceView({ data }) {
              ];
              return (
                <div key={i} className="flex gap-4 items-start">
-                  <span className="text-primary font-black font-display text-lg opacity-40">0{i+1}</span>
+                  <span className="text-[#fdf9e1] font-black font-display text-lg opacity-40">0{i+1}</span>
                   <div>
-                    <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">{feature}</h4>
-                    <p className="text-[10px] text-slate-500 font-body uppercase tracking-wider">
+                    <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-[#fdf9e1] leading-tight">{feature}</h4>
+                    <p className="text-[10px] text-[#fdf9e1]/60 font-body uppercase tracking-wider">
                       {subtitles[i] || "Optimizado para resultados"}
                     </p>
                   </div>
@@ -319,25 +356,25 @@ function MainServiceView({ data }) {
 
 function SecondaryServiceView({ data, icon }) {
   return (
-    <div className="p-10 md:p-16 rounded-[3rem] bg-cream border border-pastel shadow-[0_40px_80px_-20px_rgba(202,222,221,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
+    <div className="p-10 md:p-16 rounded-[3rem] bg-primary border border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
       <div className="space-y-6 flex-1">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+        <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center text-white">
           <span className="material-symbols-outlined text-3xl">{icon}</span>
         </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-primary-dark pr-8">
+        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-white pr-8">
           {data.title}
         </h3>
-        <p className="text-primary-dark font-body leading-relaxed max-w-2xl pb-4">
+        <p className="text-white opacity-90 font-body leading-relaxed max-w-2xl pb-4">
           {data.description}
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-pastel/30 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-white/10 mt-6">
            {data.features.map((feature, i) => (
              <div key={i} className="flex gap-4 items-start">
-                <span className="text-primary font-black font-display text-lg opacity-40">0{i+1}</span>
+                <span className="text-white font-black font-display text-lg opacity-40">0{i+1}</span>
                 <div className="flex flex-col">
-                  <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">{feature}</h4>
-                  <p className="text-[10px] text-slate-500 font-body uppercase tracking-wider">Servicio Especializado</p>
+                  <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-white leading-tight">{feature}</h4>
+                  <p className="text-[10px] text-white/60 font-body uppercase tracking-wider">Servicio Especializado</p>
                 </div>
              </div>
            ))}
