@@ -136,37 +136,51 @@ export default function ServiciosPage() {
               className="relative"
             >
               <div className="relative flex flex-col items-center">
-                <motion.div 
-                  animate={{ 
-                    filter: [
-                      'brightness(1) drop-shadow(0 0 0px rgba(0,0,0,0))',
-                      'brightness(1.1) drop-shadow(0 0 10px rgba(255,255,255,0.2))',
-                      'brightness(1) drop-shadow(0 0 0px rgba(0,0,0,0))'
-                    ]
-                  }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative transform-gpu"
-                  style={{ perspective: 1000 }}
-                >
-                  <p className="text-3xl md:text-6xl font-display font-black tracking-tighter uppercase relative flex flex-nowrap justify-center items-center gap-x-3 whitespace-nowrap overflow-hidden px-8 py-2">
-                    <span className="text-primary-dark">{pricingTag.split(' ')[0]}</span>
-                    <span className="text-primary italic font-medium lowercase tracking-tighter">
-                      {pricingTag.split(' ').slice(1).join(' ')}
-                    </span>
-                    <motion.span 
-                      animate={{ 
-                        left: ["-50%", "150%"],
-                      }}
-                      transition={{ 
-                        duration: 8, 
-                        repeat: Infinity, 
-                        repeatDelay: 10,
-                        ease: "easeInOut"
-                      }}
-                      className="absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-20 pointer-events-none"
-                    />
-                  </p>
-                </motion.div>
+                <div className="text-3xl md:text-6xl font-display font-black tracking-tighter uppercase relative flex flex-nowrap justify-center items-center gap-x-3 whitespace-nowrap px-8 py-2">
+                  {/* TEXT: PLANES */}
+                  <div className="flex text-primary-dark">
+                    {"PLANES".split("").map((char, i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ 
+                          color: ["#1d2729", "#ffffff", "#1d2729"],
+                          textShadow: ["0 0 0px rgba(255,255,255,0)", "0 0 10px rgba(255,255,255,0.5)", "0 0 0px rgba(255,255,255,0)"]
+                        }}
+                        transition={{ 
+                          duration: 2, 
+                          repeat: Infinity, 
+                          repeatDelay: 10,
+                          delay: i * 0.1 
+                        }}
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </div>
+
+                  {/* TEXT: DESDE $500/MES */}
+                  <div className="flex text-primary italic font-medium lowercase tracking-tighter">
+                    {"desde $500/mes".split("").map((char, i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ 
+                          opacity: [1, 0.6, 1],
+                          color: ["#396542", "#ffffff", "#396542"],
+                          textShadow: ["0 0 0px rgba(255,255,255,0)", "0 0 15px rgba(255,255,255,0.8)", "0 0 0px rgba(255,255,255,0)"]
+                        }}
+                        transition={{ 
+                          duration: 2, 
+                          repeat: Infinity, 
+                          repeatDelay: 10,
+                          delay: 0.6 + (i * 0.1) 
+                        }}
+                        className={char === " " ? "mx-1" : ""}
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
 
                 <motion.span 
                   initial={{ width: 0 }}
