@@ -194,29 +194,30 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      {/* MAIN CONTENT GRID - MAXIMUM WIDTH EXPANSION */}
-      <section className="w-full relative pb-24 bg-background px-4 md:px-10 flex-1 flex flex-col justify-start pt-0">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative">
+      {/* DASHBOARD SECTION */}
+      <section className="w-full relative pb-24 flex-1 z-10 px-[clamp(1.5rem,6vw,6rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pt-0">
           
-          {/* TABS - 50% WIDTH WITH VERTICAL INDICATOR */}
-          <div className="hidden lg:flex lg:col-span-6 z-20 lg:flex-col lg:justify-start gap-3 h-fit sticky top-[32px] pl-6 border-l border-black/5">
-            {/* Animated Active Indicator */}
+          {/* MENU - LEFT SIDE */}
+          <div className="hidden lg:flex lg:col-span-6 space-y-3 flex-col h-fit sticky top-16 pr-8 border-r border-slate-100 -mt-40 pt-0">
+            {/* Vertical Indicator Line */}
+            <div className="absolute right-[-1px] top-0 bottom-0 w-[1px] bg-slate-100" />
             <motion.div 
-              className="absolute left-0 w-1 bg-primary rounded-full z-30"
+              className="absolute right-[-1px] w-[2px] bg-primary z-30"
               animate={{ 
-                top: activeTab * 76, // Approximate height of each tab
-                height: 64 
+                height: 88,
+                y: activeTab * 101
               }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
-            
+
             {tabs.map((tab, index) => {
               const isActive = activeTab === index;
               return (
                 <button 
                   key={tab.id} 
                   onClick={() => handleTabClick(index)}
-                  className={`text-left p-4 flex items-center gap-6 transition-all duration-700 group min-w-0 rounded-[2rem] border border-transparent relative overflow-hidden ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] scale-[1.02] z-10' : 'bg-transparent hover:bg-white/40 backdrop-blur-[2px]'}`}
+                  className={`text-left p-4 flex items-center gap-6 transition-all duration-700 group min-w-0 rounded-[2rem] border border-transparent relative overflow-hidden h-[88px] ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] scale-[1.02] z-10' : 'bg-transparent hover:bg-white/40 backdrop-blur-[2px]'}`}
                 >
                   <div className={`w-14 h-14 flex flex-shrink-0 items-center justify-center font-black transition-all duration-500 rounded-2xl ${isActive ? 'bg-primary text-white shadow-lg' : 'bg-slate-100 text-slate-400 group-hover:bg-primary/10 group-hover:text-primary'}`}>
                     <span className="material-symbols-outlined text-2xl">{tab.icon}</span>
@@ -234,16 +235,16 @@ export default function ServiciosPage() {
             })}
           </div>
 
-          {/* VIEWPORT - 50% WIDTH */}
-          <div className="lg:col-span-6 w-full">
+          {/* VIEWPORT - RIGHT SIDE */}
+          <div className="lg:col-span-6 w-full sticky top-32 pt-0 mt-0">
              <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTab}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5, ease: "circOut" }}
-                  className="w-full"
+                  initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full flex flex-col pt-0 mt-0"
                 >
                   {activeTab === 0 && <MainServiceView data={mainService} />}
                   {activeTab === 1 && <SecondaryServiceView data={secondaryServices[0]} icon="architecture" />}
@@ -309,19 +310,19 @@ export default function ServiciosPage() {
 function MainServiceView({ data }) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 30, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group"
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group mt-0"
     >
       {/* Ambient Light Rim */}
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
       
-      <div className="space-y-8 flex-1 relative z-10">
+      <div className="space-y-8 flex-1 relative z-10 pt-0">
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="w-16 h-16 bg-[#fdf9e1]/10 rounded-2xl flex items-center justify-center text-[#fdf9e1] shadow-inner transition-transform duration-500"
+          className="w-16 h-16 bg-[#fdf9e1]/10 rounded-2xl flex items-center justify-center text-[#fdf9e1] shadow-inner transition-transform duration-500 mt-0"
         >
           <span className="material-symbols-outlined text-3xl">layers</span>
         </motion.div>
@@ -369,19 +370,19 @@ function MainServiceView({ data }) {
 function SecondaryServiceView({ data, icon }) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 30, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group"
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group mt-0"
     >
       {/* Ambient Light Rim */}
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
 
-      <div className="space-y-8 flex-1 relative z-10">
+      <div className="space-y-8 flex-1 relative z-10 pt-0">
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white shadow-inner transition-transform duration-500"
+          className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white shadow-inner transition-transform duration-500 mt-0"
         >
           <span className="material-symbols-outlined text-3xl">{icon}</span>
         </motion.div>

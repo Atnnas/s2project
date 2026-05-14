@@ -1,107 +1,236 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect, useRef, memo } from "react";
+import SplashCursor from "@/components/ui/SplashCursor";
 
-const categories = [
+const staticCategories = [
   {
     id: "reels",
     title: "REELS",
     href: "/reels",
-    image: "/reels-cover.png",
-    desc: "Narrativa dinámica y cinematografía de alto impacto."
+    apiCat: "Reels",
+    desc: "Narrativa dinámica y cinematografía de alto impacto.",
+    aura: "rgba(57, 101, 66, 0.4)",
+    defaultImgs: ["/reels-cover.png", "/banner-reels-1.png"]
   },
   {
     id: "artes",
     title: "ARTES",
     href: "/digital-arts",
-    image: "/artes-cover.png",
-    desc: "Diseño estratégico y creatividad digital sin límites."
+    apiCat: "Arte Digital",
+    desc: "Diseño estratégico y creatividad digital sin límites.",
+    aura: "rgba(158, 181, 178, 0.4)",
+    defaultImgs: ["/artes-cover.png", "/banner-artes-1.png"]
   }
 ];
 
-export default function PortafolioPage() {
+// OPTIMIZED PARTICLE SYSTEM
+const ParticleBackground = memo(() => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let animationFrameId;
+
+    let particles = [];
+    const colors = ['#396542', '#9eb5b2', '#f8f9fa'];
+
+    const resize = () => {
+      canvas.width = window.innerWidth / 2; // Low res for performance
+      canvas.height = window.innerHeight / 2;
+    };
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 1.5 + 0.2;
+        this.speedX = (Math.random() - 0.5) * 0.2;
+        this.speedY = (Math.random() - 0.5) * 0.2;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = Math.random() * 0.4 + 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+      }
+      draw() {
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.size, this.size); // Faster than arc
+      }
+    }
+
+    const init = () => {
+      particles = Array.from({ length: 50 }, () => new Particle());
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for(let i=0; i<particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('resize', resize);
+    resize(); init(); animate();
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[60] opacity-40 mix-blend-screen w-full h-full" />;
+});
+
+ParticleBackground.displayName = "ParticleBackground";
+
+function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
+  const cardRef = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Optimized Springs
+  const mouseXSpring = useSpring(x, { stiffness: 100, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 100, damping: 30 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
   return (
-    <div className="min-h-screen w-full bg-background flex flex-col items-center pt-[clamp(8rem,14vh,10rem)] pb-12 overflow-x-hidden relative">
-      
-      {/* Brand Background Texture */}
-      <div className="absolute inset-0 bg-grid-slate-900/[0.02] bg-[size:40px_40px] pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-slate-50/5 pointer-events-none" />
-
-      {/* Header - Integrated with Site Aesthetic */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8 md:mb-10 text-center relative z-10 px-6"
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={onHover}
+      onMouseLeave={() => { x.set(0); y.set(0); onLeave(); }}
+      className="relative h-1/2 md:h-full w-full md:w-1/2 overflow-hidden cursor-pointer"
+      style={{ perspective: "1000px" }}
+    >
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="relative w-full h-full group"
       >
+        <motion.div
+          animate={{ scale: [1, 1.02, 1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-0"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentImg}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="absolute inset-0"
+            >
+              <Image src={currentImg} alt={cat.title} fill className="object-cover brightness-110" priority />
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
 
-        <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85]">
-          Nuestro <br className="md:hidden" /> <span className="text-primary italic">Trabajo</span>
-        </h1>
-        <div className="h-1 w-12 bg-primary mx-auto mt-6" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
+        <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity bg-black/40" />
+
+        <Link href={cat.href} className="absolute inset-0 flex flex-col items-center justify-center p-12 z-20">
+          <div style={{ transform: "translateZ(80px)", transformStyle: "preserve-3d" }} className="flex flex-col items-center">
+            <motion.div 
+              animate={{ scale: isHovered ? 2 : 1.3, opacity: isHovered ? 0.6 : 0.4 }}
+              style={{ backgroundColor: cat.aura }}
+              className="absolute inset-0 blur-[120px] rounded-full -z-10 transition-all duration-[2s]"
+            />
+            <span className="text-[11px] font-body uppercase tracking-[0.7em] text-white mb-8 drop-shadow-xl font-black">
+              {cat.id === 'reels' ? 'Motion Authority' : 'Digital Mastery'}
+            </span>
+            <h2 className="text-6xl md:text-[clamp(5rem,11vw,14rem)] font-display font-black text-[#f8f9fa] leading-none tracking-tighter drop-shadow-[0_20px_50px_rgba(0,0,0,1)] group-hover:text-primary transition-all duration-700">
+              {cat.title}
+            </h2>
+            <motion.p 
+              animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 15 }}
+              className="mt-10 text-[#f8f9fa] font-body text-xs md:text-[14px] font-black uppercase tracking-[0.3em] max-w-sm text-center leading-relaxed hidden md:block drop-shadow-2xl"
+            >
+              {cat.desc}
+            </motion.p>
+          </div>
+        </Link>
       </motion.div>
+    </div>
+  );
+}
 
-      {/* Categories Grid - Symmetrical 2 column layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-[850px] w-full px-[clamp(1.5rem,6vw,6rem)] relative z-10">
-        {categories.map((cat, index) => (
-          <motion.div
-            key={cat.id}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col items-center group"
-          >
-            {/* Pill-shaped Card - Functionality from Reference */}
-            <Link href={cat.href} className="w-full relative">
-              <div className="relative aspect-square w-full rounded-[60px] md:rounded-[100px] overflow-hidden shadow-xl transition-all duration-700 group-hover:shadow-primary/20 group-hover:-translate-y-2">
-                <Image 
-                  src={cat.image} 
-                  alt={cat.title} 
-                  fill 
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                  priority={index === 0}
-                />
-                
-                {/* Premium Overlay Layer */}
-                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/0 transition-colors duration-500" />
-                <div className="absolute inset-0 ring-1 ring-inset ring-white/20 rounded-[60px] md:rounded-[100px]" />
-                
-                {/* Content Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-[2px]">
-                   <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white scale-50 group-hover:scale-100 transition-transform duration-500 shadow-xl">
-                      <span className="material-symbols-outlined text-2xl">
-                        {cat.id === 'reels' ? 'play_arrow' : 'auto_fix_high'}
-                      </span>
-                   </div>
-                   <p className="mt-4 text-white font-display font-black uppercase tracking-[0.3em] text-[8px]">Explorar Categoría</p>
-                </div>
-              </div>
-            </Link>
+export default function PortafolioPage() {
+  const [hoveredId, setHoveredId] = useState(null);
+  const [currentImageIndices, setCurrentImageIndices] = useState({ reels: 0, artes: 0 });
+  const [projectData, setProjectData] = useState({ reels: [], artes: [] });
 
-            {/* Typography & Call to Action */}
-            <div className="mt-6 text-center space-y-3 px-6">
-              <h2 className="text-2xl md:text-4xl font-display font-black uppercase tracking-[0.05em] text-slate-900 group-hover:text-primary transition-colors duration-300">
-                {cat.title}
-              </h2>
-              <p className="text-[9px] md:text-[10px] font-body uppercase tracking-[0.2em] text-accent max-w-[250px] mx-auto leading-relaxed">
-                {cat.desc}
-              </p>
-              
-              <div className="pt-3">
-                <Link 
-                  href={cat.href}
-                  className="inline-flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-full font-display font-black uppercase tracking-[0.2em] text-[9px] transition-all duration-500 hover:bg-primary/90 hover:scale-105 active:scale-95 shadow-lg shadow-primary/20 group/btn overflow-hidden relative"
-                >
-                  <span className="relative z-10">Ver Trabajo</span>
-                  <span className="material-symbols-outlined text-xs relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1">arrow_forward</span>
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const [reelsRes, artesRes] = await Promise.all([
+          fetch('/api/projects?category=Reels'),
+          fetch('/api/projects?category=Arte%20Digital')
+        ]);
+        const reelsJson = await reelsRes.json();
+        const artesJson = await artesRes.json();
+        setProjectData({
+          reels: reelsJson.data?.map(p => p.imageUrl).filter(Boolean) || [],
+          artes: artesJson.data?.map(p => p.imageUrl).filter(Boolean) || []
+        });
+      } catch (e) {}
+    }
+    fetchProjects();
+  }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndices(prev => ({
+        reels: (prev.reels + 1) % (projectData.reels.length > 0 ? projectData.reels.length : 2),
+        artes: (prev.artes + 1) % (projectData.artes.length > 0 ? projectData.artes.length : 2)
+      }));
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [projectData]);
+
+  return (
+    <div className="h-screen w-full bg-[#1d2729] overflow-hidden flex flex-col md:flex-row relative">
+      <SplashCursor 
+        RAINBOW_MODE={false} 
+        COLOR="#396542" 
+        SPLAT_RADIUS={0.3} 
+        DENSITY_DISSIPATION={3.5}
+        SIM_RESOLUTION={64} // LOWER RES FOR PERFORMANCE
+      />
+      <ParticleBackground />
+      <div className="absolute inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      {staticCategories.map((cat) => (
+        <CategoryCard 
+          key={cat.id}
+          cat={cat}
+          currentImg={(projectData[cat.id].length > 0 ? projectData[cat.id] : cat.defaultImgs)[currentImageIndices[cat.id] % (projectData[cat.id].length || 2)]}
+          isHovered={hoveredId === cat.id}
+          onHover={() => setHoveredId(cat.id)}
+          onLeave={() => setHoveredId(null)}
+        />
+      ))}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-white/5 z-30 hidden md:block" />
     </div>
   );
 }
