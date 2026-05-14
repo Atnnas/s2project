@@ -1,21 +1,6 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'ClashGrotesk';
-  src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ClashGrotesk';
-  src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* 1. TITULAR FONT - CLASH GROTESK */
 @font-face {
   font-family: 'ClashGrotesk';
   src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Semibold.woff2') format('woff2');
@@ -32,6 +17,39 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'ClashGrotesk';
+  src: url('/TIPOGRAFIAS/ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Variable.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2. BODY FONT - ROUNDO */
+@font-face {
+  font-family: 'Roundo';
+  src: url('/TIPOGRAFIAS/Roundo_Complete/Fonts/WEB/fonts/Roundo-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roundo';
+  src: url('/TIPOGRAFIAS/Roundo_Complete/Fonts/WEB/fonts/Roundo-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roundo';
+  src: url('/TIPOGRAFIAS/Roundo_Complete/Fonts/WEB/fonts/Roundo-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   /* Colores Exclusivos S2 */
   --color-primary: #396542;
@@ -40,15 +58,19 @@
   --color-accent-pastel: #cadedd;
   --color-cream: #fdf9e1;
   --color-white: #fdf9e1;
-  --color-background: #9eb5b2;
+  --color-background: #cadedd;
   
   --color-slate-900: #1d2729;
   --color-slate-950: #000000;
 
+  /* FUENTES MAESTRAS - ASIGNACIÓN INAMOVIBLE */
   --font-display: 'ClashGrotesk', sans-serif;
-  --font-body: var(--font-body), sans-serif;
-  --font-sans: var(--font-body), sans-serif;
+  --font-body: 'Roundo', sans-serif;
+  --font-sans: 'Roundo', sans-serif;
+  --font-serif: 'ClashGrotesk', serif;
+  
   --font-clash: 'ClashGrotesk';
+  --font-roundo: 'Roundo';
 }
 
 :root {
@@ -57,7 +79,6 @@
 
 @layer base {
   html {
-    /* Responsividad Apple de alta fidelidad */
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -67,54 +88,53 @@
   }
 
   body {
-    font-family: var(--font-body), sans-serif;
+    /* FORZAR ROUNDO COMO BASE PARA TODO EL SITIO */
+    font-family: 'Roundo', sans-serif !important;
     color: var(--color-primary-dark);
     line-height: 1.5;
     overflow-x: hidden;
   }
 
-  /* Tipografía Fluida con clamp() - Garantía de Silueta Invariable */
+  /* FORZAR CLASH GROTESK PARA TODOS LOS ENCABEZADOS EN TODAS LAS RUTAS */
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: 'ClashGrotesk', sans-serif !important;
+  }
+
   h1 {
-    font-family: var(--font-display);
     font-size: clamp(2.5rem, 7.5vw, 6.5rem) !important;
     font-weight: 900 !important;
-    line-height: 0.9 !important;
+    line-height: 0.85 !important;
     letter-spacing: -0.05em !important;
     text-transform: uppercase !important;
-    color: var(--color-primary-dark) !important;
-    max-width: 15ch; /* Limita el ancho para evitar saltos de línea erráticos */
   }
 
   h2 {
-    font-family: var(--font-display);
     font-size: clamp(1.8rem, 5.5vw, 4.5rem) !important;
     font-weight: 900 !important;
-    line-height: 0.95 !important;
+    line-height: 0.9 !important;
     letter-spacing: -0.04em !important;
     text-transform: uppercase !important;
-    color: var(--color-primary-dark) !important;
-    max-width: 20ch;
   }
 
   h3 {
-    font-family: var(--font-display);
     font-size: clamp(1.4rem, 3.5vw, 2.5rem) !important;
-    font-weight: 900 !important;
-    line-height: 1 !important;
+    font-weight: 800 !important;
+    line-height: 0.95 !important;
     text-transform: uppercase !important;
-    color: var(--color-primary-dark) !important;
   }
 
-  p {
+  /* FORZAR ROUNDO PARA TODOS LOS PÁRRAFOS Y TEXTOS BASE */
+  p, span, li, a, button, .font-body {
+    /* Excepto si tienen la clase font-display */
+  }
+  
+  p, .font-body {
+    font-family: 'Roundo', sans-serif !important;
     font-size: clamp(1rem, 1.3vw, 1.25rem);
-    color: var(--color-primary-dark);
-    opacity: 0.9;
-    line-height: 1.65;
-    font-weight: 450;
-    max-width: 65ch; /* Longitud de línea óptima para legibilidad */
+    line-height: 1.6;
+    font-weight: 400;
   }
 
-  /* Asegurar que los contenedores no colapsen */
   section {
     width: 100%;
     position: relative;
@@ -130,7 +150,6 @@
   }
 }
 
-/* Clases de Utilidad de Armonía */
 .bg-cream-glass {
   background-color: rgba(253, 249, 225, 0.85);
   backdrop-filter: blur(20px);

@@ -45,7 +45,7 @@ export default async function DigitalArtsPage() {
   }));
 
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col items-center pt-[clamp(12rem,18vh,14rem)] pb-24 overflow-x-hidden relative">
+    <div className="min-h-screen w-full bg-[#cadedd] flex flex-col items-center pt-[clamp(12rem,18vh,14rem)] pb-24 overflow-x-hidden relative">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-slate-900/[0.02] bg-[size:40px_40px] pointer-events-none" />
       

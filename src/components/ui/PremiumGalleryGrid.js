@@ -1,84 +1,46 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function PremiumGalleryGrid({ items = [] }) {
   const [selectedItem, setSelectedItem] = useState(null);
+  const [shuffledItems, setShuffledItems] = useState([]);
+
+  // RANDOM SHUFFLE - Runs only on client mount to ensure the content is random but positions are stable
+  useEffect(() => {
+    if (items.length === 0) return;
+    
+    // Create a copy and shuffle it
+    const shuffled = [...items].sort(() => Math.random() - 0.5);
+    setShuffledItems(shuffled);
+  }, [items]);
 
   if (items.length === 0) return null;
 
+  // Use shuffled items if available, otherwise fallback to original
+  const displayItems = shuffledItems.length > 0 ? shuffledItems : items;
+
   return (
     <div className="w-full max-w-7xl mx-auto px-6 py-12">
-      {/* Option 5: Split-Screen High-Impact Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-        {items.map((item, index) => {
-          // Logic for Option 5: Large Hero blocks alternating with smaller ones
-          // Pattern: Large (2x2), Small, Small, Large (2x2), etc.
-          const isHero = index % 5 === 0; // Every 5th item is a Hero (spanning 2 columns and 2 rows potentially, or just width)
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 auto-rows-fr">
+        {displayItems.map((item, index) => {
+          // ALWAYS THE FIRST ONE IS BIG (ON THE LEFT)
+          const isHero = index === 0;
           
           return (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: (index % 4) * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: true }}
-              className={`group cursor-pointer relative ${isHero ? 'md:col-span-2 md:row-span-2' : 'col-span-1'}`}
-              onClick={() => setSelectedItem(item)}
-            >
-              <div className="relative h-full w-full overflow-hidden rounded-[30px] md:rounded-[50px] shadow-2xl transition-all duration-700 group-hover:shadow-primary/30 group-hover:-translate-y-2">
-                <div className={`relative w-full h-full ${isHero ? 'aspect-square md:aspect-auto md:h-full' : 'aspect-[4/5]'}`}>
-                  <img 
-                    src={item.url} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                  
-                  <div className="absolute inset-0 bg-[#9eb5b2]/80 group-hover:opacity-90 transition-opacity duration-500" />
-                  
-                  {/* Content for Split-Screen style */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-                    <div className="space-y-4">
-                       <div className="flex items-center gap-4">
-                          <div className={`flex items-center justify-center rounded-full bg-primary/20 backdrop-blur-xl border border-primary/40 text-primary ${isHero ? 'w-16 h-16' : 'w-12 h-12'}`}>
-                             <span className={`material-symbols-outlined ${isHero ? 'text-3xl' : 'text-xl'}`}>
-                              {item.videoUrl ? 'play_arrow' : 'image'}
-                             </span>
-                          </div>
-                          <span className={`font-black uppercase tracking-[0.4em] text-primary ${isHero ? 'text-[12px]' : 'text-[10px]'}`}>
-                            {item.videoUrl ? 'Motion Showcase' : 'Digital Art'}
-                          </span>
-                       </div>
-
-                       <h3 className={`text-white font-display font-black uppercase tracking-tighter leading-none ${isHero ? 'text-4xl md:text-6xl' : 'text-2xl'}`}>
-                         {item.title}
-                       </h3>
-
-                       {isHero && (
-                         <motion.p 
-                           initial={{ opacity: 0, y: 10 }}
-                           whileInView={{ opacity: 1, y: 0 }}
-                           className="text-slate-300 font-body text-sm md:text-base max-w-md line-clamp-2"
-                         >
-                           {item.description || "Explora este proyecto destacado diseñado con los más altos estándares de calidad por S2 Project."}
-                         </motion.p>
-                       )}
-
-                       <div className="pt-4 flex items-center gap-4 text-white/40 group-hover:text-primary transition-colors duration-300">
-                          <span className="h-[1px] w-8 bg-current" />
-                          <span className="text-[10px] font-black uppercase tracking-widest">Ver Detalles</span>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            <GalleryCard 
+              key={`${item.url}-${index}`} 
+              item={item} 
+              index={index} 
+              isHero={isHero}
+              onClick={() => setSelectedItem(item)} 
+            />
           );
         })}
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {selectedItem && (
           <GalleryModal 
             project={selectedItem} 
@@ -90,7 +52,44 @@ export function PremiumGalleryGrid({ items = [] }) {
   );
 }
 
-// Modal remains consistent but with slightly more luxury touches
+function GalleryCard({ item, index, isHero, onClick }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: (index % 4) * 0.1, duration: 0.8, ease: "easeOut" }}
+      className={`group cursor-pointer relative ${isHero ? 'md:col-span-2 md:row-span-2' : 'col-span-1'}`}
+      onClick={onClick}
+    >
+      {/* VIVID AURA */}
+      <div className="absolute -inset-6 bg-gradient-to-tr from-primary/20 via-transparent to-accent-light/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
+
+      {/* MAIN CONTAINER */}
+      <div className={`relative w-full h-full overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] group-hover:shadow-[0_40px_80px_-20px_rgba(57,101,66,0.25)] transition-all duration-700 group-hover:-translate-y-4 ${isHero ? 'aspect-square md:aspect-auto' : 'aspect-[4/5]'}`}>
+        
+        <div className="absolute inset-0">
+          <img 
+            src={item.url} 
+            alt={item.title} 
+            className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-700 mix-blend-overlay" />
+        </div>
+
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 scale-90 group-hover:scale-100 bg-black/5">
+           <div className={`rounded-full bg-white/20 backdrop-blur-xl border border-white/40 flex items-center justify-center text-white shadow-2xl transition-all duration-500 ${isHero ? 'w-24 h-24' : 'w-16 h-16'}`}>
+              <span className={`material-symbols-outlined drop-shadow-lg ${isHero ? 'text-4xl' : 'text-2xl'}`}>
+                {item.videoUrl ? 'play_arrow' : 'visibility'}
+              </span>
+           </div>
+        </div>
+
+        <div className="absolute inset-0 border border-white/5 rounded-[2.5rem] md:rounded-[3.5rem] group-hover:border-primary/30 transition-colors duration-500 pointer-events-none" />
+      </div>
+    </motion.div>
+  );
+}
+
 function GalleryModal({ project, onClose }) {
   const getEmbedUrl = (url) => {
     if (!url) return null;
@@ -111,69 +110,68 @@ function GalleryModal({ project, onClose }) {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[300] flex items-center justify-center p-4 md:p-10"
     >
-      <div className="absolute inset-0 bg-[#9eb5b2]/95 backdrop-blur-3xl" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#cadedd]/95 backdrop-blur-3xl" onClick={onClose} />
       
       <button
-        className="absolute top-6 right-6 z-[310] h-12 w-12 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-primary transition-all duration-500 hover:rotate-90"
+        className="absolute top-6 right-6 z-[310] h-14 w-14 flex items-center justify-center rounded-full bg-white text-primary hover:bg-primary hover:text-white transition-all duration-500 shadow-2xl"
         onClick={onClose}
       >
-        <span className="material-symbols-outlined">close</span>
+        <span className="material-symbols-outlined text-2xl">close</span>
       </button>
 
       <motion.div
         initial={{ scale: 0.9, opacity: 0, y: 40 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 40 }}
-        className="relative z-[305] w-full max-w-7xl h-full max-h-[90vh] bg-[#9eb5b2] rounded-[40px] md:rounded-[80px] overflow-hidden border border-white/5 shadow-[0_0_100px_rgba(0,0,0,1)] flex flex-col md:flex-row"
+        className="relative z-[305] w-full max-w-7xl h-full max-h-[90vh] bg-white rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row"
       >
-        <div className="flex-[2] bg-black relative flex items-center justify-center group/media">
+        <div className="flex-[1.5] bg-black relative flex items-center justify-center">
           {project.videoUrl ? (
             <iframe
               src={getEmbedUrl(project.videoUrl)}
-              className="w-full h-full aspect-video md:aspect-auto"
+              className="w-full h-full"
               allow="autoplay; fullscreen"
             />
           ) : (
-            <img src={project.url} className="w-full h-full object-contain" />
+            <img src={project.url} className="w-full h-full object-contain p-4" />
           )}
-          <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-[40px] md:rounded-[80px]" />
         </div>
 
-        <div className="flex-1 p-8 md:p-20 flex flex-col justify-center bg-[#9eb5b2] border-l border-white/5 overflow-y-auto">
-           <div className="space-y-10">
+        <div className="flex-1 p-10 md:p-16 flex flex-col justify-center bg-[#f8f9fa]">
+           <div className="space-y-8">
               <header>
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="w-12 h-[1px] bg-primary" />
-                  <span className="text-primary text-[10px] font-black uppercase tracking-[0.5em]">Project Archive</span>
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="w-10 h-[2px] bg-primary" />
+                  <span className="text-primary text-[11px] font-black uppercase tracking-[0.4em]">Project Showcase</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tighter leading-[0.9] mb-6">
+                <h2 className="text-4xl md:text-5xl font-display font-black text-primary-dark uppercase tracking-tighter leading-none mb-6">
                   {project.title}
                 </h2>
               </header>
 
-              <div className="space-y-6">
-                <p className="text-slate-400 font-body text-lg leading-relaxed italic">
-                  &quot;{project.description || "Una visión artística ejecutada con precisión técnica para elevar el estándar de la marca."}&quot;
-                </p>
-              </div>
+              <p className="text-slate-600 font-body text-lg leading-relaxed font-light">
+                {project.description || "Una visión artística ejecutada con precisión técnica para elevar el estándar de la marca."}
+              </p>
 
-              <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/5">
+              <div className="grid grid-cols-2 gap-8 py-8 border-y border-slate-200">
                  <div className="space-y-1">
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Tipo</p>
-                    <p className="text-sm font-bold text-white uppercase tracking-tight">{project.videoUrl ? 'Cinematografía' : 'Arte Digital'}</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Categoría</p>
+                    <p className="text-sm font-bold text-primary-dark uppercase tracking-tight">{project.videoUrl ? 'Cinematografía' : 'Diseño Digital'}</p>
                  </div>
                  <div className="space-y-1">
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Año</p>
-                    <p className="text-sm font-bold text-white uppercase tracking-tight">2024 Collection</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Año</p>
+                    <p className="text-sm font-bold text-primary-dark uppercase tracking-tight">2024</p>
                  </div>
               </div>
 
-              <div className="pt-4">
-                <button className="group/btn relative w-full bg-white text-black px-12 py-6 rounded-full font-display font-black uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-white transition-all duration-500 shadow-2xl overflow-hidden">
-                  <span className="relative z-10">Agendar Consulta</span>
-                  <div className="absolute inset-0 bg-[#9eb5b2] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
-                </button>
-              </div>
+              <a
+                href="https://api.whatsapp.com/send?phone=50660060026"
+                target="_blank"
+                className="group/btn relative w-full bg-primary text-white px-8 py-6 rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs hover:bg-primary-dark transition-all duration-500 shadow-xl overflow-hidden flex items-center justify-center gap-4"
+              >
+                <span className="relative z-10">Agendar Consulta</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
            </div>
         </div>
       </motion.div>
