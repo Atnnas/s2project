@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import GlassIconButton from "@/components/ui/GlassIconButton";
 
 /**
  * S2 DESIGN SYSTEM - PROFESSIONAL IMPLEMENTATION
@@ -219,9 +220,13 @@ export default function ServiciosPage() {
                   onClick={() => handleTabClick(index)}
                   className={`text-left p-4 flex items-center gap-6 transition-all duration-700 group min-w-0 rounded-[2rem] border border-transparent relative overflow-hidden h-[88px] ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] scale-[1.02] z-10' : 'bg-transparent hover:bg-white/40 backdrop-blur-[2px]'}`}
                 >
-                  <div className={`w-14 h-14 flex flex-shrink-0 items-center justify-center font-black transition-all duration-500 rounded-2xl ${isActive ? 'bg-primary text-white shadow-lg' : 'bg-slate-100 text-slate-400 group-hover:bg-primary/10 group-hover:text-primary'}`}>
-                    <span className="material-symbols-outlined text-2xl">{tab.icon}</span>
-                  </div>
+                  <GlassIconButton 
+                    icon={tab.icon} 
+                    color="primary" 
+                    isActive={isActive} 
+                    className="w-14 h-14 flex-shrink-0" 
+                    iconClassName={`text-2xl transition-opacity duration-500 ${isActive ? 'text-white opacity-100' : 'text-white opacity-50 group-hover:opacity-100'}`}
+                  />
                   <div className="flex-1 pr-1 overflow-hidden">
                     <h3 
                       className={`font-display font-black uppercase text-[10px] tracking-[0.3em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
@@ -318,14 +323,14 @@ function MainServiceView({ data }) {
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
       
       <div className="space-y-8 flex-1 relative z-10 pt-0">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="w-16 h-16 bg-[#fdf9e1]/10 rounded-2xl flex items-center justify-center text-[#fdf9e1] shadow-inner transition-transform duration-500 mt-0"
-        >
-          <span className="material-symbols-outlined text-3xl">layers</span>
-        </motion.div>
+        <GlassIconButton 
+          icon="layers" 
+          color="cream" 
+          darkMode={true} 
+          isActive={true} 
+          className="w-16 h-16 mb-8 mt-0" 
+          iconClassName="text-3xl text-primary"
+        />
         
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
@@ -378,14 +383,14 @@ function SecondaryServiceView({ data, icon }) {
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
 
       <div className="space-y-8 flex-1 relative z-10 pt-0">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white shadow-inner transition-transform duration-500 mt-0"
-        >
-          <span className="material-symbols-outlined text-3xl">{icon}</span>
-        </motion.div>
+        <GlassIconButton 
+          icon={icon} 
+          color="cream" 
+          darkMode={true} 
+          isActive={true} 
+          className="w-16 h-16 mb-8 mt-0" 
+          iconClassName="text-3xl text-primary"
+        />
         
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
