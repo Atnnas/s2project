@@ -228,21 +228,21 @@ export default function ProcesoPage() {
              {metrics.slice(0, 6).map((metric, idx) => (
                <div key={idx} className="p-6 bg-white border border-pastel flex flex-col items-center text-center justify-center transition-all duration-500 rounded-[2rem] shadow-sm">
                  <div className="text-xl md:text-2xl font-display font-black text-primary-dark">{metric.value}</div>
+                 <div className="text-xl md:text-2xl font-display font-black text-primary">{metric.value}</div>
                  <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-2">{metric.label}</p>
                </div>
              ))}
           </div>
 
-          <div className="relative z-10 w-full lg:w-auto">
-             <Link
-               href="https://api.whatsapp.com/send?phone=50660060026"
-               target="_blank"
-               className="relative flex items-center justify-center gap-4 bg-primary text-white px-12 py-8 w-full lg:w-auto rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 active:scale-95 shadow-xl shadow-primary/20 hover:bg-primary/90"
-             >
-               <span className="relative z-10">Inicia tu Proceso</span>
-               <span className="material-symbols-outlined text-sm relative z-10">arrow_outward</span>
-             </Link>
-          </div>
+           <div className="relative z-10 w-full lg:w-auto">
+              <Link
+                href="https://api.whatsapp.com/send?phone=50660060026"
+                target="_blank"
+                className="relative flex items-center justify-center bg-[#fdf9e1] text-primary px-16 py-7 w-full lg:w-auto rounded-[2rem] font-display font-black uppercase tracking-tight text-lg md:text-xl transition-all duration-500 active:scale-95 shadow-2xl shadow-black/20 hover:bg-[#fdf9e1]/90"
+              >
+                <span className="relative z-10">Inicia tu Proceso</span>
+              </Link>
+           </div>
         </div>
       </section>
 

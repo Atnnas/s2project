@@ -4,6 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
+/**
+ * S2 DESIGN SYSTEM - PROFESSIONAL IMPLEMENTATION
+ * Focus: Stability, Hierarchy, and Balanced Spacing.
+ */
+
 const mainService = {
   title: "Gestión Integral",
   subtitle: "Pensado para marcas que quieren crecer",
@@ -42,10 +47,10 @@ const secondaryServices = [
 ];
 
 const tabs = [
-  { id: "01", title: "Gestión Integral", desc: "Todo lo que tu marca necesita, mes a mes.", icon: "layers" },
-  { id: "02", title: "Identidad de Marca", desc: "Tu marca, desde cero o desde reinvención.", icon: "architecture" },
-  { id: "03", title: "Real Estate", desc: "Video y drone para proyectos de alto nivel.", icon: "domain" },
-  { id: "04", title: "Contenido Corporativo", desc: "Video institucional y eventos.", icon: "business_center" }
+  { id: "01", title: "Gestión Integral", desc: "Estrategia mensual completa.", icon: "layers" },
+  { id: "02", title: "Identidad de Marca", desc: "Branding con propósito.", icon: "architecture" },
+  { id: "03", title: "Real Estate", desc: "Audiovisual inmobiliario.", icon: "domain" },
+  { id: "04", title: "Contenido Corporativo", desc: "Comunicación empresarial.", icon: "business_center" }
 ];
 
 export default function ServiciosPage() {
@@ -69,19 +74,15 @@ export default function ServiciosPage() {
 
   useEffect(() => {
     if (isPaused) return;
-    
-    // Autoplay interval (rotates every 5 seconds)
     const intervalId = setInterval(() => {
       setActiveTab((prevTab) => (prevTab + 1) % tabs.length);
     }, 5000);
-
     return () => clearInterval(intervalId);
   }, [isPaused]);
 
   const handleInteraction = () => {
     setIsPaused(true);
     if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
-    // Resume autoplay after 8 seconds of inactivity on mobile taps
     interactionTimeoutRef.current = setTimeout(() => {
       setIsPaused(false);
     }, 8000);
@@ -92,89 +93,86 @@ export default function ServiciosPage() {
     handleInteraction();
   };
 
-  const handleNext = () => {
-    setActiveTab((prevTab) => (prevTab + 1) % tabs.length);
-    handleInteraction();
-  };
-
-  const handlePrev = () => {
-    setActiveTab((prevTab) => (prevTab - 1 + tabs.length) % tabs.length);
-    handleInteraction();
-  };
-
   return (
     <div className="flex-1 flex flex-col bg-background relative overflow-x-hidden min-h-screen w-full">
-      <section className="relative w-full pt-[clamp(8rem,14vh,10rem)] pb-4 px-6 shrink-0 text-center">
-        <div className="max-w-4xl mx-auto">
+      {/* CINEMATIC GRAIN TEXTURE - ANIMATED & MORE VISIBLE */}
+      <motion.div 
+        animate={{ 
+          x: [0, -10, 10, -5, 0],
+          y: [0, 5, -10, 5, 0]
+        }}
+        transition={{ 
+          duration: 0.5, 
+          repeat: Infinity, 
+          ease: "linear" 
+        }}
+        className="fixed inset-0 pointer-events-none z-[100] opacity-[0.07] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" 
+      />
+      
+      {/* AMBIENT LIGHT FOLLOW */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-1/4 w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[40vw] h-[40vw] bg-[#2a4d32]/5 rounded-full blur-[100px]" />
+      </div>
 
-          <h1 className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.95] relative inline-block">
-            Servicios
-          </h1>
-          <div className="mt-12 flex flex-col items-center">
+      {/* HERO SECTION - COMPACT & MINIMAL */}
+      <section className="relative w-full pt-44 pb-4 px-6 shrink-0 text-center z-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "circOut" }}
+          >
+            <p className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-primary-dark leading-[0.85] relative inline-block mb-12">
+              Servicios
+            </p>
+          </motion.div>
+          
+          <div className="flex flex-col items-center">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative group cursor-default"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 1 }}
+              className="relative"
             >
-              {/* Shadow Latency Layer - Deep Cinematic Aura */}
-              <motion.div 
-                animate={{ 
-                  scale: [1.1, 1.3, 1.1],
-                  rotate: [0, 90, 0],
-                  opacity: [0.1, 0.2, 0.1]
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-                className="absolute -inset-20 bg-slate-900 blur-[100px] rounded-full pointer-events-none" 
-              />
-
-              {/* Institutional Latency Glow - Infinite Pulse */}
-              <motion.div 
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute -inset-12 bg-primary/20 blur-[60px] rounded-full pointer-events-none" 
-              />
-              
               <div className="relative flex flex-col items-center">
-                <motion.span 
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ delay: 0.5, duration: 1.5, ease: "easeInOut" }}
-                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent mb-8"
-                />
-                
-                <motion.div
+                <motion.div 
                   animate={{ 
-                    filter: ['brightness(1) contrast(1)', 'brightness(1.1) contrast(1.1)', 'brightness(1) contrast(1)'],
-                    textShadow: [
-                      '0 0 20px rgba(57, 101, 66, 0)',
-                      '0 0 30px rgba(57, 101, 66, 0.3)',
-                      '0 0 20px rgba(57, 101, 66, 0)'
+                    filter: [
+                      'brightness(1) drop-shadow(0 0 0px rgba(0,0,0,0))',
+                      'brightness(1.1) drop-shadow(0 0 10px rgba(255,255,255,0.2))',
+                      'brightness(1) drop-shadow(0 0 0px rgba(0,0,0,0))'
                     ]
                   }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative transform-gpu"
+                  style={{ perspective: 1000 }}
                 >
-                  <h2 className="text-[clamp(2.5rem,8vw,6.5rem)] font-display font-black tracking-[-0.05em] text-primary-dark leading-none uppercase relative">
-                    {pricingTag.split(' ')[0]} <span className="text-primary italic font-medium lowercase tracking-tighter">{pricingTag.split(' ').slice(1).join(' ')}</span>
-                  </h2>
+                  <p className="text-3xl md:text-6xl font-display font-black tracking-tighter uppercase relative flex flex-nowrap justify-center items-center gap-x-3 whitespace-nowrap overflow-hidden px-8 py-2">
+                    <span className="text-primary-dark">{pricingTag.split(' ')[0]}</span>
+                    <span className="text-primary italic font-medium lowercase tracking-tighter">
+                      {pricingTag.split(' ').slice(1).join(' ')}
+                    </span>
+                    <motion.span 
+                      animate={{ 
+                        left: ["-50%", "150%"],
+                      }}
+                      transition={{ 
+                        duration: 8, 
+                        repeat: Infinity, 
+                        repeatDelay: 10,
+                        ease: "easeInOut"
+                      }}
+                      className="absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-20 pointer-events-none"
+                    />
+                  </p>
                 </motion.div>
 
                 <motion.span 
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
-                  transition={{ delay: 0.8, duration: 1.5, ease: "easeInOut" }}
-                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent mt-8"
+                  transition={{ delay: 0.8, duration: 1.5 }}
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent mt-5"
                 />
               </div>
             </motion.div>
@@ -182,80 +180,56 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      {/* DASHBOARD GRID — Apple Material Design */}
-      <section className="w-full relative pb-24 bg-background flex-1 flex flex-col justify-start pt-0">
-        <div 
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative px-[clamp(1.5rem,6vw,6rem)]"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+      {/* MAIN CONTENT GRID - MAXIMUM WIDTH EXPANSION */}
+      <section className="w-full relative pb-24 bg-background px-4 md:px-10 flex-1 flex flex-col justify-start pt-0">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative">
           
-          {/* Column 1: Desktop Vertical Menu (Sticky to avoid double scroll) */}
-          <div className="hidden lg:flex lg:col-span-6 z-20 lg:flex-col lg:justify-start gap-2 h-fit sticky top-[20px]">
+          {/* TABS - 50% WIDTH WITH VERTICAL INDICATOR */}
+          <div className="hidden lg:flex lg:col-span-6 z-20 lg:flex-col lg:justify-start gap-3 h-fit sticky top-[32px] pl-6 border-l border-black/5">
+            {/* Animated Active Indicator */}
+            <motion.div 
+              className="absolute left-0 w-1 bg-primary rounded-full z-30"
+              animate={{ 
+                top: activeTab * 76, // Approximate height of each tab
+                height: 64 
+              }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+            
             {tabs.map((tab, index) => {
               const isActive = activeTab === index;
               return (
                 <button 
                   key={tab.id} 
                   onClick={() => handleTabClick(index)}
-                  className={`text-left p-6 flex items-center gap-6 transition-all duration-500 group min-w-0 rounded-[30px] border border-transparent ${isActive ? 'bg-[#fdf9e1] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] z-10' : 'bg-transparent hover:bg-[#fdf9e1]/10'}`}
+                  className={`text-left p-4 flex items-center gap-6 transition-all duration-700 group min-w-0 rounded-[2rem] border border-transparent relative overflow-hidden ${isActive ? 'bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] scale-[1.02] z-10' : 'bg-transparent hover:bg-white/40 backdrop-blur-[2px]'}`}
                 >
-                  <div className={`w-12 h-12 flex flex-shrink-0 items-center justify-center font-black text-xl transition-colors duration-300 ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-slate-500 group-hover:bg-primary/20 group-hover:text-primary'}`}>
-                    <span className="material-symbols-outlined text-xl">{tab.icon}</span>
+                  <div className={`w-14 h-14 flex flex-shrink-0 items-center justify-center font-black transition-all duration-500 rounded-2xl ${isActive ? 'bg-primary text-white shadow-lg' : 'bg-slate-100 text-slate-400 group-hover:bg-primary/10 group-hover:text-primary'}`}>
+                    <span className="material-symbols-outlined text-2xl">{tab.icon}</span>
                   </div>
-                  <div className="flex-1">
-                    <h3 className={`font-display font-black uppercase text-xs md:text-sm tracking-widest ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-700'}`}>{tab.title}</h3>
+                  <div className="flex-1 pr-1 overflow-hidden">
+                    <h3 
+                      className={`font-display font-black uppercase text-[10px] tracking-[0.3em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
+                      style={{ transform: 'scale(0.36)' }}
+                    >
+                      {tab.title}
+                    </h3>
                   </div>
                 </button>
               );
             })}
           </div>
 
-          {/* Mobile Carousel (Standardized) */}
-          <div className="lg:hidden w-full flex items-center justify-between pb-6 gap-2 z-20">
-             <button onClick={handlePrev} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors">
-                 <span className="material-symbols-outlined text-xl">chevron_left</span>
-             </button>
-             
-             <div className="flex-1 overflow-hidden relative min-h-[50px] flex items-center justify-center">
-                 <AnimatePresence mode="wait">
-                   <motion.div
-                     key={activeTab}
-                     initial={{ opacity: 0, x: 20 }}
-                     animate={{ opacity: 1, x: 0 }}
-                     exit={{ opacity: 0, x: -20 }}
-                     transition={{ duration: 0.2, ease: "easeOut" }}
-                     className="absolute inset-0 flex items-center justify-center w-full"
-                   >
-                     <div className="bg-slate-900 mx-auto p-2 pr-5 rounded-full flex items-center gap-3 shadow-xl max-w-full cursor-pointer" onClick={handleNext}>
-                         <div className="w-8 h-8 rounded-full bg-primary text-white flex flex-shrink-0 items-center justify-center font-black shadow-inner">
-                            <span className="material-symbols-outlined text-[1rem]">{tabs[activeTab].icon}</span>
-                         </div>
-                         <h3 className="font-display font-black uppercase text-[10px] sm:text-xs tracking-widest text-white whitespace-nowrap truncate w-full pr-2">
-                            {tabs[activeTab].title}
-                         </h3>
-                      </div>
-                   </motion.div>
-                 </AnimatePresence>
-             </div>
-             
-             <button onClick={handleNext} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-500 transition-colors">
-                 <span className="material-symbols-outlined text-xl">chevron_right</span>
-             </button>
-          </div>
-          {/* Column 2: Active Card Viewport (Integrated with page scroll) */}
-          <div className="lg:col-span-6 w-full min-h-[500px]">
+          {/* VIEWPORT - 50% WIDTH */}
+          <div className="lg:col-span-6 w-full">
              <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTab}
-                  initial={{ opacity: 0, filter: 'blur(15px)', y: 20 }}
-                  animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
-                  exit={{ opacity: 0, filter: 'blur(15px)', y: -20 }}
-                  transition={{ 
-                    duration: 0.7, 
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                  className="w-full h-full"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.5, ease: "circOut" }}
+                  className="w-full"
                 >
                   {activeTab === 0 && <MainServiceView data={mainService} />}
                   {activeTab === 1 && <SecondaryServiceView data={secondaryServices[0]} icon="architecture" />}
@@ -267,119 +241,173 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      {/* Conversion Panel - Unified with Home style */}
-      <section className="w-full pb-20 px-[clamp(1.5rem,6vw,6rem)]">
-        <div className="relative p-10 md:p-14 lg:p-20 bg-primary border border-primary/20 rounded-[3rem] overflow-hidden shadow-2xl shadow-primary/20 flex flex-col lg:flex-row items-center justify-between gap-12 group transition-all duration-700 hover:shadow-primary/30">
-          
-          <div className="relative z-10 flex flex-col space-y-8 max-w-4xl">
-            <div className="flex items-center gap-4">
-              <span className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-white px-5 py-2 rounded-full border border-white/20 shadow-sm">
-                Consulta Exclusiva
-              </span>
-            </div>
-            
-            <h2 className="text-white">
-              Diagnóstico <br />
-              <span className="text-white italic text-6xl xl:text-8xl">Sin Costo</span>
-            </h2>
-            
-            <p className="text-lg md:text-xl text-white opacity-90 font-body leading-relaxed max-w-3xl">
-              Analizamos tu marca y te compartimos una lectura estratégica clara. Sin compromiso, con el mismo criterio con el que trabajamos cada cuenta.
-            </p>
-          </div>
+      {/* CONVERSION PANEL - ULTRA PREMIUM EDITORIAL */}
+      <section className="w-full pb-32 px-4 md:px-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative p-10 md:p-20 bg-gradient-to-br from-primary via-primary to-[#2a4d32] border border-white/10 rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] flex flex-col lg:flex-row items-center justify-between gap-16"
+          >
+            {/* Ambient Light Effect */}
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-black/20 rounded-full blur-[100px] pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col sm:flex-row items-stretch lg:items-center gap-8 shrink-0 w-full lg:w-auto">
-             <div className="p-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-[2.5rem] flex flex-col items-center text-center justify-center shadow-sm">
-               <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white mb-4">
-                 <span className="material-symbols-outlined text-4xl">insights</span>
-               </div>
-               <p className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">Estrategia</p>
-               <p className="text-sm font-bold text-white uppercase tracking-tight">Diagnóstico visual</p>
-             </div>
-             
-             <Link
-               href="https://api.whatsapp.com/send?phone=50660060026"
-               target="_blank"
-               className="relative flex items-center justify-center gap-4 bg-white text-primary px-12 py-8 w-full lg:w-auto rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 active:scale-95 shadow-xl shadow-black/10 hover:bg-slate-50"
-             >
-               <span className="relative z-10">Quiero Trabajar con S2</span>
-               <span className="material-symbols-outlined text-sm relative z-10">arrow_outward</span>
-             </Link>
-          </div>
+            <div className="relative z-10 flex flex-col space-y-8 max-w-2xl text-center lg:text-left">
+              <div className="flex flex-col gap-4">
+                <span className="inline-block text-[10px] font-black uppercase tracking-[0.5em] text-primary bg-[#fdf9e1] px-6 py-2.5 rounded-full w-fit mx-auto lg:mx-0 shadow-xl shadow-black/10">
+                  Oportunidad Estratégica
+                </span>
+                <h2 className="text-[#fdf9e1] text-4xl md:text-6xl font-display font-black uppercase leading-[0.9] tracking-tighter">
+                  Diagnóstico <br />
+                  <span className="italic font-light lowercase opacity-60 tracking-normal block mt-2 text-3xl md:text-5xl">sin costo alguno.</span>
+                </h2>
+              </div>
+              
+              <div className="w-20 h-[1px] bg-[#fdf9e1]/30 mx-auto lg:mx-0" />
+
+              <p className="text-base md:text-lg text-[#fdf9e1]/80 font-body leading-relaxed font-light">
+                Elevamos la lectura de tu marca a través de un análisis <span className="text-[#fdf9e1] font-medium italic">honesto y profundo</span>. Descubre el potencial oculto de tu visión con la perspectiva estratégica de S2.
+              </p>
+            </div>
+
+            <div className="relative z-10 w-full lg:w-auto">
+              <Link
+                href="https://api.whatsapp.com/send?phone=50660060026"
+                target="_blank"
+                className="group relative flex items-center justify-center gap-6 bg-[#fdf9e1] text-primary px-16 py-8 rounded-2xl font-display font-black uppercase tracking-[0.2em] text-[11px] transition-all duration-700 hover:bg-white hover:scale-[1.02] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] active:scale-95 overflow-hidden"
+              >
+                <span className="relative z-10">Agendar Consultoría</span>
+                <span className="material-symbols-outlined text-lg relative z-10 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">arrow_outward</span>
+                
+                {/* Button Shine Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
-
     </div>
   );
 }
 
 function MainServiceView({ data }) {
   return (
-    <div className="p-10 md:p-16 rounded-[3rem] bg-primary border border-[#fdf9e1]/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
-      <div className="space-y-6 flex-1">
-        <div className="w-16 h-16 bg-[#fdf9e1]/10 rounded-full flex items-center justify-center text-[#fdf9e1]">
+    <motion.div 
+      initial={{ opacity: 0, y: 30, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group"
+    >
+      {/* Ambient Light Rim */}
+      <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
+      
+      <div className="space-y-8 flex-1 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="w-16 h-16 bg-[#fdf9e1]/10 rounded-2xl flex items-center justify-center text-[#fdf9e1] shadow-inner transition-transform duration-500"
+        >
           <span className="material-symbols-outlined text-3xl">layers</span>
-        </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-[#fdf9e1] pr-8">
-          {data.title}
-        </h3>
-        <p className="text-[#fdf9e1] opacity-90 font-body leading-relaxed max-w-2xl">
-          {data.description}
-        </p>
+        </motion.div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-[#fdf9e1]/10 mt-6">
-           {data.features.map((feature, i) => {
-             const subtitles = [
-               "Objetivos claros desde el día uno",
-               "Calendario, guiones y dirección creativa",
-               "Grabación y edición profesional",
-               "Pauta estratégica con seguimiento",
-               "Análisis mensual y mejora continua"
-             ];
-             return (
-               <div key={i} className="flex gap-4 items-start">
-                  <span className="text-[#fdf9e1] font-black font-display text-lg opacity-40">0{i+1}</span>
-                  <div>
-                    <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-[#fdf9e1] leading-tight">{feature}</h4>
-                    <p className="text-[10px] text-[#fdf9e1]/60 font-body uppercase tracking-wider">
-                      {subtitles[i] || "Optimizado para resultados"}
-                    </p>
-                  </div>
-               </div>
-             );
-           })}
+        <motion.h3 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-3xl md:text-[3.3rem] font-display font-black uppercase tracking-tight leading-[0.9] text-[#fdf9e1]"
+        >
+          {data.title}
+        </motion.h3>
+        
+        <motion.p 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-base md:text-lg text-[#fdf9e1]/70 font-body leading-relaxed max-w-3xl font-light"
+        >
+          {data.description}
+        </motion.p>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 pt-10 border-t border-[#fdf9e1]/10 mt-10">
+           {data.features.map((feature, i) => (
+             <motion.div 
+               key={i} 
+               initial={{ opacity: 0, x: -10 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ delay: 0.5 + (i * 0.1) }}
+               className="flex gap-5 items-start group/item"
+             >
+                <span className="text-[#fdf9e1] font-black font-display text-xl opacity-10 mt-1 transition-opacity group-hover/item:opacity-30">0{i+1}</span>
+                <div>
+                  <h4 className="text-[13px] font-black uppercase tracking-widest text-[#fdf9e1] leading-tight mb-1">{feature}</h4>
+                  <p className="text-[12px] text-[#fdf9e1]/30 font-body uppercase tracking-wider">Estándar de excelencia S2</p>
+                </div>
+             </motion.div>
+           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 function SecondaryServiceView({ data, icon }) {
   return (
-    <div className="p-10 md:p-16 rounded-[3rem] bg-primary border border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] w-full h-full flex flex-col justify-between transition-all duration-700">
-      <div className="space-y-6 flex-1">
-        <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center text-white">
+    <motion.div 
+      initial={{ opacity: 0, y: 30, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group"
+    >
+      {/* Ambient Light Rim */}
+      <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
+
+      <div className="space-y-8 flex-1 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white shadow-inner transition-transform duration-500"
+        >
           <span className="material-symbols-outlined text-3xl">{icon}</span>
-        </div>
-        <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter leading-tight text-white pr-8">
-          {data.title}
-        </h3>
-        <p className="text-white opacity-90 font-body leading-relaxed max-w-2xl pb-4">
-          {data.description}
-        </p>
+        </motion.div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 pt-6 border-t border-white/10 mt-6">
+        <motion.h3 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-3xl md:text-[3.3rem] font-display font-black uppercase tracking-tight leading-[0.9] text-white"
+        >
+          {data.title}
+        </motion.h3>
+        
+        <motion.p 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-base md:text-lg text-white/70 font-body leading-relaxed max-w-3xl font-light"
+        >
+          {data.description}
+        </motion.p>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 pt-10 border-t border-white/10 mt-10">
            {data.features.map((feature, i) => (
-             <div key={i} className="flex gap-4 items-start">
-                <span className="text-white font-black font-display text-lg opacity-40">0{i+1}</span>
-                <div className="flex flex-col">
-                  <h4 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-white leading-tight">{feature}</h4>
-                  <p className="text-[10px] text-white/60 font-body uppercase tracking-wider">Servicio Especializado</p>
+             <motion.div 
+               key={i} 
+               initial={{ opacity: 0, x: -10 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ delay: 0.5 + (i * 0.1) }}
+               className="flex gap-5 items-start group/item"
+             >
+                <span className="text-white font-black font-display text-xl opacity-10 mt-1 transition-opacity group-hover/item:opacity-30">0{i+1}</span>
+                <div>
+                  <h4 className="text-[13px] font-black uppercase tracking-widest text-white leading-tight mb-1">{feature}</h4>
+                  <p className="text-[12px] text-white/30 font-body uppercase tracking-wider">Estándar de excelencia S2</p>
                 </div>
-             </div>
+             </motion.div>
            ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
