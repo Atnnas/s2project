@@ -77,7 +77,7 @@ export default function MainHeroCarousel() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-                className="inline-block text-primary font-black uppercase tracking-[0.4em] text-[10px] mb-4 bg-primary/10 px-4 py-2 rounded-full border border-primary/20 backdrop-blur-md"
+                className="inline-block text-primary font-black uppercase tracking-[0.4em] text-[11px] sm:text-[13px] mb-6 bg-primary/10 px-6 py-2.5 rounded-full border border-primary/20 backdrop-blur-md"
               >
                 {banners[current].topText || 'S2 Project • Boutique Agency'}
               </motion.span>
@@ -85,7 +85,7 @@ export default function MainHeroCarousel() {
                 initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 transition={{ delay: 0.8, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[clamp(2.5rem,8vw,6rem)] font-display font-black uppercase text-white leading-[0.95] tracking-tighter mb-6"
+                className="text-[clamp(3rem,9vw,6.5rem)] font-display font-black uppercase text-white leading-[0.85] tracking-tighter mb-8"
               >
                 {banners[current].title.split('\n').map((line, i) => (
                   <span key={i}>
@@ -98,7 +98,7 @@ export default function MainHeroCarousel() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1 }}
-                className="text-lg md:text-xl text-slate-300 font-body max-w-xl leading-relaxed"
+                className="text-xl md:text-2xl text-slate-100 font-body max-w-2xl leading-relaxed font-medium"
               >
                 {banners[current].subtitle}
               </motion.p>

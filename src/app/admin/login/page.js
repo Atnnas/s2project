@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import GlassIconButton from "@/components/ui/GlassIconButton";
+import AnimatedButtonText from "@/components/ui/AnimatedButtonText";
 
 function LoginContent() {
   const { data: session, status } = useSession();
@@ -46,7 +47,7 @@ function LoginContent() {
           className="relative z-10 w-full flex items-center justify-center gap-4 bg-[#fdf9e1] py-4 px-6 rounded-2xl font-bold text-primary-dark hover:bg-white transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl mb-8"
         >
           <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" className="w-5 h-5" />
-          Ingresar con Google
+          <AnimatedButtonText text="Ingresar con Google" baseColor="#1d2729" />
         </button>
 
         <div className="relative flex items-center py-2 mb-6 z-10 w-full">
@@ -73,7 +74,9 @@ function LoginContent() {
               iconClassName="text-xl sm:text-2xl text-[#1d2729]"
             />
             <div className="flex-1 relative z-10">
-              <h4 className="font-display font-black uppercase text-[11px] sm:text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-[#25D366] transition-colors">Hablar por WhatsApp</h4>
+              <h4 className="font-display font-black uppercase text-[11px] sm:text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-[#25D366] transition-colors">
+                <AnimatedButtonText text="Hablar por WhatsApp" baseColor="#fdf9e1" />
+              </h4>
               <p className="text-[10px] sm:text-xs text-[#fdf9e1]/50 font-body">Respuesta rápida</p>
             </div>
             <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-[#25D366] transition-colors group-hover:translate-x-1 relative z-10">arrow_forward</span>
@@ -96,7 +99,9 @@ function LoginContent() {
               iconClassName="text-xl sm:text-2xl text-[#1d2729]"
             />
             <div className="flex-1 relative z-10">
-              <h4 className="font-display font-black uppercase text-[11px] sm:text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-white transition-colors">Agendar Llamada</h4>
+              <h4 className="font-display font-black uppercase text-[11px] sm:text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-white transition-colors">
+                <AnimatedButtonText text="Agendar Llamada" baseColor="#fdf9e1" />
+              </h4>
               <p className="text-[10px] sm:text-xs text-[#fdf9e1]/50 font-body">Reunión estratégica</p>
             </div>
             <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-white transition-colors group-hover:translate-x-1 relative z-10">arrow_forward</span>

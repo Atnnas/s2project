@@ -2,7 +2,7 @@
 
 export default function Loading() {
   return (
-    <main className="min-h-screen pb-16 relative bg-white overflow-x-hidden">
+    <main className="min-h-screen pb-16 relative bg-[#cadedd] overflow-x-hidden">
       <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-16 pt-0">
         <div className="flex flex-col space-y-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">

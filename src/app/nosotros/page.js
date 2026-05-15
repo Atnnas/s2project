@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import GlassIconButton from "@/components/ui/GlassIconButton";
+import AnimatedButtonText from "@/components/ui/AnimatedButtonText";
 
 export default function NosotrosPage() {
   const [showContactModal, setShowContactModal] = useState(false);
@@ -16,17 +17,17 @@ export default function NosotrosPage() {
   ];
 
   return (
-    <div className="flex-1 flex flex-col bg-background relative overflow-x-hidden w-full">
+    <div className="flex-1 flex flex-col bg-[#cadedd] relative overflow-x-hidden w-full">
       {/* Premium Minimal Hero — Standardized Spacing (Compact) */}
-      <section className="relative w-full pt-[clamp(8rem,14vh,11rem)] pb-[clamp(0.5rem,1vh,1rem)] px-6 shrink-0 text-center">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[300px] bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
+      <section className="relative w-full pt-[clamp(4rem,6vh,6rem)] lg:pt-12 xl:pt-[clamp(8rem,14vh,11rem)] pb-0 px-6 shrink-0 text-center">
+
         
         <div className="max-w-4xl mx-auto">
         </div>
       </section>
 
       {/* RESTRUCTURACIÓN TOTAL: Grid de 2 Columnas (Compact) */}
-      <div className="flex-1 w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 relative z-10 lg:min-h-[calc(100vh-140px)] overflow-hidden">
+      <div className="flex-1 w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 relative z-10 lg:min-h-[calc(100vh-100px)] overflow-hidden">
         
         {/* COLUMNA IZQUIERDA: Anclaje de Foto */}
         <div className="relative w-full h-[50vh] sm:h-[60vh] lg:h-full order-2 lg:order-1 flex items-end">
@@ -49,7 +50,7 @@ export default function NosotrosPage() {
         </div>
 
         {/* COLUMNA DERECHA: Bloque de Información (Compact) */}
-        <div className="flex flex-col justify-center px-6 sm:px-12 lg:px-20 py-10 lg:py-6 gap-[clamp(1rem,3vh,2rem)] order-1 lg:order-2 h-full">
+        <div className="flex flex-col justify-start lg:justify-center px-6 sm:px-10 lg:px-8 xl:px-20 py-6 lg:py-4 gap-[clamp(1rem,2vh,1.5rem)] order-1 lg:order-2 h-full">
           
           {/* Main Title Section */}
           <motion.div
@@ -58,11 +59,11 @@ export default function NosotrosPage() {
             transition={{ duration: 0.8 }}
             className="space-y-3"
           >
-            <h2 className="text-[clamp(3.5rem,8vw,8rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block mb-2">
+            <h2 className="text-[clamp(2.8rem,7vw,8rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block mb-2">
               La Agencia de la <br />
-              <span className="text-primary whitespace-nowrap">Nueva Generación</span>
+              <span className="text-primary">Nueva Generación</span>
             </h2>
-            <p className="text-[clamp(1.1rem,1.4vw,1.4rem)] [@media(min-width:1600px)]:text-[clamp(1.4rem,1.8vw,2rem)] text-accent font-body leading-relaxed max-w-xl">
+            <p className="text-accent font-body leading-relaxed max-w-xl">
               Somos una <strong>agencia boutique</strong> con un enfoque fresco del marketing digital. Trabajamos con marcas que buscan más que publicaciones: buscan presencia, diferenciación y crecimiento real.
             </p>
           </motion.div>
@@ -76,7 +77,7 @@ export default function NosotrosPage() {
           >
             <div className="space-y-2">
               <h3 className="text-[clamp(1.4rem,2vw,1.9rem)] [@media(min-width:1600px)]:text-[clamp(2rem,2.5vw,3rem)] font-display font-black uppercase tracking-tight text-slate-800">Como Trabajamos</h3>
-              <p className="text-accent font-body leading-relaxed text-[clamp(1rem,1.2vw,1.25rem)] [@media(min-width:1600px)]:text-[clamp(1.25rem,1.5vw,1.6rem)] max-w-xl">
+              <p className="text-accent font-body leading-relaxed max-w-xl">
                 Cada cuenta recibe estrategia, producción y seguimiento. No publicamos por publicar: cada pieza tiene un propósito dentro del crecimiento de tu marca.
               </p>
             </div>
@@ -91,7 +92,7 @@ export default function NosotrosPage() {
                   transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
                   className="flex flex-col border-l-4 border-primary pl-4 py-0.5 cursor-default group"
                 >
-                  <span className="text-slate-800 font-bold text-[clamp(0.85rem,1vw,1rem)] [@media(min-width:1600px)]:text-[clamp(1.2rem,1.5vw,1.6rem)] transition-colors duration-300">
+                  <span className="text-slate-800 font-bold transition-colors duration-300">
                     {item.label}
                   </span>
                 </motion.div>
@@ -133,10 +134,16 @@ export default function NosotrosPage() {
                 <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500" />
 
                 <span className="relative z-10 flex flex-col items-start text-left">
-                  <span className="text-[#cadedd] text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70">Diagnóstico visual</span>
-                  <span className="font-display font-black text-lg md:text-xl tracking-tight text-white">
-                    AGENDA TU CONSULTA
-                  </span>
+                  <AnimatedButtonText 
+                    text="Diagnóstico visual" 
+                    baseColor="#cadedd" 
+                    className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70"
+                  />
+                  <AnimatedButtonText 
+                    text="AGENDA TU CONSULTA" 
+                    baseColor="#cadedd" 
+                    className="font-display font-black text-lg md:text-xl tracking-tight"
+                  />
                 </span>
                 
                 <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-[#fdf9e1] transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-[#fdf9e1]/30 group-hover:rotate-[360deg]">
@@ -191,7 +198,9 @@ export default function NosotrosPage() {
                     iconClassName="text-2xl text-[#1d2729]"
                   />
                   <div>
-                    <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-[#25D366] transition-colors">Hablar por WhatsApp</h4>
+                    <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-[#25D366] transition-colors">
+                      <AnimatedButtonText text="Hablar por WhatsApp" baseColor="#fdf9e1" />
+                    </h4>
                     <p className="text-xs text-[#fdf9e1]/50 font-body">Respuesta rápida</p>
                   </div>
                   <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-[#25D366] transition-colors group-hover:translate-x-1">arrow_forward</span>
@@ -211,7 +220,9 @@ export default function NosotrosPage() {
                     iconClassName="text-2xl text-[#1d2729]"
                   />
                   <div>
-                    <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-white transition-colors">Agendar en Calendario</h4>
+                    <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-white transition-colors">
+                      <AnimatedButtonText text="Agendar en Calendario" baseColor="#fdf9e1" />
+                    </h4>
                     <p className="text-xs text-[#fdf9e1]/50 font-body">Reunión virtual estratégica</p>
                   </div>
                   <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-white transition-colors group-hover:translate-x-1">arrow_forward</span>

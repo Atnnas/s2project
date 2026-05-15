@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSession, signIn } from 'next-auth/react';
+import AnimatedButtonText from '@/components/ui/AnimatedButtonText';
 
 const NavbarLink = ({ href, children, isActive, onClick }) => {
   return (
@@ -61,21 +62,36 @@ export default function Navbar() {
         className="fixed top-6 left-0 w-full z-[100] px-6 flex justify-center pointer-events-none"
       >
         <nav 
-          className={`pointer-events-auto flex items-center justify-between px-6 md:px-12 py-5 rounded-full transition-all duration-700 max-w-[90vw] w-full border border-pastel ${
-            isScrolled ? 'bg-cream-glass shadow-xl' : 'bg-white shadow-sm'
+          className={`pointer-events-auto flex items-center justify-between px-4 md:px-8 lg:px-10 py-4 md:py-5 rounded-full transition-all duration-700 max-w-[calc(100vw-2rem)] md:max-w-[90vw] w-full border border-white/50 overflow-hidden relative ${
+            isScrolled 
+              ? 'backdrop-blur-2xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)]' 
+              : 'backdrop-blur-xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.15)]'
           }`}
+          style={{
+            transform: isScrolled ? 'translateY(-4px) scale(1.02)' : 'translateY(0) scale(1)',
+            background: isScrolled 
+              ? 'linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.15) 100%)'
+              : 'linear-gradient(to bottom, rgba(253,249,225,0.5) 0%, rgba(253,249,225,0.2) 45%, rgba(253,249,225,0.1) 50%, rgba(253,249,225,0.3) 100%)',
+            boxShadow: isScrolled
+              ? '0 40px 100px -20px rgba(0,0,0,0.3), inset 0 2px 2px 0 rgba(255,255,255,0.8), inset 0 -1px 2px 0 rgba(0,0,0,0.1), inset 0 15px 30px -10px rgba(255,255,255,0.5)'
+              : '0 20px 50px -10px rgba(0,0,0,0.15), inset 0 2px 2px 0 rgba(255,255,255,0.7), inset 0 -1px 2px 0 rgba(0,0,0,0.05), inset 0 12px 24px -10px rgba(255,255,255,0.4)',
+          }}
         >
-          {/* Logo Section - Optimized for Retina */}
-          <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] -mt-4">
+          {/* Internal Glass Reflection Shimmer */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent pointer-events-none z-0 h-1/2" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shimmer_5s_infinite] pointer-events-none z-0" />
+
+          {/* Logo Section - Adjusted for centering */}
+          <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] relative z-10">
             <img 
               src="/logo-final.png" 
               alt="S2 PROJECT" 
-              className="h-12 md:h-15 w-auto object-contain"
+              className="h-[84px] md:h-[105px] w-auto object-contain drop-shadow-sm"
             />
           </Link>
 
           {/* Desktop Nav - Expanded horizontally & Vertically Centered */}
-          <div className="hidden lg:flex flex-1 items-center justify-around gap-2 px-8 h-full">
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-4 px-2 xl:px-8 h-full">
             {navLinks.map((link) => (
               <NavbarLink 
                 key={link.href}
@@ -88,27 +104,27 @@ export default function Navbar() {
           </div>
 
           {/* Auth Actions (Desktop) */}
-          <div className="hidden lg:flex items-center gap-2 pl-4 border-l border-primary/10">
+          <div className="hidden lg:flex items-center gap-2 pl-2 xl:pl-4 border-l border-primary/10">
             {!session ? (
               <>
                 <button 
                   onClick={() => signIn('google', { callbackUrl: pathname })}
-                  className="px-5 py-2.5 text-[12px] font-black uppercase tracking-[0.15em] text-primary-dark hover:text-primary transition-colors font-display"
+                  className="px-3 xl:px-5 py-2.5 text-[11px] xl:text-[12px] font-black uppercase tracking-[0.1em] xl:tracking-[0.15em] text-primary-dark hover:text-primary transition-colors font-display"
                 >
-                  Login
+                  <AnimatedButtonText text="Login" baseColor="#1d2729" />
                 </button>
                 <button 
                   onClick={() => setIsSignUpOpen(true)}
-                  className="px-6 py-2.5 rounded-full bg-primary text-[#fdf9e1] text-[12px] font-black uppercase tracking-[0.15em] hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 font-display"
+                  className="px-4 xl:px-6 py-2.5 rounded-full bg-primary text-[#fdf9e1] text-[11px] xl:text-[12px] font-black uppercase tracking-[0.1em] xl:tracking-[0.15em] hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 font-display"
                 >
-                  Sign Up
+                  <AnimatedButtonText text="Sign Up" baseColor="#fdf9e1" />
                 </button>
               </>
             ) : (
               isAdmin && (
                 <Link 
                   href="/admin/dashboard"
-                  className={`px-6 py-2.5 rounded-full text-[12px] font-black uppercase tracking-[0.15em] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 font-display ${
+                  className={`px-4 xl:px-6 py-2.5 rounded-full text-[11px] xl:text-[12px] font-black uppercase tracking-[0.1em] xl:tracking-[0.15em] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 font-display ${
                     pathname.startsWith('/admin') 
                       ? 'bg-primary text-white' 
                       : 'bg-primary/10 text-primary hover:bg-primary/20'
@@ -168,7 +184,7 @@ export default function Navbar() {
                   }}
                   className="text-2xl font-display font-black uppercase tracking-tighter text-primary-dark mt-4 pt-4 border-t border-primary/10"
                 >
-                  Login
+                  <AnimatedButtonText text="Login" baseColor="#1d2729" />
                 </button>
               ) : (
                 isAdmin && (

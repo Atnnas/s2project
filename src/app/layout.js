@@ -78,12 +78,12 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
       <body
-        className={`${clashGrotesk.variable} ${roundo.variable} bg-background-light font-body text-slate-900 antialiased overflow-x-hidden`}
+        className={`${clashGrotesk.variable} ${roundo.variable} bg-[#cadedd] font-body text-slate-900 antialiased overflow-x-hidden`}
       >
         <AuthProvider>
-          <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+          <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-[#cadedd]">
             <Navbar />
-            <main className="flex-1 pt-0 flex flex-col bg-white">
+            <main className="flex-1 flex flex-col bg-[#cadedd]">
               {children}
             </main>
             <Footer />

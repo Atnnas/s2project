@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import GlassIconButton from "@/components/ui/GlassIconButton";
+import AnimatedButtonText from "@/components/ui/AnimatedButtonText";
 
 const steps = [
   {
@@ -87,7 +88,7 @@ export default function ProcesoPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-background relative overflow-x-hidden min-h-screen w-full">
+    <div className="flex-1 flex flex-col bg-[#cadedd] relative overflow-x-hidden min-h-screen w-full">
       {/* CINEMATIC GRAIN TEXTURE */}
       <motion.div 
         animate={{ 
@@ -95,14 +96,11 @@ export default function ProcesoPage() {
           y: [0, 5, -10, 5, 0]
         }}
         transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-        className="fixed inset-0 pointer-events-none z-[100] opacity-[0.07] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" 
+        className="fixed inset-0 pointer-events-none z-[100] opacity-[0.05] mix-blend-soft-light bg-[url('data:image/svg+xml,%3Csvg_viewBox=%220_0_200_200%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')] bg-repeat" 
       />
 
-      {/* AMBIENT LIGHT */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]" />
-      </div>
+      {/* PURE BACKGROUND - NO AMBIENT LIGHTS */}
+
 
       {/* HERO SECTION */}
       <section className="relative w-full pt-44 pb-4 px-6 shrink-0 text-center z-10">
@@ -162,8 +160,7 @@ export default function ProcesoPage() {
                     />
                     <div className="flex items-center gap-2 min-w-0">
                       <h3 
-                        className={`font-display font-black uppercase text-[10px] tracking-[0.3em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
-                        style={{ transform: 'scale(0.36)' }}
+                        className={`font-display font-black uppercase text-[9px] md:text-[9.35px] tracking-[0.25em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
                       >
                         <span className={isActive ? 'text-primary' : 'text-inherit opacity-60'}>0{index + 1}</span> {step.title}
                       </h3>
@@ -192,9 +189,9 @@ export default function ProcesoPage() {
         </div>
       </section>
 
-      {/* RESULTS PANEL */}
-      <section className="w-full pb-32 px-4 md:px-10 z-10">
-        <div className="max-w-7xl mx-auto">
+      {/* RESULTADOS PANEL - FULL WIDTH IMMERSIVE */}
+      <section className="w-full pb-32 px-4 md:px-10">
+        <div className="w-full">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -255,9 +252,11 @@ export default function ProcesoPage() {
                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500" />
 
                   <span className="relative z-10 flex flex-col items-start text-left">
-                    <span className="font-display font-black text-lg md:text-xl tracking-tight">
-                      QUIERO EMPEZAR
-                    </span>
+                    <AnimatedButtonText 
+                      text="QUIERO EMPEZAR" 
+                      baseColor="#396542" 
+                      className="font-display font-black text-lg md:text-xl tracking-tight"
+                    />
                   </span>
                   
                   <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-primary transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-primary/30 group-hover:rotate-[360deg]">
@@ -270,23 +269,36 @@ export default function ProcesoPage() {
               </motion.div>
             </div>
 
-            <div className="relative z-10 grid grid-cols-2 gap-4 w-full lg:w-auto">
+            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-4xl">
                {metrics.slice(0, 6).map((metric, idx) => (
                  <motion.div 
                    key={idx}
-                   whileHover={{ scale: 1.05 }}
-                   className="p-6 bg-white/10 backdrop-blur-md border border-white/10 rounded-3xl flex flex-col items-center justify-center text-center group"
+                   whileHover={{ scale: 1.05, x: 5 }}
+                   className="flex items-center gap-4 pl-3 pr-8 py-3 bg-white/10 backdrop-blur-xl border border-white/10 rounded-full group transition-all duration-500 hover:bg-white/20 shadow-lg w-full"
                  >
-                    <span className="material-symbols-outlined text-[#fdf9e1] mb-2 opacity-40 group-hover:opacity-100 transition-opacity">{metric.icon}</span>
-                    <div className="text-2xl font-display font-black text-[#fdf9e1]">{metric.value}</div>
-                    <p className="text-[8px] font-black uppercase tracking-widest text-[#fdf9e1]/40 mt-1">{metric.label}</p>
+                    <GlassIconButton 
+                      icon={metric.icon} 
+                      color="pastel" 
+                      darkMode={true}
+                      isActive={true} 
+                      className="w-10 h-10 flex-shrink-0" 
+                      iconClassName="text-lg text-[#1d2729]"
+                    />
+                    <div className="flex flex-col">
+                      <div className="text-[clamp(0.9rem,1.5vw,1.2rem)] font-display font-black text-[#fdf9e1] leading-none tracking-tighter">
+                        {metric.value}
+                      </div>
+                      <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[#fdf9e1]/50 leading-tight">
+                        {metric.label}
+                      </p>
+                    </div>
                  </motion.div>
                ))}
                
                {/* Disclaimer sutil */}
-               <div className="col-span-2 mt-6 pt-6 border-t border-white/5">
-                 <p className="text-[11px] md:text-xs text-[#fdf9e1]/60 font-body leading-relaxed text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
-                   <span className="opacity-100 font-bold mr-1">*</span> Métricas promedio observadas en cuentas gestionadas por <span className="text-[#fdf9e1] font-medium">S2 Project</span> durante los últimos 12 meses. Los resultados pueden variar según industria, historial y nivel de inversión.
+               <div className="w-full mt-8 pt-6 border-t border-white/5">
+                 <p className="text-[10px] md:text-[11px] text-[#fdf9e1]/40 font-body leading-relaxed text-center lg:text-left max-w-2xl mx-auto lg:mx-0 uppercase tracking-widest">
+                   <span className="opacity-100 font-bold mr-1">*</span> MÉTRICAS PROMEDIO OBSERVADAS EN CUENTAS S2 PROJECT 2025.
                  </p>
                </div>
              </div>
@@ -352,7 +364,9 @@ export default function ProcesoPage() {
                       iconClassName="text-2xl text-[#1d2729]"
                     />
                     <div>
-                      <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-[#25D366] transition-colors">Hablar por WhatsApp</h4>
+                      <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-[#25D366] transition-colors">
+                        <AnimatedButtonText text="Hablar por WhatsApp" baseColor="#fdf9e1" />
+                      </h4>
                       <p className="text-xs text-[#fdf9e1]/50 font-body">Respuesta rápida</p>
                     </div>
                     <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-[#25D366] transition-colors group-hover:translate-x-1">arrow_forward</span>
@@ -372,7 +386,9 @@ export default function ProcesoPage() {
                       iconClassName="text-2xl text-[#1d2729]"
                     />
                     <div>
-                      <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-white transition-colors">Agendar en Calendario</h4>
+                      <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-white transition-colors">
+                        <AnimatedButtonText text="Agendar en Calendario" baseColor="#fdf9e1" />
+                      </h4>
                       <p className="text-xs text-[#fdf9e1]/50 font-body">Reunión virtual estratégica</p>
                     </div>
                     <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-white transition-colors group-hover:translate-x-1">arrow_forward</span>

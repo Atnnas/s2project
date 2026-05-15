@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import AnimatedButtonText from '@/components/ui/AnimatedButtonText';
 
 export default function HomeCTA() {
   return (
@@ -56,7 +57,7 @@ export default function HomeCTA() {
             target="_blank"
             className="relative z-10 w-full py-7 bg-[#fdf9e1] text-primary font-display font-black uppercase tracking-[0.25em] text-[13px] text-center rounded-[1.5rem] hover:bg-white transition-all active:scale-[0.98] shadow-2xl shadow-black/20"
           >
-            Agende su cita
+            <AnimatedButtonText text="Agende su cita" baseColor="#396542" />
           </Link>
         </motion.div>
 
@@ -89,7 +90,7 @@ export default function HomeCTA() {
             className="relative z-10 w-full py-7 bg-[#fdf9e1] text-primary font-display font-black uppercase tracking-[0.25em] text-[13px] text-center rounded-[1.5rem] hover:bg-white transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-2xl shadow-black/20"
           >
             <i className="fab fa-whatsapp text-2xl"></i>
-            Iniciar Conversación
+            <AnimatedButtonText text="Iniciar Conversación" baseColor="#396542" />
           </Link>
         </motion.div>
 

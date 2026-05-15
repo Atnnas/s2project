@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import GlassIconButton from "@/components/ui/GlassIconButton";
+import AnimatedButtonText from "@/components/ui/AnimatedButtonText";
 
 /**
  * S2 DESIGN SYSTEM - PROFESSIONAL IMPLEMENTATION
@@ -96,7 +97,7 @@ export default function ServiciosPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-background relative overflow-x-hidden min-h-screen w-full">
+    <div className="flex-1 flex flex-col bg-[#cadedd] relative overflow-x-hidden min-h-screen w-full">
       {/* CINEMATIC GRAIN TEXTURE - ANIMATED & MORE VISIBLE */}
       <motion.div 
         animate={{ 
@@ -108,14 +109,11 @@ export default function ServiciosPage() {
           repeat: Infinity, 
           ease: "linear" 
         }}
-        className="fixed inset-0 pointer-events-none z-[100] opacity-[0.07] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" 
+        className="fixed inset-0 pointer-events-none z-[100] opacity-[0.05] mix-blend-soft-light bg-[url('data:image/svg+xml,%3Csvg_viewBox=%220_0_200_200%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')] bg-repeat" 
       />
       
-      {/* AMBIENT LIGHT FOLLOW */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/4 w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[40vw] h-[40vw] bg-[#2a4d32]/5 rounded-full blur-[100px]" />
-      </div>
+      {/* PURE BACKGROUND - NO AMBIENT LIGHTS */}
+
 
       {/* HERO SECTION - COMPACT & MINIMAL */}
       <section className="relative w-full pt-44 pb-4 px-6 shrink-0 text-center z-10">
@@ -125,9 +123,9 @@ export default function ServiciosPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "circOut" }}
           >
-            <p className="text-3xl md:text-6xl font-display font-black uppercase tracking-tighter text-primary-dark leading-[0.85] relative inline-block mb-12">
-              Servicios
-            </p>
+            <h1 className="text-[clamp(3.5rem,8vw,8rem)] font-display font-black uppercase tracking-tighter text-primary-dark leading-[0.9] relative inline-block mb-4">
+              SERVICIOS
+            </h1>
           </motion.div>
           
           <div className="flex flex-col items-center">
@@ -230,8 +228,7 @@ export default function ServiciosPage() {
                   />
                   <div className="flex-1 pr-1 overflow-hidden">
                     <h3 
-                      className={`font-display font-black uppercase text-[10px] tracking-[0.3em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
-                      style={{ transform: 'scale(0.36)' }}
+                      className={`font-display font-black uppercase text-[9px] md:text-[9.35px] tracking-[0.25em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
                     >
                       {tab.title}
                     </h3>
@@ -322,10 +319,16 @@ export default function ServiciosPage() {
                 <div className="absolute inset-0 bg-[#fdf9e1] opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
 
                 <span className="relative z-10 flex flex-col items-start text-left">
-                  <span className="text-[#396542] text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70">Diagnóstico visual</span>
-                  <span className="font-display font-black text-lg md:text-xl tracking-tight text-[#1d2729]">
-                    AGENDA TU CONSULTA
-                  </span>
+                  <AnimatedButtonText 
+                    text="Diagnóstico visual" 
+                    baseColor="#396542" 
+                    className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70"
+                  />
+                  <AnimatedButtonText 
+                    text="AGENDA TU CONSULTA" 
+                    baseColor="#1d2729" 
+                    className="font-display font-black text-lg md:text-xl tracking-tight"
+                  />
                 </span>
                 
                 <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-[#1d2729] rounded-full flex items-center justify-center group-hover:bg-[#396542] transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-[#396542]/30 group-hover:rotate-[360deg]">

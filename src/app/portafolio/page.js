@@ -41,8 +41,8 @@ const ParticleBackground = memo(() => {
     const colors = ['#396542', '#9eb5b2', '#f8f9fa'];
 
     const resize = () => {
-      canvas.width = window.innerWidth / 2; // Low res for performance
-      canvas.height = window.innerHeight / 2;
+      canvas.width = window.innerWidth / 4; // Lower res for performance
+      canvas.height = window.innerHeight / 4;
     };
 
     class Particle {
@@ -69,7 +69,7 @@ const ParticleBackground = memo(() => {
     }
 
     const init = () => {
-      particles = Array.from({ length: 50 }, () => new Particle());
+      particles = Array.from({ length: 30 }, () => new Particle());
     };
 
     const animate = () => {
@@ -99,9 +99,9 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Optimized Springs
-  const mouseXSpring = useSpring(x, { stiffness: 100, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 100, damping: 30 });
+  // Optimized Springs - Lower stiffness for smoother, cheaper calc
+  const mouseXSpring = useSpring(x, { stiffness: 60, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 60, damping: 20 });
 
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
@@ -125,7 +125,7 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
       style={{ perspective: "1000px" }}
     >
       <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d", willChange: "transform" }}
         className="relative w-full h-full group"
       >
         <motion.div
@@ -216,10 +216,12 @@ export default function PortafolioPage() {
         COLOR="#396542" 
         SPLAT_RADIUS={0.3} 
         DENSITY_DISSIPATION={3.5}
-        SIM_RESOLUTION={64} // LOWER RES FOR PERFORMANCE
+        SIM_RESOLUTION={64} 
+        DYE_RESOLUTION={256}
+        PRESSURE_ITERATIONS={10}
       />
       <ParticleBackground />
-      <div className="absolute inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="absolute inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('data:image/svg+xml,%3Csvg_viewBox=%220_0_200_200%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
       {staticCategories.map((cat) => (
         <CategoryCard 
           key={cat.id}

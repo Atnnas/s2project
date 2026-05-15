@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import AnimatedButtonText from "@/components/ui/AnimatedButtonText";
 
 const results = [
   { label: "Interacción", value: "+185%", desc: "Crecimiento de compromiso", color: "bg-blue-500" },
@@ -152,8 +153,16 @@ export default function ResultsSection() {
                !
             </div>
             <div className="text-left">
-              <span className="block text-[8px] font-black uppercase tracking-[0.6em] text-primary">Diagnóstico Estratégico</span>
-              <span className="block text-lg font-display font-black uppercase tracking-tight">Quiero Empezar</span>
+              <AnimatedButtonText 
+                text="Diagnóstico Estratégico" 
+                baseColor="#396542" 
+                className="block text-[8px] font-black uppercase tracking-[0.6em]"
+              />
+              <AnimatedButtonText 
+                text="Quiero Empezar" 
+                baseColor="currentColor" 
+                className="block text-lg font-display font-black uppercase tracking-tight"
+              />
             </div>
           </Link>
         </motion.div>

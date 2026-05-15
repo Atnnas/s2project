@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import AnimatedButtonText from "@/components/ui/AnimatedButtonText";
 
 const tabs = [
   {
@@ -216,7 +217,9 @@ export default function HomeInteractiveBoard() {
                     target="_blank"
                     className="relative flex items-center justify-center gap-3 bg-primary text-white px-8 py-5 w-full rounded-2xl font-display font-black uppercase tracking-[0.1em] text-xs transition-all duration-500 overflow-hidden active:scale-95 shadow-xl shadow-primary/30 hover:bg-primary/90"
                   >
-                    <span className="relative z-10 flex-shrink-0 text-center">Quiero Trabajar con S2</span>
+                    <span className="relative z-10 flex-shrink-0 text-center">
+                      <AnimatedButtonText text="Quiero Trabajar con S2" baseColor="#fdf9e1" />
+                    </span>
                     <div className="relative z-10 w-6 h-6 bg-white/20 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-full hidden sm:flex">
                       <span className="material-symbols-outlined text-xs absolute transition-transform duration-500 group-hover:translate-x-[150%] group-hover:-translate-y-[150%]">
                         arrow_outward
@@ -335,7 +338,7 @@ function BookingView({ step, onBooking, onReset }) {
                 onClick={onBooking}
                 className="group w-full py-6 bg-primary text-white font-display font-black uppercase tracking-widest text-xs flex items-center justify-center gap-4 hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 mt-4 rounded-2xl"
               >
-                Ver Disponibilidad
+                <AnimatedButtonText text="Ver Disponibilidad" baseColor="#fdf9e1" />
                 <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">calendar_month</span>
               </button>
             </motion.div>

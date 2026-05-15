@@ -9,5 +9,5 @@ export const metadata = {
 };
 
 export default function NosotrosLayout({ children }) {
-  return <div className="bg-white">{children}</div>;
+  return <div className="bg-[#cadedd]">{children}</div>;
 }
