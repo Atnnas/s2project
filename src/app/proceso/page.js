@@ -160,7 +160,7 @@ export default function ProcesoPage() {
                     />
                     <div className="flex items-center gap-2 min-w-0">
                       <h3 
-                        className={`font-display font-black uppercase text-[9px] md:text-[9.35px] tracking-[0.25em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
+                        className={`font-display font-bold uppercase text-[9px] md:text-[9.35px] tracking-[0.15em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
                       >
                         <span className={isActive ? 'text-primary' : 'text-inherit opacity-60'}>0{index + 1}</span> {step.title}
                       </h3>
