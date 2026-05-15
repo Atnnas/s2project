@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useSearchParams, Suspense } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 function ErrorContent() {
   const searchParams = useSearchParams();
