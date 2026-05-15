@@ -10,7 +10,7 @@ const steps = [
   {
     id: "01",
     title: "Diagnóstico",
-    desc: "Analizamos tu marca, tu industria y tu competencia. Definimos como diferenciarte y hacia dónde llevarte.",
+    desc: "Analizamos tu marca, tu industria y tu competencia. Definimos cómo diferenciarte y hacia dónde llevarte.",
     icon: "analytics"
   },
   {

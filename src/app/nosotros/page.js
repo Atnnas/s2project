@@ -76,7 +76,7 @@ export default function NosotrosPage() {
             className="space-y-5"
           >
             <div className="space-y-2">
-              <h3 className="text-[clamp(1.4rem,2vw,1.9rem)] [@media(min-width:1600px)]:text-[clamp(2rem,2.5vw,3rem)] font-display font-black uppercase tracking-tight text-slate-800">Como Trabajamos</h3>
+              <h3 className="text-[clamp(1.4rem,2vw,1.9rem)] [@media(min-width:1600px)]:text-[clamp(2rem,2.5vw,3rem)] font-display font-black uppercase tracking-tight text-slate-800">Cómo Trabajamos</h3>
               <p className="text-accent font-body leading-relaxed max-w-xl">
                 Cada cuenta recibe estrategia, producción y seguimiento. No publicamos por publicar: cada pieza tiene un propósito dentro del crecimiento de tu marca.
               </p>

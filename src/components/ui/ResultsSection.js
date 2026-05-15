@@ -96,7 +96,7 @@ export default function ResultsSection() {
              className="mb-16"
           >
             <h3 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tighter border-l-4 border-primary pl-8">
-              Métricas de Rendimientos de <br />
+              Métricas de Rendimiento de <br />
               <span className="text-primary opacity-60">Crecimiento Mensual</span>
             </h3>
           </motion.div>
