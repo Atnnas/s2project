@@ -21,8 +21,14 @@ export const authOptions = {
 
         if (!existingUser && !isSuperAdmin) {
           // RECHAZAR inicio de sesión si el correo no está registrado previamente
-          console.log(`Acceso denegado para: ${user.email}`);
+          console.log(`Acceso denegado para: ${user.email} (No existe)`);
           return false; 
+        }
+        
+        if (!isSuperAdmin && existingUser && !existingUser.isActive) {
+          // RECHAZAR inicio de sesión si el usuario existe pero está desactivado
+          console.log(`Acceso denegado para: ${user.email} (Cuenta inactiva)`);
+          return '/admin/error?error=inactive';
         } else if (isSuperAdmin) {
           // Asegurar que el superadmin siempre tenga el rol Admin y esté activo
           await User.findOneAndUpdate(

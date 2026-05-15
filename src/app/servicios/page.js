@@ -15,11 +15,11 @@ const mainService = {
   subtitle: "Pensado para marcas que quieren crecer",
   description: "Gestionamos tu presencia digital de forma integral: estrategia, producción de contenido, diseño y seguimiento mensual. Todo con un objetivo claro: que tu marca crezca con consistencia y profesionalismo.",
   features: [
-    "Estrategia y dirección de marca",
-    "Planificación mensual de contenido",
-    "Producción de video, foto y reels",
-    "Campañas de Meta Ads",
-    "Análisis y ajustes continuos"
+    "Objetivos claros desde el día uno",
+    "Calendario, guiones y dirección creativa",
+    "Grabación y edición profesional",
+    "Pauta estratégica con seguimiento",
+    "Análisis mensual y mejora continua"
   ]
 };
 
@@ -27,21 +27,21 @@ const secondaryServices = [
   {
     id: "branding",
     title: "Identidad de Marca",
-    subtitle: "Brand Kit con Propósito Estratégico",
+    subtitle: "Tu marca, desde cero o desde reinvención.",
     description: "Diseñamos la identidad visual de tu marca: logo, colores, tipografía y guía de uso. Todo lo que necesitas para proyectar presencia desde el primer día.",
     features: ["Diseño de logotipo", "Paleta de colores", "Sistema tipográfico", "Manual de marca", "Assets para redes sociales"]
   },
   {
     id: "real-estate",
     title: "Real Estate",
-    subtitle: "La propiedad merece verse así",
+    subtitle: "REAL ESTATE / Fotografía, video y drone para proyectos de alto nivel.",
     description: "Producción audiovisual de alto nivel para proyectos inmobiliarios. Cinematografía, drone y fotografía que transforman propiedades en experiencias.",
     features: ["Cinematografía Inmobiliaria", "Fotografía Aérea con Dron", "Recorridos Visuales Fluidos", "Edición Dinámica Musical", "Optimizados para Meta Ads"]
   },
   {
     id: "corporate",
     title: "Contenido Corporativo",
-    subtitle: "Para empresas que comunican con estilo",
+    subtitle: "Video institucional y eventos.",
     description: "Video institucional, entrevistas, casos de éxito y cobertura de eventos. Producciones pensadas para empresas que entienden el valor de comunicar bien.",
     features: ["Video institucional", "Entrevistas y testimonios", "Casos de éxito", "Cobertura de eventos", "Comunicación interna y ejecutiva"]
   }
@@ -58,6 +58,7 @@ export default function ServiciosPage() {
   const [activeTab, setActiveTab] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [pricingTag, setPricingTag] = useState("Planes desde $500/mes");
+  const [showContactModal, setShowContactModal] = useState(false);
   const interactionTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -225,7 +226,7 @@ export default function ServiciosPage() {
                     color="primary" 
                     isActive={isActive} 
                     className="w-14 h-14 flex-shrink-0" 
-                    iconClassName={`text-2xl transition-opacity duration-500 ${isActive ? 'text-white opacity-100' : 'text-white opacity-50 group-hover:opacity-100'}`}
+                    iconClassName="text-2xl text-[#1d2729] transition-colors duration-500"
                   />
                   <div className="flex-1 pr-1 overflow-hidden">
                     <h3 
@@ -277,37 +278,138 @@ export default function ServiciosPage() {
             <div className="relative z-10 flex flex-col space-y-8 max-w-2xl text-center lg:text-left">
               <div className="flex flex-col gap-4">
                 <span className="inline-block text-[10px] font-black uppercase tracking-[0.5em] text-primary bg-[#fdf9e1] px-6 py-2.5 rounded-full w-fit mx-auto lg:mx-0 shadow-xl shadow-black/10">
-                  Oportunidad Estratégica
+                  CONSULTA EXCLUSIVA
                 </span>
                 <h2 className="text-[#fdf9e1] text-4xl md:text-6xl font-display font-black uppercase leading-[0.9] tracking-tighter">
                   Diagnóstico <br />
-                  <span className="italic font-light lowercase opacity-60 tracking-normal block mt-2 text-3xl md:text-5xl">sin costo alguno.</span>
+                  <span className="italic font-light lowercase opacity-60 tracking-normal block mt-2 text-3xl md:text-5xl">sin costo.</span>
                 </h2>
               </div>
               
               <div className="w-20 h-[1px] bg-[#fdf9e1]/30 mx-auto lg:mx-0" />
 
               <p className="text-base md:text-lg text-[#fdf9e1]/80 font-body leading-relaxed font-light">
-                Elevamos la lectura de tu marca a través de un análisis <span className="text-[#fdf9e1] font-medium italic">honesto y profundo</span>. Descubre el potencial oculto de tu visión con la perspectiva estratégica de S2.
+                Analizamos tu marca y te compartimos una lectura estratégica clara. Sin compromiso, con el mismo criterio con el que trabajamos cada cuenta.
               </p>
             </div>
 
-            <div className="relative z-10 w-full lg:w-auto">
-              <Link
-                href="https://api.whatsapp.com/send?phone=50660060026"
-                target="_blank"
-                className="group relative flex items-center justify-center gap-6 bg-[#fdf9e1] text-primary px-16 py-8 rounded-2xl font-display font-black uppercase tracking-[0.2em] text-[11px] transition-all duration-700 hover:bg-white hover:scale-[1.02] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] active:scale-95 overflow-hidden"
+            <div className="relative z-10 w-full lg:w-auto flex justify-center lg:justify-start">
+              {/* Elegant Liquid Ripple Waves */}
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ 
+                    scale: [1, 1.8],
+                    opacity: [0, 0.3, 0]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity, 
+                    delay: i * 1.3,
+                    ease: [0.25, 0.1, 0.25, 1] // Custom smooth bezier
+                  }}
+                  className="absolute inset-0 bg-[#fdf9e1] rounded-full blur-2xl -z-10"
+                />
+              ))}
+
+              <motion.button
+                onClick={() => setShowContactModal(true)}
+                whileHover={{ scale: 1.05, rotateX: 5, rotateY: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative inline-flex items-center justify-between gap-8 bg-[#fdf9e1] text-[#1d2729] px-8 py-4 md:px-10 md:py-5 rounded-full font-body transition-all duration-500 hover:bg-white overflow-hidden w-full sm:w-auto border border-white/50 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_-10px_rgba(253,249,225,0.6),0_0_20px_rgba(253,249,225,0.2)]"
               >
-                <span className="relative z-10">Agendar Consultoría</span>
-                <span className="material-symbols-outlined text-lg relative z-10 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">arrow_outward</span>
+                {/* Glow Aura Layer (Hover) */}
+                <div className="absolute inset-0 bg-[#fdf9e1] opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
+
+                <span className="relative z-10 flex flex-col items-start text-left">
+                  <span className="text-[#396542] text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70">Diagnóstico visual</span>
+                  <span className="font-display font-black text-lg md:text-xl tracking-tight text-[#1d2729]">
+                    AGENDA TU CONSULTA
+                  </span>
+                </span>
                 
-                {/* Button Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-              </Link>
+                <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-[#1d2729] rounded-full flex items-center justify-center group-hover:bg-[#396542] transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-[#396542]/30 group-hover:rotate-[360deg]">
+                  <span className="material-symbols-outlined text-xl text-[#fdf9e1]">arrow_forward</span>
+                </div>
+                
+                {/* Dynamic Glass Shimmer */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+              </motion.button>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* MODAL DE CONTACTO */}
+      <AnimatePresence>
+        {showContactModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-primary w-full max-w-lg rounded-[2.5rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/10 overflow-hidden relative"
+            >
+              <button 
+                onClick={() => setShowContactModal(false)}
+                className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-all"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+
+              <h3 className="text-3xl font-display font-black text-[#fdf9e1] mb-2 uppercase tracking-tight">Conecta con S2</h3>
+              <p className="text-[#fdf9e1]/70 font-body text-sm mb-8">Elige el medio que prefieras para comunicarte con nuestro equipo estratégico.</p>
+
+              <div className="flex flex-col gap-4">
+                <Link
+                  href="https://api.whatsapp.com/send?phone=50660060026"
+                  target="_blank"
+                  className="group flex items-center gap-6 p-4 rounded-[2rem] bg-transparent hover:bg-white/5 transition-all duration-500 border border-transparent hover:border-white/10"
+                >
+                  <GlassIconButton 
+                    icon="chat" 
+                    color="pastel" 
+                    darkMode={true}
+                    isActive={true} 
+                    className="w-16 h-16 flex-shrink-0 scale-90 group-hover:scale-100 transition-transform duration-500" 
+                    iconClassName="text-2xl text-[#1d2729]"
+                  />
+                  <div>
+                    <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-[#25D366] transition-colors">Hablar por WhatsApp</h4>
+                    <p className="text-xs text-[#fdf9e1]/50 font-body">Respuesta rápida</p>
+                  </div>
+                  <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-[#25D366] transition-colors group-hover:translate-x-1">arrow_forward</span>
+                </Link>
+
+                <Link
+                  href="https://calendar.app.google/zadeELEGddkDxJ829" 
+                  target="_blank"
+                  className="group flex items-center gap-6 p-4 rounded-[2rem] bg-transparent hover:bg-white/5 transition-all duration-500 border border-transparent hover:border-white/10"
+                >
+                  <GlassIconButton 
+                    icon="calendar_month" 
+                    color="pastel" 
+                    darkMode={true}
+                    isActive={true} 
+                    className="w-16 h-16 flex-shrink-0 scale-90 group-hover:scale-100 transition-transform duration-500" 
+                    iconClassName="text-2xl text-[#1d2729]"
+                  />
+                  <div>
+                    <h4 className="font-display font-black uppercase text-[12px] tracking-widest text-[#fdf9e1] group-hover:text-white transition-colors">Agendar en Calendario</h4>
+                    <p className="text-xs text-[#fdf9e1]/50 font-body">Reunión virtual estratégica</p>
+                  </div>
+                  <span className="material-symbols-outlined ml-auto text-white/30 group-hover:text-white transition-colors group-hover:translate-x-1">arrow_forward</span>
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -325,11 +427,11 @@ function MainServiceView({ data }) {
       <div className="space-y-8 flex-1 relative z-10 pt-0">
         <GlassIconButton 
           icon="layers" 
-          color="cream" 
+          color="pastel" 
           darkMode={true} 
           isActive={true} 
           className="w-16 h-16 mb-8 mt-0" 
-          iconClassName="text-3xl text-primary"
+          iconClassName="text-3xl text-[#1d2729]"
         />
         
         <motion.h3 
@@ -340,6 +442,17 @@ function MainServiceView({ data }) {
         >
           {data.title}
         </motion.h3>
+
+        {data.subtitle && (
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="text-[11px] md:text-[13px] font-display font-black text-[#fdf9e1]/40 uppercase tracking-[0.4em] leading-none"
+          >
+            {data.subtitle}
+          </motion.p>
+        )}
         
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
@@ -357,12 +470,11 @@ function MainServiceView({ data }) {
                initial={{ opacity: 0, x: -10 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ delay: 0.5 + (i * 0.1) }}
-               className="flex gap-5 items-start group/item"
+               className="flex gap-5 items-center group/item"
              >
-                <span className="text-[#fdf9e1] font-black font-display text-xl opacity-10 mt-1 transition-opacity group-hover/item:opacity-30">0{i+1}</span>
+                <span className="text-[#fdf9e1] font-black font-display text-xl opacity-10 transition-opacity group-hover/item:opacity-30">0{i+1}</span>
                 <div>
-                  <h4 className="text-[13px] font-black uppercase tracking-widest text-[#fdf9e1] leading-tight mb-1">{feature}</h4>
-                  <p className="text-[12px] text-[#fdf9e1]/30 font-body uppercase tracking-wider">Estándar de excelencia S2</p>
+                  <h4 className="text-[13px] font-black uppercase tracking-widest text-[#fdf9e1] leading-tight">{feature}</h4>
                 </div>
              </motion.div>
            ))}
@@ -385,11 +497,11 @@ function SecondaryServiceView({ data, icon }) {
       <div className="space-y-8 flex-1 relative z-10 pt-0">
         <GlassIconButton 
           icon={icon} 
-          color="cream" 
+          color="pastel" 
           darkMode={true} 
           isActive={true} 
           className="w-16 h-16 mb-8 mt-0" 
-          iconClassName="text-3xl text-primary"
+          iconClassName="text-3xl text-[#1d2729]"
         />
         
         <motion.h3 
@@ -400,6 +512,17 @@ function SecondaryServiceView({ data, icon }) {
         >
           {data.title}
         </motion.h3>
+
+        {data.subtitle && (
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="text-[11px] md:text-[13px] font-display font-black text-white/40 uppercase tracking-[0.4em] leading-none"
+          >
+            {data.subtitle}
+          </motion.p>
+        )}
         
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
@@ -417,12 +540,11 @@ function SecondaryServiceView({ data, icon }) {
                initial={{ opacity: 0, x: -10 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ delay: 0.5 + (i * 0.1) }}
-               className="flex gap-5 items-start group/item"
+               className="flex gap-5 items-center group/item"
              >
-                <span className="text-white font-black font-display text-xl opacity-10 mt-1 transition-opacity group-hover/item:opacity-30">0{i+1}</span>
+                <span className="text-white font-black font-display text-xl opacity-10 transition-opacity group-hover/item:opacity-30">0{i+1}</span>
                 <div>
-                  <h4 className="text-[13px] font-black uppercase tracking-widest text-white leading-tight mb-1">{feature}</h4>
-                  <p className="text-[12px] text-white/30 font-body uppercase tracking-wider">Estándar de excelencia S2</p>
+                  <h4 className="text-[13px] font-black uppercase tracking-widest text-white leading-tight">{feature}</h4>
                 </div>
              </motion.div>
            ))}

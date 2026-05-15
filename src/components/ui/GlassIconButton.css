@@ -1,13 +1,12 @@
 .glass-btn-3d-container {
   cursor: pointer;
-  perspective: 24em;
-  transform-style: preserve-3d;
   -webkit-tap-highlight-color: transparent;
+  /* Se eliminó perspective y preserve-3d para habilitar el backdrop-filter nativo */
 }
 
 .glass-btn-3d {
   position: relative;
-  transform-style: preserve-3d;
+  isolation: isolate; /* Fuerza a Chrome/Safari a aplicar el backdrop-filter a los hermanos */
 }
 
 .glass-btn-3d__back,
@@ -21,50 +20,79 @@
 }
 
 .glass-btn-3d__back {
-  /* Panel de cristal trasero */
-  background-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset, 0.2em -0.2em 0.5em rgba(29, 39, 41, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* Panel sólido trasero con bordes nítidos y definidos */
+  box-shadow: 0 4px 15px rgba(29, 39, 41, 0.15);
   display: block;
-  /* Rotación y separación mucho más sutiles */
-  transform: rotate(8deg) translate3d(-0.15em, -0.15em, 0);
+  transform: rotate(8deg) translate(-0.15em, -0.15em);
   transform-origin: 100% 100%;
-  will-change: transform;
 }
 
 .glass-btn-3d__front {
-  /* Panel sólido delantero (color inyectado por JS) */
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  position: relative; /* Necesario para que overflow: hidden recorte a sus hijos absolutos */
+  overflow: hidden; /* Esto asegura que el "clon borroso" solo se vea dentro de este cristal */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+  box-shadow: 
+    inset 1px 1px 0px rgba(255, 255, 255, 0.8), 
+    inset -1px -1px 0px rgba(255, 255, 255, 0.1),
+    0 10px 40px rgba(0, 0, 0, 0.1);
   display: flex;
   transform-origin: 50% 50%;
-  will-change: transform;
   z-index: 2;
-  transform: translate3d(0, 0, 0);
+  transform: translate(0, 0);
+}
+
+/* EL CLON BORROSO: Matemáticamente idéntico a __back, pero borroso y dentro de __front */
+.glass-btn-3d__back-blurred {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(8deg) translate(-0.15em, -0.15em);
+  transform-origin: 100% 100%;
+  filter: blur(12px); /* El difuminado es total, pero solo visible a través del cristal (__front) */
+  opacity: 0.9;
+  transition: opacity 0.4s cubic-bezier(0.83, 0, 0.17, 1), transform 0.4s cubic-bezier(0.83, 0, 0.17, 1);
+  z-index: 0;
 }
 
 /* Hover & Active States */
 .glass-btn-3d-container:hover .glass-btn-3d__back,
+.glass-btn-3d-active .glass-btn-3d__back,
+.glass-btn-3d-container:hover .glass-btn-3d__back-blurred,
+.glass-btn-3d-active .glass-btn-3d__back-blurred {
+  transform: rotate(12deg) translate(-0.25em, -0.25em);
+}
+
+.glass-btn-3d-container:hover .glass-btn-3d__back,
 .glass-btn-3d-active .glass-btn-3d__back {
-  /* Pequeño asomo extra, sin salirse del botón */
-  transform: rotate(12deg) translate3d(-0.25em, -0.25em, 0);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset, 0.3em -0.3em 0.8em rgba(29, 39, 41, 0.2);
-  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0.3em -0.3em 0.8em rgba(29, 39, 41, 0.25);
 }
 
 .glass-btn-3d-container:hover .glass-btn-3d__front,
 .glass-btn-3d-active .glass-btn-3d__front {
-  /* Sin crecimiento ni escala para evitar recortes */
-  transform: translate3d(0, 0, 0);
+  transform: translate(0, 0);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+  box-shadow: 
+    inset 1px 1px 0px rgba(255, 255, 255, 1), 
+    inset -1px -1px 0px rgba(255, 255, 255, 0.2),
+    0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Dark Mode Variations (For back glass panel) */
-.dark-mode-glass .glass-btn-3d__back {
-  background-color: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0.2em -0.2em 0.5em rgba(0, 0, 0, 0.3);
+/* Dark Mode Variations (For front glass panel on dark backgrounds) */
+.dark-mode-glass .glass-btn-3d__front {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.0) 100%);
+  box-shadow: 
+    inset 1px 1px 0px rgba(255, 255, 255, 0.2), 
+    inset -1px -1px 0px rgba(0, 0, 0, 0.4),
+    0 10px 40px rgba(0, 0, 0, 0.25);
 }
 
-.dark-mode-glass.glass-btn-3d-container:hover .glass-btn-3d__back,
-.dark-mode-glass.glass-btn-3d-active .glass-btn-3d__back {
-  background-color: rgba(255, 255, 255, 0.15);
+.dark-mode-glass.glass-btn-3d-container:hover .glass-btn-3d__front,
+.dark-mode-glass.glass-btn-3d-active .glass-btn-3d__front {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+  box-shadow: 
+    inset 1px 1px 0px rgba(255, 255, 255, 0.3), 
+    inset -1px -1px 0px rgba(0, 0, 0, 0.4),
+    0 10px 40px rgba(0, 0, 0, 0.35);
 }

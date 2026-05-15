@@ -11,7 +11,9 @@ export default function PortfolioPage() {
       {/* Spacer for fixed navbar */}
       <div className="shrink-0 h-[var(--navbar-height)]" />
       <div className="flex-1 w-full max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24 pt-8 sm:pt-10 lg:pt-12 pb-12">
-        <h1 className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] mb-6">Nuestro Portafolio</h1>
+        <h1 className="text-[clamp(3.5rem,8vw,8rem)] font-display font-black uppercase tracking-tighter text-slate-900 leading-[0.85] relative inline-block mb-6">
+          Nuestro <span className="text-primary italic block md:inline">Portafolio</span>
+        </h1>
         <p className="text-[clamp(1.1rem,1.2vw,1.35rem)] text-slate-500 max-w-2xl font-body leading-relaxed mb-16">
           Proyectos de élite diseñados para elevar la identidad digital de marcas líderes.
         </p>

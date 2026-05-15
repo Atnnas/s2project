@@ -159,3 +159,31 @@
 .border-pastel {
   border-color: rgba(202, 222, 221, 0.4);
 }
+
+@keyframes subtle-heartbeat {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.02); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.02); }
+  60%, 100% { transform: scale(1); }
+}
+
+@keyframes shadow-pulse-dark {
+  0% { box-shadow: 0 0 0 0 rgba(29, 39, 41, 0.15), 0 20px 60px -15px rgba(0, 0, 0, 0.6); }
+  40% { box-shadow: 0 0 0 30px rgba(29, 39, 41, 0), 0 25px 60px -10px rgba(0, 0, 0, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(29, 39, 41, 0), 0 20px 60px -15px rgba(0, 0, 0, 0.6); }
+}
+
+@keyframes shadow-pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(57, 101, 66, 0.3), 0 20px 60px -15px rgba(57, 101, 66, 0.6); }
+  40% { box-shadow: 0 0 0 30px rgba(57, 101, 66, 0), 0 25px 60px -10px rgba(57, 101, 66, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(57, 101, 66, 0), 0 20px 60px -15px rgba(57, 101, 66, 0.6); }
+}
+
+.animate-button-dark {
+  animation: subtle-heartbeat 3s cubic-bezier(0.4, 0, 0.2, 1) infinite, shadow-pulse-dark 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-button-green {
+  animation: subtle-heartbeat 3s cubic-bezier(0.4, 0, 0.2, 1) infinite, shadow-pulse-green 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

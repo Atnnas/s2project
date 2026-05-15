@@ -1,16 +1,10 @@
-import { League_Spartan } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "@/components/Providers/AuthProvider";
 import CookieConsent from "@/components/CookieConsent/CookieConsent";
 
-const leagueSpartan = League_Spartan({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-});
-
 const clashGrotesk = { variable: "" };
+const roundo = { variable: "" };
 
 export const metadata = {
   metadataBase: new URL('https://s2-project.com'),
@@ -47,7 +41,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "S2 Project | Marketing Digital",
-    description: "Producción audiovisual y artes digitales de alto impacto.",
+    description: "S2 Project. Agencia boutique de marketing digital. Estrategia, contenido, producción y Meta Ads para marcas que quieren crecer.",
     images: ["/og-main.jpg"],
   },
   robots: {
@@ -84,7 +78,7 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
       <body
-        className={`${clashGrotesk.variable} ${leagueSpartan.variable} bg-background-light font-body text-slate-900 antialiased overflow-x-hidden`}
+        className={`${clashGrotesk.variable} ${roundo.variable} bg-background-light font-body text-slate-900 antialiased overflow-x-hidden`}
       >
         <AuthProvider>
           <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">

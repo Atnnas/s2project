@@ -24,8 +24,14 @@ export default function GlassIconButton({
       onClick={onClick}
     >
       <div className="glass-btn-3d w-full h-full rounded-2xl">
-        <span className="glass-btn-3d__back rounded-2xl"></span>
-        <span className="glass-btn-3d__front rounded-2xl" style={backgroundStyle}>
+        {/* Panel Sólido Trasero Real (Bordes Nítidos) */}
+        <span className="glass-btn-3d__back rounded-2xl" style={backgroundStyle}></span>
+        
+        {/* Cristal Frontal */}
+        <span className="glass-btn-3d__front rounded-2xl overflow-hidden">
+          {/* CLON BORROSO: Se alinea matemáticamente con el panel trasero, pero queda confinado y difuminado dentro del cristal */}
+          <span className="glass-btn-3d__back-blurred rounded-2xl" style={backgroundStyle}></span>
+          
           <span className={`material-symbols-outlined m-auto relative z-10 transition-colors duration-300 ${iconClassName}`} aria-hidden="true">
             {icon}
           </span>

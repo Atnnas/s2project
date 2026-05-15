@@ -246,8 +246,24 @@ function DashboardContent() {
   });
 
   return (
-    <>
-      <AnimatePresence>
+    <div className="min-h-screen w-full bg-background relative overflow-x-hidden">
+      {/* Background decoration igual que las demás vistas */}
+      <motion.div 
+        animate={{ 
+          x: [0, -10, 10, -5, 0],
+          y: [0, 5, -10, 5, 0]
+        }}
+        transition={{ 
+          duration: 0.5, 
+          repeat: Infinity, 
+          ease: "linear" 
+        }}
+        className="fixed inset-0 pointer-events-none z-[0] opacity-[0.07] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" 
+      />
+      <div className="fixed inset-0 bg-grid-slate-900/[0.02] bg-[size:40px_40px] pointer-events-none z-[0]" />
+      
+      <div className="relative z-10">
+        <AnimatePresence>
         {showConfirm && (
           <motion.div 
             initial={{ opacity: 0 }}
@@ -933,7 +949,8 @@ function DashboardContent() {
           </div>
         </div>
       </main>
-    </>
+      </div>
+    </div>
   );
 }
 
