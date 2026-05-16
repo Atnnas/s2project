@@ -254,7 +254,7 @@ export default function ServiciosPage() {
                   initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
-                  transition={{ duration: isMobile ? 1.2 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: isMobile ? 2.0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
                   className="w-full flex flex-col pt-0 mt-0"
                 >
                   {activeTab === 0 && <MainServiceView data={mainService} isMobile={isMobile} />}
@@ -475,7 +475,7 @@ function MainServiceView({ data, isMobile }) {
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: isMobile ? 0.8 : 0.4 }}
+          transition={{ delay: 0.3, duration: isMobile ? 1.4 : 0.4 }}
           className="text-3xl md:text-[3.3rem] font-display font-black uppercase tracking-tight leading-[0.9] text-[#fdf9e1]"
         >
           {data.title}
@@ -485,7 +485,7 @@ function MainServiceView({ data, isMobile }) {
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: isMobile ? 0.8 : 0.4 }}
+            transition={{ delay: 0.35, duration: isMobile ? 1.4 : 0.4 }}
             className="text-[11px] md:text-[13px] font-display font-black text-[#fdf9e1]/40 uppercase tracking-[0.4em] leading-none"
           >
             {data.subtitle}
@@ -495,7 +495,7 @@ function MainServiceView({ data, isMobile }) {
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: isMobile ? 0.8 : 0.4 }}
+          transition={{ delay: 0.4, duration: isMobile ? 1.4 : 0.4 }}
           className="text-base md:text-lg text-[#fdf9e1]/70 font-body leading-relaxed max-w-3xl font-light"
         >
           {data.description}
@@ -545,7 +545,7 @@ function SecondaryServiceView({ data, icon, isMobile }) {
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: isMobile ? 0.8 : 0.4 }}
+          transition={{ delay: 0.3, duration: isMobile ? 1.4 : 0.4 }}
           className="text-3xl md:text-[3.3rem] font-display font-black uppercase tracking-tight leading-[0.9] text-white"
         >
           {data.title}
@@ -555,7 +555,7 @@ function SecondaryServiceView({ data, icon, isMobile }) {
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: isMobile ? 0.8 : 0.4 }}
+            transition={{ delay: 0.35, duration: isMobile ? 1.4 : 0.4 }}
             className="text-[11px] md:text-[13px] font-display font-black text-white/40 uppercase tracking-[0.4em] leading-none"
           >
             {data.subtitle}
@@ -565,7 +565,7 @@ function SecondaryServiceView({ data, icon, isMobile }) {
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: isMobile ? 0.8 : 0.4 }}
+          transition={{ delay: 0.4, duration: isMobile ? 1.4 : 0.4 }}
           className="text-base md:text-lg text-white/70 font-body leading-relaxed max-w-3xl font-light"
         >
           {data.description}
