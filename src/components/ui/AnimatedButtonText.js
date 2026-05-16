@@ -23,16 +23,15 @@ export default function AnimatedButtonText({
             color: [baseColor, '#ffffff', baseColor],
             textShadow: [
               '0 0 0px transparent', 
-              '0 0 8px #ffffff, 0 0 15px #ffffff', 
+              '0 0 10px rgba(255,255,255,0.5)', 
               '0 0 0px transparent'
-            ],
-            scale: [1, 1.1, 1]
+            ]
           }}
           transition={{ 
-            duration: 1.2, 
+            duration: 2, 
             repeat: Infinity, 
-            repeatDelay: repeatDelay,
-            delay: delay + (i * 0.08),
+            repeatDelay: 10,
+            delay: delay + (i * 0.1),
             ease: "easeInOut"
           }}
           className={char === ' ' ? 'mr-[0.25em]' : ''}
