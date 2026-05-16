@@ -372,7 +372,7 @@ export default function ServiciosPage() {
                 {/* Glow Aura Layer (Hover) */}
                 <div className="absolute inset-0 bg-[#fdf9e1] opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
 
-                <span className="relative z-10 flex flex-col items-start text-left">
+                <span className="relative z-10 flex flex-col items-center text-center">
                   <AnimatedButtonText 
                     text="Diagnóstico visual" 
                     baseColor="#396542" 
