@@ -136,8 +136,21 @@ export default function ServiciosPage() {
             </h1>
           </motion.div>
           
-          {/* MOBILE NAVIGATION CONTROLS - CLEAN & MINIMAL */}
-          <div className="lg:hidden flex items-center justify-center gap-12 mt-4 px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 1 }}
+            className="flex items-center justify-center gap-4 mt-5 mb-8"
+          >
+            <div className="h-px w-12 bg-primary/20" />
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">
+              {pricingTag}
+            </p>
+            <div className="h-px w-12 bg-primary/20" />
+          </motion.div>
+
+          {/* MOBILE NAVIGATION CONTROLS - REPOSITIONED BELOW PRICING TAG */}
+          <div className="lg:hidden flex items-center justify-center gap-12 mt-2 px-6">
               <button 
                 onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
                 className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
@@ -161,6 +174,69 @@ export default function ServiciosPage() {
                 <span className="material-symbols-outlined text-3xl">chevron_right</span>
               </button>
           </div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 1 }}
+            className="relative"
+          >
+            <div className="relative flex flex-col items-center">
+              <div className="text-3xl md:text-6xl font-display font-black tracking-tighter uppercase relative flex flex-nowrap justify-center items-center gap-x-3 whitespace-nowrap px-8 py-2">
+                {/* TEXT: PLANES */}
+                <div className="flex text-primary-dark">
+                  {"PLANES".split("").map((char, i) => (
+                    <motion.span
+                      key={i}
+                      animate={{ 
+                        color: ["#1d2729", "#ffffff", "#1d2729"],
+                        textShadow: ["0 0 0px rgba(255,255,255,0)", "0 0 10px rgba(255,255,255,0.5)", "0 0 0px rgba(255,255,255,0)"]
+                      }}
+                      transition={{ 
+                        duration: 2, 
+                        repeat: Infinity, 
+                        repeatDelay: 10,
+                        delay: i * 0.1 
+                      }}
+                      className="inline-block"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </div>
+
+                {/* TEXT: DESDE $500/MES */}
+                <div className="flex text-primary italic font-medium lowercase tracking-tighter">
+                  {"desde $500/mes".split("").map((char, i) => (
+                    <motion.span
+                      key={i}
+                      animate={{ 
+                        opacity: [1, 0.6, 1],
+                        color: ["#396542", "#ffffff", "#396542"],
+                        textShadow: ["0 0 0px rgba(255,255,255,0)", "0 0 15px rgba(255,255,255,0.8)", "0 0 0px rgba(255,255,255,0)"]
+                      }}
+                      transition={{ 
+                        duration: 2, 
+                        repeat: Infinity, 
+                        repeatDelay: 10,
+                        delay: 0.6 + (i * 0.1) 
+                      }}
+                      className={char === " " ? "mx-1" : ""}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+
+              <motion.span 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ delay: 0.8, duration: 1.5 }}
+                className="h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent mt-5"
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
 
