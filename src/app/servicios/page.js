@@ -514,7 +514,7 @@ function MainServiceView({ data, isMobile }) {
             transition={{ delay: isMobile ? 0 : 0.35, duration: isMobile ? 0 : 0.4 }}
             className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md w-fit"
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-primary-dark shadow-[0_0_10px_rgba(57,101,66,0.5)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#fdf9e1] shadow-[0_0_10px_rgba(253,249,225,0.4)]" />
             <p className="text-[9px] md:text-[10px] font-display font-black text-[#fdf9e1] uppercase tracking-[0.3em] leading-none">
               {data.subtitle}
             </p>
