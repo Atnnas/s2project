@@ -14,7 +14,7 @@ export default function AnimatedButtonText({
   if (!text) return null;
 
   return (
-    <span className={`inline-flex flex-wrap ${className}`}>
+    <span className={`inline-flex flex-nowrap ${className}`}>
       {text.split('').map((char, i) => (
         <motion.span
           key={i}

@@ -168,7 +168,6 @@ export default function ServiciosPage() {
 
                 {/* TEXT: DESDE $500/MES */}
                 <div className="flex text-primary italic font-medium lowercase tracking-tighter">
-                  {"desde $500/mes".split("").map((char, i) => (
                     <motion.span
                       key={i}
                       animate={{ 
@@ -372,21 +371,23 @@ export default function ServiciosPage() {
                 {/* Glow Aura Layer (Hover) */}
                 <div className="absolute inset-0 bg-[#fdf9e1] opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
 
-                <span className="relative z-10 flex flex-col items-center text-center">
-                  <AnimatedButtonText 
-                    text="Diagnóstico visual" 
-                    baseColor="#396542" 
-                    className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70"
-                  />
-                  <div className="flex flex-col leading-[1.1] md:leading-[0.9]">
-                    <div className="whitespace-nowrap">
+                <span className="relative z-10 flex-1 flex flex-col items-center text-center min-w-0">
+                  <div className="w-full flex justify-center">
+                    <AnimatedButtonText 
+                      text="Diagnóstico visual" 
+                      baseColor="#396542" 
+                      className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70"
+                    />
+                  </div>
+                  <div className="flex flex-col leading-[1.1] md:leading-[0.9] w-full items-center">
+                    <div className="w-full flex justify-center">
                       <AnimatedButtonText 
                         text="AGENDA TU" 
                         baseColor="#1d2729" 
                         className="font-display font-black text-lg md:text-xl tracking-tight"
                       />
                     </div>
-                    <div className="whitespace-nowrap">
+                    <div className="w-full flex justify-center">
                       <AnimatedButtonText 
                         text="CONSULTA" 
                         baseColor="#1d2729" 
