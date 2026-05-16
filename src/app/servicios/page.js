@@ -357,7 +357,7 @@ export default function ServiciosPage() {
                     duration: 4, 
                     repeat: Infinity, 
                     delay: i * 1.3,
-                    ease: [0.25, 0.1, 0.25, 1] // Custom smooth bezier
+                    ease: [0.25, 0.1, 0.25, 1] 
                   }}
                   className="absolute inset-0 bg-[#fdf9e1] rounded-full blur-2xl -z-10"
                 />
@@ -367,7 +367,7 @@ export default function ServiciosPage() {
                 onClick={() => setShowContactModal(true)}
                 whileHover={{ scale: 1.05, rotateX: 5, rotateY: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative inline-flex items-center justify-between gap-8 bg-[#fdf9e1] text-[#1d2729] px-8 py-4 md:px-10 md:py-5 rounded-full font-body transition-all duration-500 hover:bg-white overflow-hidden w-full sm:w-auto border border-white/50 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_-10px_rgba(253,249,225,0.6),0_0_20px_rgba(253,249,225,0.2)]"
+                className="group relative inline-flex items-center justify-between gap-8 bg-[#fdf9e1] text-[#1d2729] px-8 py-4 md:px-10 md:py-5 rounded-full font-body transition-all duration-500 hover:bg-white overflow-hidden w-full sm:w-auto min-w-[280px] border border-white/50 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_-10px_rgba(253,249,225,0.6),0_0_20px_rgba(253,249,225,0.2)]"
               >
                 {/* Glow Aura Layer (Hover) */}
                 <div className="absolute inset-0 bg-[#fdf9e1] opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
@@ -378,17 +378,21 @@ export default function ServiciosPage() {
                     baseColor="#396542" 
                     className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70"
                   />
-                  <div className="flex flex-col leading-[0.9]">
-                    <AnimatedButtonText 
-                      text="AGENDA TU" 
-                      baseColor="#1d2729" 
-                      className="font-display font-black text-lg md:text-xl tracking-tight"
-                    />
-                    <AnimatedButtonText 
-                      text="CONSULTA" 
-                      baseColor="#1d2729" 
-                      className="font-display font-black text-lg md:text-xl tracking-tight"
-                    />
+                  <div className="flex flex-col leading-[1.1] md:leading-[0.9]">
+                    <div className="whitespace-nowrap">
+                      <AnimatedButtonText 
+                        text="AGENDA TU" 
+                        baseColor="#1d2729" 
+                        className="font-display font-black text-lg md:text-xl tracking-tight"
+                      />
+                    </div>
+                    <div className="whitespace-nowrap">
+                      <AnimatedButtonText 
+                        text="CONSULTA" 
+                        baseColor="#1d2729" 
+                        className="font-display font-black text-lg md:text-xl tracking-tight"
+                      />
+                    </div>
                   </div>
                 </span>
                 
