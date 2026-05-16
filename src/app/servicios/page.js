@@ -200,7 +200,7 @@ export default function ServiciosPage() {
                   >
                     <div className="flex flex-col items-center">
                       <span 
-                        className={`font-display font-black text-[9px] xl:text-[11px] uppercase tracking-[0.15em] xl:tracking-[0.25em] relative z-10 whitespace-nowrap transition-transform duration-500 ${activeTab === i ? 'scale-105' : 'group-hover:scale-105'}`}
+                        className={`font-display font-black text-[8px] xl:text-[9.5px] uppercase tracking-[0.15em] xl:tracking-[0.25em] relative z-10 whitespace-nowrap transition-transform duration-500 ${activeTab === i ? 'scale-105' : 'group-hover:scale-105'}`}
                       >
                         {tab.title}
                       </span>
@@ -298,7 +298,7 @@ export default function ServiciosPage() {
                   />
                   <div className="flex-1 pr-1 overflow-hidden">
                     <h3 
-                      className={`font-display font-bold uppercase text-[9px] md:text-[9.35px] tracking-[0.15em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
+                      className={`font-display font-bold uppercase text-[8px] md:text-[8px] tracking-[0.15em] whitespace-nowrap transition-colors duration-500 origin-left ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}
                     >
                       {tab.title}
                     </h3>
