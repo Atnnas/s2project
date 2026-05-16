@@ -371,23 +371,23 @@ export default function ServiciosPage() {
                 {/* Glow Aura Layer (Hover) */}
                 <div className="absolute inset-0 bg-[#fdf9e1] opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
 
-                <span className="relative z-10 flex-1 flex flex-col items-center text-center min-w-0">
-                  <div className="w-full flex justify-center">
+                <div className="relative z-10 flex-1 flex flex-col items-center text-center min-w-0">
+                  <div className="w-full flex justify-center min-w-max">
                     <AnimatedButtonText 
                       text="Diagnóstico visual" 
                       baseColor="#396542" 
                       className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70"
                     />
                   </div>
-                  <div className="flex flex-col leading-[1.1] md:leading-[0.9] w-full items-center">
-                    <div className="w-full flex justify-center">
+                  <div className="flex flex-col leading-[1.1] md:leading-[0.9] w-full items-center min-w-max">
+                    <div className="w-full flex justify-center whitespace-nowrap">
                       <AnimatedButtonText 
                         text="AGENDA TU" 
                         baseColor="#1d2729" 
                         className="font-display font-black text-lg md:text-xl tracking-tight"
                       />
                     </div>
-                    <div className="w-full flex justify-center">
+                    <div className="w-full flex justify-center whitespace-nowrap">
                       <AnimatedButtonText 
                         text="CONSULTA" 
                         baseColor="#1d2729" 
@@ -395,7 +395,7 @@ export default function ServiciosPage() {
                       />
                     </div>
                   </div>
-                </span>
+                </div>
                 
                 <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-[#1d2729] rounded-full flex items-center justify-center group-hover:bg-[#396542] transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-[#396542]/30 group-hover:rotate-[360deg]">
                   <span className="material-symbols-outlined text-xl text-[#fdf9e1]">arrow_forward</span>
