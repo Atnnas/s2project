@@ -265,19 +265,19 @@ export default function ServiciosPage() {
              </AnimatePresence>
 
              {/* MOBILE FLOATING GLASS NAVIGATION CONTROLS */}
-             <div className="lg:hidden absolute top-1/2 -translate-y-1/2 left-0 right-0 z-20 pointer-events-none flex justify-between px-2">
+             <div className="lg:hidden absolute top-1/2 -translate-y-1/2 left-0 right-0 z-20 pointer-events-none flex justify-between px-0">
                 <button 
                   onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
-                  className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-primary-dark shadow-2xl active:scale-90 transition-all pointer-events-auto"
+                  className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all pointer-events-auto"
                 >
-                  <span className="material-symbols-outlined text-2xl">chevron_left</span>
+                  <span className="material-symbols-outlined text-3xl">chevron_left</span>
                 </button>
 
                 <button 
                   onClick={() => handleTabClick((activeTab + 1) % tabs.length)}
-                  className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-primary-dark shadow-2xl active:scale-90 transition-all pointer-events-auto"
+                  className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all pointer-events-auto"
                 >
-                  <span className="material-symbols-outlined text-2xl">chevron_right</span>
+                  <span className="material-symbols-outlined text-3xl">chevron_right</span>
                 </button>
              </div>
 
