@@ -116,7 +116,7 @@ export default function ServiciosPage() {
 
 
       {/* HERO SECTION - COMPACT & MINIMAL */}
-      <section className="relative w-full pt-20 md:pt-44 pb-4 px-6 shrink-0 text-center z-10">
+      <section className="relative w-full pt-12 md:pt-44 pb-4 px-6 shrink-0 text-center z-10">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
