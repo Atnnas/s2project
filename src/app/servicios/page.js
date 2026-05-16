@@ -255,6 +255,38 @@ export default function ServiciosPage() {
                   {activeTab === 3 && <SecondaryServiceView data={secondaryServices[2]} icon="business_center" />}
                 </motion.div>
              </AnimatePresence>
+
+             {/* MOBILE NAVIGATION CONTROLS */}
+             <div className="flex lg:hidden items-center justify-between mt-12 px-2">
+                <button 
+                  onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
+                  className="flex flex-col items-start group"
+                >
+                  <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center text-primary-dark shadow-xl active:scale-90 transition-all mb-2">
+                    <span className="material-symbols-outlined text-2xl">chevron_left</span>
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-primary-dark/40 ml-2">Anterior</span>
+                </button>
+
+                <div className="flex gap-2">
+                  {tabs.map((_, i) => (
+                    <div 
+                      key={i} 
+                      className={`w-2 h-2 rounded-full transition-all duration-500 ${activeTab === i ? 'bg-primary w-6' : 'bg-primary/20'}`} 
+                    />
+                  ))}
+                </div>
+
+                <button 
+                  onClick={() => handleTabClick((activeTab + 1) % tabs.length)}
+                  className="flex flex-col items-end group"
+                >
+                  <div className="w-14 h-14 rounded-full bg-primary text-[#fdf9e1] flex items-center justify-center shadow-xl active:scale-90 transition-all mb-2">
+                    <span className="material-symbols-outlined text-2xl">chevron_right</span>
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-primary-dark/40 mr-2">Siguiente</span>
+                </button>
+             </div>
           </div>
         </div>
       </section>
