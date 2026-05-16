@@ -168,6 +168,7 @@ export default function ServiciosPage() {
 
                 {/* TEXT: DESDE $500/MES */}
                 <div className="flex text-primary italic font-medium lowercase tracking-tighter">
+                  {"desde $500/mes".split("").map((char, i) => (
                     <motion.span
                       key={i}
                       animate={{ 
