@@ -136,21 +136,8 @@ export default function ServiciosPage() {
             </h1>
           </motion.div>
           
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1 }}
-            className="flex items-center justify-center gap-4 mt-5 mb-8"
-          >
-            <div className="h-px w-12 bg-primary/20" />
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">
-              {pricingTag}
-            </p>
-            <div className="h-px w-12 bg-primary/20" />
-          </motion.div>
-
-          {/* MOBILE NAVIGATION CONTROLS - REPOSITIONED BELOW PRICING TAG */}
-          <div className="lg:hidden flex items-center justify-center gap-12 mt-2 px-6">
+          {/* MOBILE NAVIGATION CONTROLS - REPOSITIONED BELOW SERVICIOS */}
+          <div className="lg:hidden flex items-center justify-center gap-12 mt-8 px-6">
               <button 
                 onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
                 className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
