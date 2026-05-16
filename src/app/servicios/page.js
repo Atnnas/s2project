@@ -60,7 +60,15 @@ export default function ServiciosPage() {
   const [isPaused, setIsPaused] = useState(false);
   const [pricingTag, setPricingTag] = useState("Planes desde $500/mes");
   const [showContactModal, setShowContactModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const interactionTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -246,13 +254,13 @@ export default function ServiciosPage() {
                   initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: isMobile ? 1.2 : 0.6, ease: [0.22, 1, 0.36, 1] }}
                   className="w-full flex flex-col pt-0 mt-0"
                 >
-                  {activeTab === 0 && <MainServiceView data={mainService} />}
-                  {activeTab === 1 && <SecondaryServiceView data={secondaryServices[0]} icon="architecture" />}
-                  {activeTab === 2 && <SecondaryServiceView data={secondaryServices[1]} icon="domain" />}
-                  {activeTab === 3 && <SecondaryServiceView data={secondaryServices[2]} icon="business_center" />}
+                  {activeTab === 0 && <MainServiceView data={mainService} isMobile={isMobile} />}
+                  {activeTab === 1 && <SecondaryServiceView data={secondaryServices[0]} icon="architecture" isMobile={isMobile} />}
+                  {activeTab === 2 && <SecondaryServiceView data={secondaryServices[1]} icon="domain" isMobile={isMobile} />}
+                  {activeTab === 3 && <SecondaryServiceView data={secondaryServices[2]} icon="business_center" isMobile={isMobile} />}
                 </motion.div>
              </AnimatePresence>
 
@@ -449,7 +457,7 @@ export default function ServiciosPage() {
   );
 }
 
-function MainServiceView({ data }) {
+function MainServiceView({ data, isMobile }) {
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.98 }}
@@ -472,17 +480,17 @@ function MainServiceView({ data }) {
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.3, duration: isMobile ? 0.8 : 0.4 }}
           className="text-3xl md:text-[3.3rem] font-display font-black uppercase tracking-tight leading-[0.9] text-[#fdf9e1]"
         >
           {data.title}
         </motion.h3>
-
+ 
         {data.subtitle && (
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35 }}
+            transition={{ delay: 0.35, duration: isMobile ? 0.8 : 0.4 }}
             className="text-[11px] md:text-[13px] font-display font-black text-[#fdf9e1]/40 uppercase tracking-[0.4em] leading-none"
           >
             {data.subtitle}
@@ -492,7 +500,7 @@ function MainServiceView({ data }) {
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.4, duration: isMobile ? 0.8 : 0.4 }}
           className="text-base md:text-lg text-[#fdf9e1]/70 font-body leading-relaxed max-w-3xl font-light"
         >
           {data.description}
@@ -519,7 +527,7 @@ function MainServiceView({ data }) {
   );
 }
 
-function SecondaryServiceView({ data, icon }) {
+function SecondaryServiceView({ data, icon, isMobile }) {
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.98 }}
@@ -542,17 +550,17 @@ function SecondaryServiceView({ data, icon }) {
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.3, duration: isMobile ? 0.8 : 0.4 }}
           className="text-3xl md:text-[3.3rem] font-display font-black uppercase tracking-tight leading-[0.9] text-white"
         >
           {data.title}
         </motion.h3>
-
+ 
         {data.subtitle && (
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35 }}
+            transition={{ delay: 0.35, duration: isMobile ? 0.8 : 0.4 }}
             className="text-[11px] md:text-[13px] font-display font-black text-white/40 uppercase tracking-[0.4em] leading-none"
           >
             {data.subtitle}
@@ -562,7 +570,7 @@ function SecondaryServiceView({ data, icon }) {
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.4, duration: isMobile ? 0.8 : 0.4 }}
           className="text-base md:text-lg text-white/70 font-body leading-relaxed max-w-3xl font-light"
         >
           {data.description}
