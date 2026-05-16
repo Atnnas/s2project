@@ -84,12 +84,12 @@ export default function ServiciosPage() {
   }, []);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || isMobile) return;
     const intervalId = setInterval(() => {
       setActiveTab((prevTab) => (prevTab + 1) % tabs.length);
     }, 5000);
     return () => clearInterval(intervalId);
-  }, [isPaused]);
+  }, [isPaused, isMobile]);
 
   const handleInteraction = () => {
     setIsPaused(true);
