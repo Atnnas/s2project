@@ -56,10 +56,23 @@ export default function Navbar() {
 
   return (
     <>
+      {/* MOBILE FLOATING MENU BUTTON - TOP LEFT */}
+      <div className="lg:hidden fixed top-6 left-6 z-[110] pointer-events-auto">
+        <motion.button 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 text-primary-dark shadow-2xl shadow-black/10 transition-all active:scale-90"
+        >
+          <span className="material-symbols-outlined text-2xl">{isMenuOpen ? 'close' : 'menu'}</span>
+        </motion.button>
+      </div>
+
+      {/* DESKTOP NAVBAR (Hidden on Mobile) */}
       <motion.header 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="fixed top-6 left-0 w-full z-[100] px-6 flex justify-center pointer-events-none"
+        className="fixed top-6 left-0 w-full z-[100] px-6 hidden lg:flex justify-center pointer-events-none"
       >
         <nav 
           className={`pointer-events-auto flex items-center justify-between px-4 md:px-8 lg:px-10 py-4 md:py-5 rounded-full transition-all duration-700 max-w-[calc(100vw-2rem)] md:max-w-[90vw] w-full border border-white/50 overflow-hidden relative ${
@@ -81,7 +94,7 @@ export default function Navbar() {
           <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent pointer-events-none z-0 h-1/2" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shimmer_5s_infinite] pointer-events-none z-0" />
 
-          {/* Logo Section - Adjusted for centering */}
+          {/* Logo Section */}
           <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] relative z-10">
             <img 
               src="/logo-final.png" 
@@ -90,8 +103,8 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Desktop Nav - Expanded horizontally & Vertically Centered */}
-          <div className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-4 px-2 xl:px-8 h-full">
+          {/* Desktop Nav Links */}
+          <div className="flex flex-1 items-center justify-center gap-1 xl:gap-4 px-2 xl:px-8 h-full">
             {navLinks.map((link) => (
               <NavbarLink 
                 key={link.href}
@@ -104,7 +117,7 @@ export default function Navbar() {
           </div>
 
           {/* Auth Actions (Desktop) */}
-          <div className="hidden lg:flex items-center gap-2 pl-2 xl:pl-4 border-l border-primary/10">
+          <div className="flex items-center gap-2 pl-2 xl:pl-4 border-l border-primary/10">
             {!session ? (
               <>
                 <button 
@@ -134,24 +147,6 @@ export default function Navbar() {
                 </Link>
               )
             )}
-          </div>
-
-          {/* Mobile Toggle & Auth (Mobile) */}
-          <div className="lg:hidden flex items-center gap-3">
-            {!session && (
-              <button 
-                onClick={() => setIsSignUpOpen(true)}
-                className="w-10 h-10 rounded-full bg-primary text-[#fdf9e1] flex items-center justify-center shadow-md"
-              >
-                <span className="material-symbols-outlined text-xl">person_add</span>
-              </button>
-            )}
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-accent-pastel/20 text-primary-dark"
-            >
-              <span className="material-symbols-outlined">{isMenuOpen ? 'close' : 'menu'}</span>
-            </button>
           </div>
         </nav>
       </motion.header>
