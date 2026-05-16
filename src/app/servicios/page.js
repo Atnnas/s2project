@@ -136,32 +136,6 @@ export default function ServiciosPage() {
             </h1>
           </motion.div>
           
-          {/* MOBILE NAVIGATION CONTROLS - REPOSITIONED BELOW SERVICIOS */}
-          <div className="lg:hidden flex items-center justify-center gap-12 mt-8 px-6">
-              <button 
-                onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
-                className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
-              >
-                <span className="material-symbols-outlined text-3xl">chevron_left</span>
-              </button>
-
-              <div className="flex gap-2">
-                {tabs.map((_, i) => (
-                  <div 
-                    key={i} 
-                    className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${activeTab === i ? 'bg-primary w-4' : 'bg-primary/10'}`} 
-                  />
-                ))}
-              </div>
-
-              <button 
-                onClick={() => handleTabClick((activeTab + 1) % tabs.length)}
-                className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
-              >
-                <span className="material-symbols-outlined text-3xl">chevron_right</span>
-              </button>
-          </div>
-
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -214,6 +188,34 @@ export default function ServiciosPage() {
                     </motion.span>
                   ))}
                 </div>
+              </div>
+
+              {/* MOBILE NAVIGATION CONTROLS - REPOSITIONED BELOW PLANES WITH SPECIFIC TRANSFORM */}
+              <div className="lg:hidden flex items-center justify-center gap-12 mt-8 mb-4 px-6">
+                  <button 
+                    onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
+                    style={{ transform: 'translateX(-4.4px) translateY(4.4px)' }}
+                    className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
+                  >
+                    <span className="material-symbols-outlined text-3xl">chevron_left</span>
+                  </button>
+
+                  <div className="flex gap-2" style={{ transform: 'translateX(-4.4px) translateY(4.4px)' }}>
+                    {tabs.map((_, i) => (
+                      <div 
+                        key={i} 
+                        className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${activeTab === i ? 'bg-primary w-4' : 'bg-primary/10'}`} 
+                      />
+                    ))}
+                  </div>
+
+                  <button 
+                    onClick={() => handleTabClick((activeTab + 1) % tabs.length)}
+                    style={{ transform: 'translateX(-4.4px) translateY(4.4px)' }}
+                    className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
+                  >
+                    <span className="material-symbols-outlined text-3xl">chevron_right</span>
+                  </button>
               </div>
 
               <motion.span 
