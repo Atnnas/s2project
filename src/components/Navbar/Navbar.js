@@ -158,9 +158,23 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-[90] bg-cream flex flex-col items-center justify-center pt-20 px-6 lg:hidden"
+            className="fixed inset-0 z-[90] bg-cream flex flex-col items-center justify-start pt-32 px-6 lg:hidden"
           >
-            <div className="flex flex-col gap-6 items-center">
+            {/* GLORIOUS CENTERED LOGO */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+              className="mb-16"
+            >
+              <img 
+                src="/logo-final.png" 
+                alt="S2 PROJECT" 
+                className="h-28 w-auto object-contain drop-shadow-[0_20px_50px_rgba(29,39,41,0.15)]"
+              />
+            </motion.div>
+
+            <div className="flex flex-col gap-8 items-center">
               {navLinks.map((link) => (
                 <Link 
                   key={link.href}
