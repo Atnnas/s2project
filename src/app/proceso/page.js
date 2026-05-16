@@ -53,10 +53,18 @@ export default function ProcesoPage() {
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showContactModal, setShowContactModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const interactionTimeoutRef = useRef(null);
 
   useEffect(() => {
-    if (isPaused) return;
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isPaused || isMobile) return;
     
     const duration = 5000;
     const interval = 50; 
@@ -121,6 +129,50 @@ export default function ProcesoPage() {
             >
               Un proceso claro de 5 pasos para llevar tu marca de donde <span className="text-primary font-medium italic">está</span> a donde quiere llegar.
             </motion.p>
+
+            {/* MOBILE NAVIGATION CONTROLS - REPLICATING SERVICIOS STYLE */}
+            <div className="lg:hidden flex flex-col items-center w-full mt-12">
+                <motion.span 
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.6, duration: 1.5 }}
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent mb-8"
+                />
+
+                <div className="flex items-center justify-center gap-12 mb-4 px-6">
+                    <button 
+                      onClick={() => handleStepClick((activeStep - 1 + steps.length) % steps.length)}
+                      style={{ transform: 'translateX(-4.4px) translateY(4.4px)' }}
+                      className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
+                    >
+                      <span className="material-symbols-outlined text-3xl">chevron_left</span>
+                    </button>
+
+                    <div className="flex gap-2" style={{ transform: 'translateX(-4.4px) translateY(4.4px)' }}>
+                      {steps.map((_, i) => (
+                        <div 
+                          key={i} 
+                          className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${activeStep === i ? 'bg-primary w-4' : 'bg-primary/10'}`} 
+                        />
+                      ))}
+                    </div>
+
+                    <button 
+                      onClick={() => handleStepClick((activeStep + 1) % steps.length)}
+                      style={{ transform: 'translateX(-4.4px) translateY(4.4px)' }}
+                      className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
+                    >
+                      <span className="material-symbols-outlined text-3xl">chevron_right</span>
+                    </button>
+                </div>
+
+                <motion.span 
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.8, duration: 1.5 }}
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent mt-5"
+                />
+            </div>
           </motion.div>
         </div>
       </section>
@@ -176,15 +228,25 @@ export default function ProcesoPage() {
              <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStep}
-                  initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+                  initial={isMobile ? { opacity: 1, x: 0, filter: "blur(0px)" } : { opacity: 0, x: 20, filter: "blur(10px)" }}
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-full"
+                  exit={isMobile ? { opacity: 1, x: 0, filter: "blur(0px)" } : { opacity: 0, x: -20, filter: "blur(10px)" }}
+                  transition={{ duration: isMobile ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full flex flex-col pt-0 mt-0"
                 >
-                  <ProcessCard data={steps[activeStep]} />
+                  <ProcessCard data={steps[activeStep]} isMobile={isMobile} />
                 </motion.div>
              </AnimatePresence>
+
+             {/* MOBILE PAGINATION DOTS (Keep it subtle) */}
+             <div className="flex lg:hidden items-center justify-center mt-8 gap-2">
+                {steps.map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${activeStep === i ? 'bg-primary w-4' : 'bg-primary/10'}`} 
+                  />
+                ))}
+             </div>
           </div>
         </div>
       </section>
@@ -403,16 +465,16 @@ export default function ProcesoPage() {
   );
 }
 
-function ProcessCard({ data }) {
+function ProcessCard({ data, isMobile }) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 30, scale: 0.98 }}
+      initial={isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group"
+      className="p-8 md:p-14 rounded-[3.5rem] bg-gradient-to-br from-primary to-[#2a4d32] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)] w-full flex flex-col justify-between transition-all duration-700 relative overflow-hidden group mt-0"
     >
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
       
-      <div className="space-y-8 flex-1 relative z-10">
+      <div className="space-y-8 flex-1 relative z-10 pt-0">
         <GlassIconButton 
           icon={data.icon} 
           color="pastel" 
@@ -423,18 +485,18 @@ function ProcessCard({ data }) {
         />
         
         <motion.h3 
-          initial={{ opacity: 0, y: 10 }}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: isMobile ? 0 : 0.3, duration: isMobile ? 0 : 0.4 }}
           className="text-3xl md:text-[3.3rem] font-display font-black uppercase tracking-tight leading-[0.9] text-[#fdf9e1]"
         >
           {data.title}
         </motion.h3>
         
         <motion.p 
-          initial={{ opacity: 0, y: 10 }}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: isMobile ? 0 : 0.4, duration: isMobile ? 0 : 0.4 }}
           className="text-base md:text-lg text-[#fdf9e1]/70 font-body leading-relaxed max-w-3xl font-light"
         >
           {data.desc}
