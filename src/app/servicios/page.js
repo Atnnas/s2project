@@ -137,6 +137,44 @@ export default function ServiciosPage() {
           </motion.div>
           
           <div className="flex flex-col items-center">
+            <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 1 }}
+            className="flex items-center justify-center gap-4 mt-5 mb-8"
+          >
+            <div className="h-px w-12 bg-primary/20" />
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">
+              {pricingTag}
+            </p>
+            <div className="h-px w-12 bg-primary/20" />
+          </motion.div>
+
+          {/* MOBILE NAVIGATION CONTROLS - REPOSITIONED BELOW PRICING TAG */}
+          <div className="lg:hidden flex items-center justify-center gap-12 mt-2 px-6">
+              <button 
+                onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
+                className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_left</span>
+              </button>
+
+              <div className="flex gap-2">
+                {tabs.map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${activeTab === i ? 'bg-primary w-4' : 'bg-primary/10'}`} 
+                  />
+                ))}
+              </div>
+
+              <button 
+                onClick={() => handleTabClick((activeTab + 1) % tabs.length)}
+                className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_right</span>
+              </button>
+          </div>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -263,23 +301,6 @@ export default function ServiciosPage() {
                   {activeTab === 3 && <SecondaryServiceView data={secondaryServices[2]} icon="business_center" isMobile={isMobile} />}
                 </motion.div>
              </AnimatePresence>
-
-             {/* MOBILE FLOATING GLASS NAVIGATION CONTROLS */}
-             <div className="lg:hidden absolute top-1/2 -translate-y-1/2 left-0 right-0 z-20 pointer-events-none flex justify-between px-0">
-                <button 
-                  onClick={() => handleTabClick((activeTab - 1 + tabs.length) % tabs.length)}
-                  className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all pointer-events-auto"
-                >
-                  <span className="material-symbols-outlined text-3xl">chevron_left</span>
-                </button>
-
-                <button 
-                  onClick={() => handleTabClick((activeTab + 1) % tabs.length)}
-                  className="w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-primary-dark/60 shadow-2xl active:scale-90 transition-all pointer-events-auto"
-                >
-                  <span className="material-symbols-outlined text-3xl">chevron_right</span>
-                </button>
-             </div>
 
              {/* MOBILE PAGINATION DOTS (Keep it subtle) */}
              <div className="flex lg:hidden items-center justify-center mt-8 gap-2">
