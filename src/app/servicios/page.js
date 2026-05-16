@@ -508,14 +508,17 @@ function MainServiceView({ data, isMobile }) {
         </motion.h3>
  
         {data.subtitle && (
-          <motion.p 
+          <motion.div 
             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: isMobile ? 0 : 0.35, duration: isMobile ? 0 : 0.4 }}
-            className="text-[11px] md:text-[13px] font-display font-black text-[#fdf9e1]/40 uppercase tracking-[0.4em] leading-none"
+            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md w-fit"
           >
-            {data.subtitle}
-          </motion.p>
+            <div className="w-1.5 h-1.5 rounded-full bg-primary-dark shadow-[0_0_10px_rgba(57,101,66,0.5)]" />
+            <p className="text-[9px] md:text-[10px] font-display font-black text-[#fdf9e1] uppercase tracking-[0.3em] leading-none">
+              {data.subtitle}
+            </p>
+          </motion.div>
         )}
         
         <motion.p 
@@ -578,14 +581,17 @@ function SecondaryServiceView({ data, icon, isMobile }) {
         </motion.h3>
  
         {data.subtitle && (
-          <motion.p 
+          <motion.div 
             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: isMobile ? 0 : 0.35, duration: isMobile ? 0 : 0.4 }}
-            className="text-[11px] md:text-[13px] font-display font-black text-white/40 uppercase tracking-[0.4em] leading-none"
+            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md w-fit"
           >
-            {data.subtitle}
-          </motion.p>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#fdf9e1] shadow-[0_0_10px_rgba(253,249,225,0.4)]" />
+            <p className="text-[9px] md:text-[10px] font-display font-black text-[#fdf9e1] uppercase tracking-[0.3em] leading-none">
+              {data.subtitle}
+            </p>
+          </motion.div>
         )}
         
         <motion.p 
