@@ -190,32 +190,6 @@ export default function ServiciosPage() {
                 </div>
               </div>
 
-              {/* DESKTOP TABS - OPTIMIZED FOR 17" SCREENS */}
-              <div className="hidden lg:flex flex-wrap items-center justify-center gap-0.5 xl:gap-4 mb-2 max-w-full">
-                {tabs.map((tab, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleTabClick(i)}
-                    className={`relative px-3 xl:px-8 py-3 rounded-full transition-all duration-500 group ${activeTab === i ? 'text-primary-dark' : 'text-primary-dark/40 hover:text-primary-dark/70'}`}
-                  >
-                    <div className="flex flex-col items-center">
-                      <span 
-                        className={`font-display font-black text-[8px] xl:text-[9.5px] uppercase tracking-[0.15em] xl:tracking-[0.25em] relative z-10 whitespace-nowrap transition-transform duration-500 ${activeTab === i ? 'scale-105' : 'group-hover:scale-105'}`}
-                      >
-                        {tab.title}
-                      </span>
-                      {activeTab === i && (
-                        <motion.div 
-                          layoutId="activeTab"
-                          className="absolute inset-0 bg-white shadow-[0_10px_30px_-5px_rgba(0,0,0,0.1)] rounded-full -z-0"
-                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                        />
-                      )}
-                    </div>
-                  </button>
-                ))}
-              </div>
-
               {/* MOBILE NAVIGATION CONTROLS - REPOSITIONED BELOW PLANES WITH SPECIFIC TRANSFORM */}
               <div className="lg:hidden flex flex-col items-center w-full">
                 <motion.span 
