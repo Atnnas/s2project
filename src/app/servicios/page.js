@@ -378,11 +378,18 @@ export default function ServiciosPage() {
                     baseColor="#396542" 
                     className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black mb-1 opacity-70"
                   />
-                  <AnimatedButtonText 
-                    text="AGENDA TU CONSULTA" 
-                    baseColor="#1d2729" 
-                    className="font-display font-black text-lg md:text-xl tracking-tight"
-                  />
+                  <div className="flex flex-col leading-[0.9]">
+                    <AnimatedButtonText 
+                      text="AGENDA TU" 
+                      baseColor="#1d2729" 
+                      className="font-display font-black text-lg md:text-xl tracking-tight"
+                    />
+                    <AnimatedButtonText 
+                      text="CONSULTA" 
+                      baseColor="#1d2729" 
+                      className="font-display font-black text-lg md:text-xl tracking-tight"
+                    />
+                  </div>
                 </span>
                 
                 <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-[#1d2729] rounded-full flex items-center justify-center group-hover:bg-[#396542] transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-[#396542]/30 group-hover:rotate-[360deg]">
