@@ -13,6 +13,7 @@ export function PremiumGalleryGrid({ items = [] }) {
     
     // Create a copy and shuffle it
     const shuffled = [...items].sort(() => Math.random() - 0.5);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShuffledItems(shuffled);
   }, [items]);
 
