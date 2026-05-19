@@ -7,6 +7,16 @@ export default function MainHeroCarousel() {
   const [current, setCurrent] = useState(0);
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     fetch('/api/home-banners')
@@ -32,11 +42,16 @@ export default function MainHeroCarousel() {
   if (loading) return <div className="w-full h-[85vh] bg-[#fdf9e1] animate-pulse" />;
   if (banners.length === 0) return <div className="w-full h-[140px] md:h-[180px] bg-white" />;
 
+  const currentBanner = banners[current];
+  const activeImageUrl = (isMobile && currentBanner?.mobileImageUrl) 
+    ? currentBanner.mobileImageUrl 
+    : currentBanner?.imageUrl;
+
   return (
     <section data-navbar-theme="dark" className="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-[#fdf9e1]">
       <AnimatePresence mode="wait">
         <motion.div
-          key={banners[current]._id}
+          key={currentBanner._id}
           initial={{ opacity: 0, scale: 1.15, filter: 'blur(15px)' }}
           animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
           exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
@@ -50,7 +65,7 @@ export default function MainHeroCarousel() {
               animate={{ opacity: 0.3 }}
               transition={{ duration: 2 }}
               className="absolute inset-0 w-full h-full bg-cover bg-center blur-3xl scale-110"
-              style={{ backgroundImage: `url(${banners[current].imageUrl})` }}
+              style={{ backgroundImage: `url(${activeImageUrl})` }}
             />
             
             {/* Foreground Main Image - Complete Reveal */}
@@ -58,9 +73,12 @@ export default function MainHeroCarousel() {
               initial={{ scale: 1.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 10, ease: [0.33, 1, 0.68, 1] }}
-              className="relative w-full h-full bg-contain bg-no-repeat bg-center"
+              className={`relative w-full h-full bg-no-repeat ${(isMobile && currentBanner.mobileImageUrl) ? 'bg-cover bg-center' : 'bg-contain bg-center'}`}
               style={{ 
-                backgroundImage: `url(${banners[current].imageUrl})`,
+                backgroundImage: `url(${activeImageUrl})`,
+                backgroundPosition: (!isMobile || !currentBanner.mobileImageUrl) 
+                  ? (currentBanner.focalPoint === 'top' ? 'center top' : currentBanner.focalPoint === 'bottom' ? 'center bottom' : 'center center') 
+                  : 'center center'
               }}
             />
           </div>
@@ -79,7 +97,7 @@ export default function MainHeroCarousel() {
                 transition={{ delay: 0.5, duration: 0.8 }}
                 className="inline-block text-primary font-black uppercase tracking-[0.4em] text-[11px] sm:text-[13px] mb-6 bg-primary/10 px-6 py-2.5 rounded-full border border-primary/20 backdrop-blur-md"
               >
-                {banners[current].topText || 'S2 Project • Boutique Agency'}
+                {currentBanner.topText || 'S2 Project • Boutique Agency'}
               </motion.span>
               <motion.h1
                 initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
@@ -87,10 +105,10 @@ export default function MainHeroCarousel() {
                 transition={{ delay: 0.8, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[clamp(3rem,9vw,6.5rem)] font-display font-black uppercase text-white leading-[0.85] tracking-tighter mb-8"
               >
-                {banners[current].title.split('\n').map((line, i) => (
+                {currentBanner.title.split('\n').map((line, i) => (
                   <span key={i}>
                     {line}
-                    {i !== banners[current].title.split('\n').length - 1 && <br />}
+                    {i !== currentBanner.title.split('\n').length - 1 && <br />}
                   </span>
                 ))}
               </motion.h1>
@@ -100,7 +118,7 @@ export default function MainHeroCarousel() {
                 transition={{ delay: 1.2, duration: 1 }}
                 className="text-xl md:text-2xl text-slate-100 font-body max-w-2xl leading-relaxed font-medium"
               >
-                {banners[current].subtitle}
+                {currentBanner.subtitle}
               </motion.p>
             </div>
           </div>

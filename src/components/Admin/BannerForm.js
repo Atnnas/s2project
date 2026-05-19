@@ -8,6 +8,7 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
     subtitle: '',
     topText: 'S2 Project • Boutique Agency',
     imageUrl: '',
+    mobileImageUrl: '',
     active: true,
     type: 'hero',
     focalPoint: 'center',
@@ -17,7 +18,17 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
   useEffect(() => {
     if (initialData) {
       const timer = setTimeout(() => {
-        setFormData(initialData);
+        setFormData({
+          title: initialData.title || '',
+          subtitle: initialData.subtitle || '',
+          topText: initialData.topText || 'S2 Project • Boutique Agency',
+          imageUrl: initialData.imageUrl || '',
+          mobileImageUrl: initialData.mobileImageUrl || '',
+          active: initialData.active !== undefined ? initialData.active : true,
+          type: initialData.type || 'hero',
+          focalPoint: initialData.focalPoint || 'center',
+          order: initialData.order || 0
+        });
       }, 0);
       return () => clearTimeout(timer);
     }
@@ -65,61 +76,105 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
               placeholder="Breve descripción del contenido..."
             />
           </div>
-
-
         </div>
 
         {/* Right Column: Visuals & Settings */}
         <div className="space-y-6">
-          <div>
-            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Imagen del Banner</label>
-            <div className="flex flex-col gap-4">
-              {formData.imageUrl ? (
-                <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200 group">
-                  <img 
-                    src={formData.imageUrl} 
-                    className="w-full h-full object-cover" 
-                    style={{ 
-                      objectPosition: formData.focalPoint === 'top' ? 'center top' : formData.focalPoint === 'bottom' ? 'center bottom' : 'center center' 
-                    }}
-                    alt="Preview" 
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <button 
-                      type="button"
-                      onClick={() => setFormData({ ...formData, imageUrl: '' })}
-                      className="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
-                    >
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Imagen Desktop (16:9)</label>
+              <div className="flex flex-col gap-4">
+                {formData.imageUrl ? (
+                  <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200 group">
+                    <img 
+                      src={formData.imageUrl} 
+                      className="w-full h-full object-cover" 
+                      style={{ 
+                        objectPosition: formData.focalPoint === 'top' ? 'center top' : formData.focalPoint === 'bottom' ? 'center bottom' : 'center center' 
+                      }}
+                      alt="Desktop Preview" 
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <button 
+                        type="button"
+                        onClick={() => setFormData({ ...formData, imageUrl: '' })}
+                        className="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
+                      >
+                        <span className="material-symbols-outlined">delete</span>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <label className="w-full aspect-video rounded-2xl border-2 border-dashed border-slate-200 hover:border-primary/40 flex flex-col items-center justify-center cursor-pointer text-slate-400 group transition-all bg-slate-50">
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onloadend = () => {
-                          setFormData({ ...formData, imageUrl: reader.result });
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }} 
-                    className="hidden" 
-                  />
-                  <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add_a_photo</span>
-                  <span className="text-[10px] uppercase font-bold mt-2">Subir desde equipo</span>
-                </label>
-              )}
+                ) : (
+                  <label className="w-full aspect-video rounded-2xl border-2 border-dashed border-slate-200 hover:border-primary/40 flex flex-col items-center justify-center cursor-pointer text-slate-400 group transition-all bg-slate-50">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setFormData({ ...formData, imageUrl: reader.result });
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }} 
+                      className="hidden" 
+                    />
+                    <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add_a_photo</span>
+                    <span className="text-[10px] uppercase font-bold mt-2">Subir Desktop</span>
+                  </label>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Imagen Mobile (9:16)</label>
+              <div className="flex flex-col gap-4">
+                {formData.mobileImageUrl ? (
+                  <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200 group">
+                    <img 
+                      src={formData.mobileImageUrl} 
+                      className="w-full h-full object-cover" 
+                      alt="Mobile Preview" 
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <button 
+                        type="button"
+                        onClick={() => setFormData({ ...formData, mobileImageUrl: '' })}
+                        className="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
+                      >
+                        <span className="material-symbols-outlined">delete</span>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="w-full aspect-video rounded-2xl border-2 border-dashed border-slate-200 hover:border-primary/40 flex flex-col items-center justify-center cursor-pointer text-slate-400 group transition-all bg-slate-50">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setFormData({ ...formData, mobileImageUrl: reader.result });
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }} 
+                      className="hidden" 
+                    />
+                    <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add_a_photo</span>
+                    <span className="text-[10px] uppercase font-bold mt-2">Subir Mobile</span>
+                  </label>
+                )}
+              </div>
             </div>
           </div>
 
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Ajuste de Encuadre</label>
+            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Ajuste de Encuadre (Desktop)</label>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { id: 'top', label: 'Arriba', icon: 'align_vertical_top' },
@@ -140,10 +195,11 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
           </div>
 
           <div className="bg-amber-50 px-6 py-4 rounded-2xl border border-amber-100 min-h-[80px] flex flex-col justify-center">
-            <p className="text-[10px] text-amber-700 leading-relaxed">
-              <span className="font-bold block mb-1">💡 Recomendación</span>
-              Usa fotos horizontales (1920x1080px). Ideal para impacto visual.
-            </p>
+            <div className="text-[10px] text-amber-700 leading-relaxed space-y-2">
+              <span className="font-bold block mb-1">💡 Recomendación de Dimensiones:</span>
+              <p>• <b>Desktop:</b> Usa fotos horizontales (resolución de 1920 x 1080 px, proporción 16:9) para un óptimo impacto visual.</p>
+              <p>• <b>Móvil (Opcional):</b> Usa fotos verticales con una resolución de 1000 x 1500 px (proporción 2:3). Esto asegura que se aproveche todo el espacio en dispositivos móviles de manera impecable.</p>
+            </div>
           </div>
         </div>
       </div>

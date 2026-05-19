@@ -16,6 +16,9 @@ const HomeBannerSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Por favor proporciona una URL de imagen.'],
   },
+  mobileImageUrl: {
+    type: String,
+  },
   active: {
     type: Boolean,
     default: true,
