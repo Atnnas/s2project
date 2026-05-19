@@ -53,7 +53,7 @@ export default async function ReelsPage() {
         </Link>
       </header>
 
-      <div className="w-full relative z-10">
+      <div className="w-full relative">
         {projects.length > 0 ? (
           <PremiumGalleryGrid items={galleryItems} />
         ) : (
