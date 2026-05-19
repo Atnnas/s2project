@@ -116,12 +116,13 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
   };
 
   return (
-    <div
+    <Link
+      href={cat.href}
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={onHover}
       onMouseLeave={() => { x.set(0); y.set(0); onLeave(); }}
-      className="relative h-1/2 md:h-full w-full md:w-1/2 overflow-hidden cursor-pointer"
+      className="relative h-1/2 md:h-full w-full md:w-1/2 overflow-hidden cursor-pointer block"
       style={{ perspective: "1000px" }}
     >
       <motion.div
@@ -150,7 +151,7 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
         <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity bg-black/40" />
 
-        <Link href={cat.href} className="absolute inset-0 flex flex-col items-center justify-center p-12 z-20">
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-12 z-20">
           <div style={{ transform: "translateZ(80px)", transformStyle: "preserve-3d" }} className="flex flex-col items-center">
             <motion.div 
               animate={{ scale: isHovered ? 2 : 1.3, opacity: isHovered ? 0.6 : 0.4 }}
@@ -170,9 +171,9 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
               {cat.desc}
             </motion.p>
           </div>
-        </Link>
+        </div>
       </motion.div>
-    </div>
+    </Link>
   );
 }
 
