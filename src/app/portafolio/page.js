@@ -133,8 +133,16 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
           animate={{ scale: [1, 1.02, 1] }}
           transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
           className="absolute inset-0"
+          style={{ imageRendering: "-webkit-optimize-contrast" }}
         >
-          <Image src={currentImg} alt={cat.title} fill className="object-cover brightness-110" priority />
+          <Image 
+            src={currentImg} 
+            alt={cat.title} 
+            fill 
+            className="object-cover brightness-[0.9] contrast-[1.12] saturate-[1.05]" 
+            priority 
+            unoptimized={true}
+          />
         </motion.div>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
