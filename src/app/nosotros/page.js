@@ -27,7 +27,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* RESTRUCTURACIÓN TOTAL: Grid de 2 Columnas (Compact) */}
-      <div className="flex-1 w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 relative z-10 lg:min-h-[calc(100vh-100px)] overflow-hidden">
+      <div className="flex-1 w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 relative z-10 lg:min-h-[calc(100vh-100px)]">
         
         {/* COLUMNA IZQUIERDA: Anclaje de Foto */}
         <div className="relative w-full h-[50vh] sm:h-[60vh] lg:h-full order-2 lg:order-1 flex items-end">
