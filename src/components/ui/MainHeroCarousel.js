@@ -68,6 +68,10 @@ export default function MainHeroCarousel() {
               style={{ backgroundImage: `url(${activeImageUrl})` }}
             />
             
+            {/* Overlays behind the foreground main image to tint the background blur only */}
+            <div className="absolute inset-0 bg-[#9eb5b2]/60" />
+            <div className="absolute inset-0 bg-[#9eb5b2]/20" />
+            
             {/* Foreground Main Image - Complete Reveal */}
             <motion.div
               initial={{ scale: 1.5, opacity: 0 }}
@@ -82,11 +86,6 @@ export default function MainHeroCarousel() {
               }}
             />
           </div>
-
-          {/* Overlays */}
-          {/* Solid Overlays (No gradients as requested) */}
-          <div className="absolute inset-0 bg-[#9eb5b2]/60 z-10" />
-          <div className="absolute inset-0 bg-[#9eb5b2]/20 z-10" />
 
           {/* Content */}
           <div className="absolute inset-0 z-20 flex flex-col justify-center pt-[80px] px-[clamp(1.5rem,6vw,6rem)]">
@@ -104,6 +103,7 @@ export default function MainHeroCarousel() {
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 transition={{ delay: 0.8, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[clamp(3rem,9vw,6.5rem)] font-display font-black uppercase text-white leading-[0.85] tracking-tighter mb-8"
+                style={{ textShadow: '0 4px 16px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2)' }}
               >
                 {currentBanner.title.split('\n').map((line, i) => (
                   <span key={i}>
@@ -117,6 +117,7 @@ export default function MainHeroCarousel() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1 }}
                 className="text-xl md:text-2xl text-slate-100 font-body max-w-2xl leading-relaxed font-medium"
+                style={{ textShadow: '0 2px 8px rgba(0,0,0,0.35)' }}
               >
                 {currentBanner.subtitle}
               </motion.p>
