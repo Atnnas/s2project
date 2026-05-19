@@ -14,7 +14,7 @@ const staticCategories = [
     apiCat: "Reels",
     desc: "Narrativa dinámica y cinematografía de alto impacto.",
     aura: "rgba(57, 101, 66, 0.4)",
-    defaultImgs: ["/reels-cover.png", "/banner-reels-1.png"]
+    img: "/fondo-reels.jpg"
   },
   {
     id: "artes",
@@ -23,7 +23,7 @@ const staticCategories = [
     apiCat: "Arte Digital",
     desc: "Diseño estratégico y creatividad digital sin límites.",
     aura: "rgba(158, 181, 178, 0.4)",
-    defaultImgs: ["/artes-cover.png", "/banner-artes-1.png"]
+    img: "/fondo-arts.jpg"
   }
 ];
 
@@ -134,18 +134,7 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
           transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
           className="absolute inset-0"
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentImg}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              className="absolute inset-0"
-            >
-              <Image src={currentImg} alt={cat.title} fill className="object-cover brightness-110" priority />
-            </motion.div>
-          </AnimatePresence>
+          <Image src={currentImg} alt={cat.title} fill className="object-cover brightness-110" priority />
         </motion.div>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
@@ -179,36 +168,6 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
 
 export default function PortafolioPage() {
   const [hoveredId, setHoveredId] = useState(null);
-  const [currentImageIndices, setCurrentImageIndices] = useState({ reels: 0, artes: 0 });
-  const [projectData, setProjectData] = useState({ reels: [], artes: [] });
-
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const [reelsRes, artesRes] = await Promise.all([
-          fetch('/api/projects?category=Reels'),
-          fetch('/api/projects?category=Arte%20Digital')
-        ]);
-        const reelsJson = await reelsRes.json();
-        const artesJson = await artesRes.json();
-        setProjectData({
-          reels: reelsJson.data?.map(p => p.imageUrl).filter(Boolean) || [],
-          artes: artesJson.data?.map(p => p.imageUrl).filter(Boolean) || []
-        });
-      } catch (e) {}
-    }
-    fetchProjects();
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImageIndices(prev => ({
-        reels: (prev.reels + 1) % (projectData.reels.length > 0 ? projectData.reels.length : 2),
-        artes: (prev.artes + 1) % (projectData.artes.length > 0 ? projectData.artes.length : 2)
-      }));
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [projectData]);
 
   return (
     <div className="h-screen w-full bg-[#1d2729] overflow-hidden flex flex-col md:flex-row relative">
@@ -227,7 +186,7 @@ export default function PortafolioPage() {
         <CategoryCard 
           key={cat.id}
           cat={cat}
-          currentImg={(projectData[cat.id].length > 0 ? projectData[cat.id] : cat.defaultImgs)[currentImageIndices[cat.id] % (projectData[cat.id].length || 2)]}
+          currentImg={cat.img}
           isHovered={hoveredId === cat.id}
           onHover={() => setHoveredId(cat.id)}
           onLeave={() => setHoveredId(null)}
