@@ -52,9 +52,9 @@ export default function MainHeroCarousel() {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentBanner._id}
-          initial={{ opacity: 0, scale: 1.15, filter: 'blur(15px)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+          initial={{ opacity: 0, filter: 'blur(15px)' }}
+          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, filter: 'blur(10px)' }}
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0 w-full h-full"
         >
@@ -74,10 +74,10 @@ export default function MainHeroCarousel() {
             
             {/* Foreground Main Image - Complete Reveal */}
             <motion.div
-              initial={{ scale: 1.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
+              initial={{ scale: 1.15, opacity: 0 }}
+              animate={{ scale: 1.01, opacity: 1 }}
               transition={{ duration: 10, ease: [0.33, 1, 0.68, 1] }}
-              className={`relative w-full h-full bg-no-repeat ${(isMobile && currentBanner.mobileImageUrl) ? 'bg-cover bg-center' : 'bg-contain bg-center'}`}
+              className="relative w-full h-full bg-no-repeat bg-cover"
               style={{ 
                 backgroundImage: `url(${activeImageUrl})`,
                 backgroundPosition: (!isMobile || !currentBanner.mobileImageUrl) 
