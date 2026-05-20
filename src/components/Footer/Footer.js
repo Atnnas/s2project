@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
 
           {/* Left: Copyright */}
-          <p className="text-[10px] uppercase tracking-[0.15em] font-semibold text-white/40 order-3 sm:order-1">
+          <p className="text-xs md:text-sm text-white/40 font-body font-light order-3 sm:order-1">
             &copy; 2026 S2 Project. Todos los derechos reservados.
           </p>
 

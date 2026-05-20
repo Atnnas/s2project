@@ -36,6 +36,8 @@
     inset -1px -1px 0px rgba(255, 255, 255, 0.1),
     0 10px 40px rgba(0, 0, 0, 0.1);
   display: flex;
+  align-items: center;
+  justify-content: center;
   transform-origin: 50% 50%;
   z-index: 2;
   transform: translate(0, 0);

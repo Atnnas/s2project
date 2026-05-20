@@ -20,9 +20,16 @@ export const authOptions = {
         const existingUser = await User.findOne({ email: user.email });
 
         if (!existingUser && !isSuperAdmin) {
-          // RECHAZAR inicio de sesión si el correo no está registrado previamente
-          console.log(`Acceso denegado para: ${user.email} (No existe)`);
-          return false; 
+          // REGISTRAR usuario inmediatamente como inactivo (esperando activación)
+          await User.create({
+            name: user.name || user.email.split('@')[0],
+            email: user.email,
+            image: user.image,
+            role: 'Viewer',
+            isActive: false
+          });
+          console.log(`Nuevo usuario registrado e inactivo: ${user.email}`);
+          return '/admin/error?error=inactive';
         }
         
         if (!isSuperAdmin && existingUser && !existingUser.isActive) {

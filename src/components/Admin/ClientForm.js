@@ -118,8 +118,9 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
         {onCancel && (
           <button
             type="button"
+            disabled={loading}
             onClick={onCancel}
-            className="flex-1 py-5 rounded-2xl bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-all shadow-sm"
+            className="flex-1 py-5 rounded-2xl bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancelar
           </button>
@@ -127,9 +128,19 @@ export default function ClientForm({ client = null, onSuccess, onCancel }) {
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 py-5 rounded-2xl bg-primary text-white font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 disabled:opacity-50"
+          className="flex-1 py-5 rounded-2xl bg-primary text-white font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          {loading ? 'Guardando...' : client ? 'Actualizar Cliente' : 'Guardar Cliente'}
+          {loading ? (
+            <>
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>Guardando...</span>
+            </>
+          ) : (
+            client ? 'Actualizar Cliente' : 'Guardar Cliente'
+          )}
         </button>
       </div>
     </form>

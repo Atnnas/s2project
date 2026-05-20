@@ -8,6 +8,7 @@ import { Suspense } from 'react';
 import ProjectForm from '@/components/Admin/ProjectForm';
 import ClientForm from '@/components/Admin/ClientForm';
 import BannerForm from '@/components/Admin/BannerForm';
+import GlassIconButton from '@/components/ui/GlassIconButton';
 
 function DashboardContent() {
   const { data: session, update } = useSession();
@@ -269,32 +270,44 @@ function DashboardContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[300] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6 bg-[#cadedd]/50 backdrop-blur-xl pointer-events-auto"
           >
             <motion.div 
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white w-full max-m-md rounded-3xl p-8 shadow-2xl border border-primary/10"
+              className="max-w-xs sm:max-w-sm w-full bg-gradient-to-br from-primary to-[#2a4d32] rounded-[2.5rem] p-6 sm:p-8 shadow-[0_40px_80px_rgba(29,39,41,0.35),inset_0_1px_1px_rgba(255,255,255,0.1)] border border-white/10 text-center relative overflow-hidden"
             >
-              <div className="w-16 h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-6">
-                <span className="material-symbols-outlined text-3xl">warning</span>
+              {/* Subtle background glow */}
+              <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+              <GlassIconButton 
+                icon="delete" 
+                color="cream" 
+                isActive={true} 
+                className="w-16 h-16 mx-auto mb-6 pointer-events-none" 
+                iconClassName="text-3xl text-primary-dark"
+              />
+
+              <div className="text-xs sm:text-sm font-display font-black text-[#fdf9e1] mb-3 tracking-widest uppercase">
+                ¿Confirmar eliminación?
               </div>
-              <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">¿Confirmar eliminación?</h3>
-              <p className="text-slate-500 mb-8 leading-relaxed">
-                Estás a punto de borrar <span className="font-bold text-slate-900">&quot;{itemToDelete?.title || itemToDelete?.name || itemToDelete?.email}&quot;</span>. Esta acción no se puede deshacer.
-              </p>
+
+              <div className="text-white/70 font-body leading-relaxed mb-6 text-xs px-2">
+                Estás a punto de borrar <span className="font-bold text-[#fdf9e1]">&quot;{itemToDelete?.title || itemToDelete?.name || itemToDelete?.email}&quot;</span>. Esta acción no se puede deshacer.
+              </div>
+
               <div className="flex gap-3">
                 <button 
                   onClick={() => setShowConfirm(false)}
-                  className="flex-1 px-6 py-4 rounded-2xl bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-all text-sm"
+                  className="flex-1 py-3 px-4 rounded-2xl bg-white/10 text-[#fdf9e1] font-bold hover:bg-white/20 transition-all text-xs uppercase tracking-widest font-display cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button 
                   onClick={confirmDelete}
-                  className="flex-1 px-6 py-4 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-200 text-sm"
+                  className="flex-1 py-3 px-4 rounded-2xl bg-[#fdf9e1] text-primary-dark font-bold hover:bg-white transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl text-xs uppercase tracking-widest font-display cursor-pointer"
                 >
-                  Eliminar ahora
+                  Aceptar
                 </button>
               </div>
             </motion.div>
@@ -939,10 +952,8 @@ function DashboardContent() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className="bg-white p-12 rounded-3xl border border-primary/10 text-center"
                 >
-                  <span className="material-symbols-outlined text-5xl text-slate-300 mb-4">insights</span>
-                  <p className="text-slate-500">Métricas de visualización en desarrollo.</p>
+                  <MetricsView />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -1012,16 +1023,215 @@ function SettingsView() {
             <label className="text-xs font-black uppercase tracking-widest text-slate-400 block px-1">
               {s.description || s.key}
             </label>
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <input 
                 type="text" 
                 defaultValue={s.value}
+                disabled={saving}
                 onBlur={(e) => handleUpdate(s.key, e.target.value)}
-                className="flex-1 px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300"
+                className="flex-1 px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 disabled:opacity-50"
               />
+              {saving && (
+                <svg className="animate-spin h-5 w-5 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              )}
             </div>
           </div>
         ))}
+      </div>
+
+      {status.message && (
+        <p className={`mt-6 text-sm font-bold ${status.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+          {status.message}
+        </p>
+      )}
+    </section>
+  );
+}
+
+function MetricsView() {
+  const [metrics, setMetrics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [savingId, setSavingId] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({ label: '', value: '', icon: '' });
+  const [status, setStatus] = useState({ type: '', message: '' });
+
+  const fetchMetrics = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/metrics');
+      const data = await res.json();
+      if (data.success) setMetrics(data.data);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchMetrics();
+  }, []);
+
+  const handleEditClick = (metric) => {
+    setEditingId(metric._id);
+    setEditData({ label: metric.label, value: metric.value, icon: metric.icon });
+    setStatus({ type: '', message: '' });
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+  };
+
+  const handleUpdate = async (id) => {
+    setSavingId(id);
+    setStatus({ type: '', message: '' });
+    try {
+      const res = await fetch('/api/metrics', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...editData })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus({ type: 'success', message: '¡Métrica actualizada correctamente! ✨' });
+        setEditingId(null);
+        fetchMetrics();
+      } else {
+        setStatus({ type: 'error', message: data.error });
+      }
+    } catch (e) {
+      setStatus({ type: 'error', message: 'Error de conexión' });
+    } finally {
+      setSavingId(null);
+    }
+  };
+
+  if (loading) return <p className="text-slate-400 py-20 text-center">Cargando métricas...</p>;
+
+  return (
+    <section className="bg-white p-8 rounded-3xl border border-primary/10">
+      <div className="flex items-center justify-between mb-8">
+        <h2 className="text-2xl font-display font-bold flex items-center gap-3">
+          <span className="material-symbols-outlined text-primary">analytics</span>
+          Métricas de Proceso
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {metrics.map((m) => {
+          const isEditing = editingId === m._id;
+          const isSaving = savingId === m._id;
+
+          return (
+            <div 
+              key={m._id} 
+              className={`p-6 rounded-3xl border transition-all duration-300 flex flex-col justify-between min-h-[220px] ${
+                isEditing 
+                  ? 'bg-gradient-to-br from-primary/10 to-[#2a4d32]/5 border-primary shadow-lg scale-[1.02]' 
+                  : 'bg-white border-primary/10 shadow-sm hover:shadow-md hover:border-primary/20'
+              }`}
+            >
+              {isEditing ? (
+                <div className="space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
+                      <div className="w-1/3">
+                        <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Icono</label>
+                        <input 
+                          type="text" 
+                          value={editData.icon}
+                          onChange={(e) => setEditData({ ...editData, icon: e.target.value })}
+                          placeholder="rocket_launch"
+                          className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-primary/10 focus:border-primary outline-none text-xs"
+                        />
+                      </div>
+                      <div className="w-2/3">
+                        <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Nombre</label>
+                        <input 
+                          type="text" 
+                          value={editData.label}
+                          onChange={(e) => setEditData({ ...editData, label: e.target.value })}
+                          placeholder="Alcance"
+                          className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-primary/10 focus:border-primary outline-none text-xs font-bold"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Valor (Número/Texto)</label>
+                      <input 
+                        type="text" 
+                        value={editData.value}
+                        onChange={(e) => setEditData({ ...editData, value: e.target.value })}
+                        placeholder="+42%"
+                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-primary/10 focus:border-primary outline-none text-sm font-display font-black text-primary-dark"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 pt-4">
+                    <button 
+                      onClick={() => handleUpdate(m._id)}
+                      disabled={isSaving}
+                      className="flex-1 py-2 px-3 rounded-xl bg-primary text-white font-bold text-xs hover:bg-primary/95 active:scale-95 transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+                    >
+                      {isSaving ? (
+                        <>
+                          <svg className="animate-spin h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          <span>Guardando...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="material-symbols-outlined text-xs">done</span>
+                          <span>Guardar</span>
+                        </>
+                      )}
+                    </button>
+                    <button 
+                      onClick={handleCancel}
+                      disabled={isSaving}
+                      className="py-2 px-3 rounded-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 active:scale-95 transition-all disabled:opacity-50"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col justify-between h-full flex-1">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <GlassIconButton 
+                        icon={m.icon} 
+                        color="primary" 
+                        isActive={true} 
+                        className="w-10 h-10 flex-shrink-0 pointer-events-none" 
+                        iconClassName="text-lg text-primary-dark"
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Métrica</span>
+                        <h4 className="font-bold text-slate-800 text-sm leading-tight">{m.label}</h4>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => handleEditClick(m)}
+                      className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-primary/10 text-slate-400 hover:text-primary transition-all flex items-center justify-center border border-primary/5"
+                    >
+                      <span className="material-symbols-outlined text-sm">edit</span>
+                    </button>
+                  </div>
+
+                  <div className="mt-6">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1">Valor Actual</span>
+                    <span className="text-3xl font-display font-black text-primary leading-none tracking-tight">{m.value}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {status.message && (

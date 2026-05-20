@@ -124,7 +124,7 @@ export default function ServiciosPage() {
 
 
       {/* HERO SECTION - COMPACT & MINIMAL */}
-      <section className="relative w-full pt-12 md:pt-44 pb-4 px-6 shrink-0 text-center z-10">
+      <section className="relative w-full pt-44 md:pt-[20%] lg:pt-[16%] xl:pt-[14%] pb-4 px-6 shrink-0 text-center z-10">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -243,7 +243,7 @@ export default function ServiciosPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pt-0">
           
           {/* MENU - LEFT SIDE */}
-          <div className="hidden lg:flex lg:col-span-6 space-y-3 flex-col h-fit sticky top-16 pr-8 border-r border-slate-100 -mt-40 pt-0">
+          <div className="hidden lg:flex lg:col-span-6 space-y-3 flex-col h-fit sticky top-32 pr-8 border-r border-slate-100 -mt-40 pt-0">
             {/* Vertical Indicator Line */}
             <div className="absolute right-[-1px] top-0 bottom-0 w-[1px] bg-slate-100" />
             <motion.div 
@@ -494,13 +494,13 @@ function MainServiceView({ data, isMobile }) {
       {/* Ambient Light Rim */}
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
       
-      <div className="space-y-8 flex-1 relative z-10 pt-0">
+      <div className="space-y-8 flex-1 relative z-10 pt-4">
         <GlassIconButton 
           icon="layers" 
           color="pastel" 
           darkMode={true} 
           isActive={true} 
-          className="w-16 h-16 mb-8 mt-0" 
+          className="w-16 h-16 mb-8 mt-2 ml-2" 
           iconClassName="text-3xl text-[#1d2729]"
         />
         
@@ -567,13 +567,13 @@ function SecondaryServiceView({ data, icon, isMobile }) {
       {/* Ambient Light Rim */}
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
 
-      <div className="space-y-8 flex-1 relative z-10 pt-0">
+      <div className="space-y-8 flex-1 relative z-10 pt-4">
         <GlassIconButton 
           icon={icon} 
           color="pastel" 
           darkMode={true} 
           isActive={true} 
-          className="w-16 h-16 mb-8 mt-0" 
+          className="w-16 h-16 mb-8 mt-2 ml-2" 
           iconClassName="text-3xl text-[#1d2729]"
         />
         

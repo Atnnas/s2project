@@ -39,7 +39,7 @@ const steps = [
   }
 ];
 
-const metrics = [
+const defaultMetrics = [
   { label: "Interacción", value: "+185%", icon: "rebase_edit" },
   { label: "Alcance", value: "+42%", icon: "rocket_launch" },
   { label: "Seguidores", value: "+1,200", icon: "group_add" },
@@ -54,7 +54,23 @@ export default function ProcesoPage() {
   const [progress, setProgress] = useState(0);
   const [showContactModal, setShowContactModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [metrics, setMetrics] = useState(defaultMetrics);
   const interactionTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const res = await fetch('/api/metrics');
+        const data = await res.json();
+        if (data.success && data.data && data.data.length > 0) {
+          setMetrics(data.data);
+        }
+      } catch (e) {
+        console.error("Error loading metrics from DB, using fallback:", e);
+      }
+    };
+    fetchMetrics();
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -111,7 +127,7 @@ export default function ProcesoPage() {
 
 
       {/* HERO SECTION */}
-      <section className="relative w-full pt-12 md:pt-44 pb-4 px-6 shrink-0 text-center z-10">
+      <section className="relative w-full pt-44 md:pt-[20%] lg:pt-[16%] xl:pt-[14%] pb-4 px-6 shrink-0 text-center z-10">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -474,13 +490,13 @@ function ProcessCard({ data, isMobile }) {
     >
       <div className="absolute inset-0 rounded-[3.5rem] border-[1.5px] border-white/5 pointer-events-none" />
       
-      <div className="space-y-8 flex-1 relative z-10 pt-0">
+      <div className="space-y-8 flex-1 relative z-10 pt-4">
         <GlassIconButton 
           icon={data.icon} 
           color="pastel" 
           darkMode={true} 
           isActive={true} 
-          className="w-16 h-16 mb-8 mt-0" 
+          className="w-16 h-16 mb-8 mt-2 ml-2" 
           iconClassName="text-3xl text-[#1d2729]"
         />
         

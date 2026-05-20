@@ -177,8 +177,17 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
 export default function PortafolioPage() {
   const [hoveredId, setHoveredId] = useState(null);
 
+  useEffect(() => {
+    document.documentElement.classList.add("page-portafolio");
+    document.body.classList.add("page-portafolio");
+    return () => {
+      document.documentElement.classList.remove("page-portafolio");
+      document.body.classList.remove("page-portafolio");
+    };
+  }, []);
+
   return (
-    <div className="h-screen w-full bg-[#1d2729] overflow-hidden flex flex-col md:flex-row relative">
+    <div className="absolute inset-0 bg-[#1d2729] !pt-0 pb-[120px] sm:pb-[60px] overflow-hidden flex flex-col md:flex-row">
       <SplashCursor 
         RAINBOW_MODE={false} 
         COLOR="#396542" 

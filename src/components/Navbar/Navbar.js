@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import AnimatedButtonText from '@/components/ui/AnimatedButtonText';
 
 const NavbarLink = ({ href, children, isActive, onClick }) => {
@@ -35,14 +35,52 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [isHoveringNavbar, setIsHoveringNavbar] = useState(false);
   const pathname = usePathname();
   const { data: session } = useSession();
+  const timeoutRef = useRef(null);
+
+  const isPortafolioRoute = pathname === '/portafolio';
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isPortafolioRoute) {
+      setIsNavbarVisible(true);
+      return;
+    }
+
+    const resetTimer = () => {
+      setIsNavbarVisible(true);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      if (!isHoveringNavbar) {
+        timeoutRef.current = setTimeout(() => {
+          setIsNavbarVisible(false);
+        }, 2000);
+      }
+    };
+
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('touchstart', resetTimer);
+
+    resetTimer();
+
+    return () => {
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('touchstart', resetTimer);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [isPortafolioRoute, isHoveringNavbar]);
 
   const isAdmin = session?.user?.role === "Admin" || session?.user?.email === "david.artavia.rodriguez@gmail.com";
 
@@ -60,9 +98,16 @@ export default function Navbar() {
       <div className="lg:hidden fixed top-6 left-6 z-[110] pointer-events-auto">
         <motion.button 
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={{ 
+            opacity: isNavbarVisible || !isPortafolioRoute || isMenuOpen ? 1 : 0, 
+            scale: isNavbarVisible || !isPortafolioRoute || isMenuOpen ? 1 : 0.8,
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 text-primary-dark shadow-2xl shadow-black/10 transition-all active:scale-90"
+          style={{
+            pointerEvents: isNavbarVisible || !isPortafolioRoute || isMenuOpen ? 'auto' : 'none'
+          }}
         >
           <span className="material-symbols-outlined text-2xl">{isMenuOpen ? 'close' : 'menu'}</span>
         </motion.button>
@@ -71,10 +116,16 @@ export default function Navbar() {
       {/* DESKTOP NAVBAR (Hidden on Mobile) */}
       <motion.header 
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        animate={{ 
+          y: isNavbarVisible || !isPortafolioRoute ? 0 : -120, 
+          opacity: isNavbarVisible || !isPortafolioRoute ? 1 : 0 
+        }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
         className="fixed top-6 left-0 w-full z-[100] px-6 hidden lg:flex justify-center pointer-events-none"
       >
         <nav 
+          onMouseEnter={() => setIsHoveringNavbar(true)}
+          onMouseLeave={() => setIsHoveringNavbar(false)}
           className={`pointer-events-auto flex items-center justify-between px-4 md:px-8 lg:px-10 py-4 md:py-5 rounded-full transition-all duration-700 max-w-[calc(100vw-2rem)] md:max-w-[90vw] w-full border border-white/50 overflow-hidden relative ${
             isScrolled 
               ? 'backdrop-blur-2xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)]' 
@@ -134,18 +185,26 @@ export default function Navbar() {
                 </button>
               </>
             ) : (
-              isAdmin && (
-                <Link 
-                  href="/admin/dashboard"
-                  className={`px-4 xl:px-6 py-2.5 rounded-full text-[11px] xl:text-[12px] font-black uppercase tracking-[0.1em] xl:tracking-[0.15em] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 font-display ${
-                    pathname.startsWith('/admin') 
-                      ? 'bg-primary text-white' 
-                      : 'bg-primary/10 text-primary hover:bg-primary/20'
-                  }`}
+              <>
+                {isAdmin && (
+                  <Link 
+                    href="/admin/dashboard"
+                    className={`px-4 xl:px-6 py-2.5 rounded-full text-[11px] xl:text-[12px] font-black uppercase tracking-[0.1em] xl:tracking-[0.15em] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 font-display ${
+                      pathname.startsWith('/admin') 
+                        ? 'bg-primary text-white' 
+                        : 'bg-primary/10 text-primary hover:bg-primary/20'
+                    }`}
+                  >
+                    Dashboard Admin
+                  </Link>
+                )}
+                <button 
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                  className="px-4 xl:px-6 py-2.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 text-[11px] xl:text-[12px] font-black uppercase tracking-[0.1em] xl:tracking-[0.15em] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 font-display cursor-pointer"
                 >
-                  Dashboard Admin
-                </Link>
-              )
+                  <AnimatedButtonText text="Cerrar sesión" baseColor="#396542" />
+                </button>
+              </>
             )}
           </div>
         </nav>
@@ -185,7 +244,28 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              {!session ? (
+              {session ? (
+                <>
+                  {isAdmin && (
+                    <Link 
+                      href="/admin/dashboard"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="text-2xl font-display font-black uppercase tracking-tighter text-primary mt-4"
+                    >
+                      Admin
+                    </Link>
+                  )}
+                  <button 
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      signOut({ callbackUrl: '/' });
+                    }}
+                    className="text-2xl font-display font-black uppercase tracking-tighter text-primary-dark mt-4 pt-4 border-t border-primary/10"
+                  >
+                    <AnimatedButtonText text="Cerrar sesión" baseColor="#1d2729" />
+                  </button>
+                </>
+              ) : (
                 <button 
                   onClick={() => {
                     setIsMenuOpen(false);
@@ -195,16 +275,6 @@ export default function Navbar() {
                 >
                   <AnimatedButtonText text="Login" baseColor="#1d2729" />
                 </button>
-              ) : (
-                isAdmin && (
-                  <Link 
-                    href="/admin/dashboard"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-2xl font-display font-black uppercase tracking-tighter text-primary mt-4 pt-4 border-t border-primary/10"
-                  >
-                    Admin
-                  </Link>
-                )
               )}
             </div>
           </motion.div>
