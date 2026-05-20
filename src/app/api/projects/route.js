@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Project from '@/models/Project';
+import { revalidatePath } from 'next/cache';
 
 export async function GET(req) {
   try {
@@ -34,6 +35,18 @@ export async function POST(req) {
     await connectToDatabase();
     const body = await req.json();
     const project = await Project.create(body);
+    
+    // Purge caches immediately
+    try {
+      revalidatePath('/reels');
+      revalidatePath('/photography');
+      revalidatePath('/digital-arts');
+      revalidatePath('/portafolio');
+      revalidatePath('/');
+    } catch (e) {
+      console.error('Revalidation error:', e);
+    }
+
     return NextResponse.json({ success: true, data: project }, { status: 201 });
   } catch (error) {
     console.error('API Error:', error);
@@ -55,6 +68,18 @@ export async function PATCH(req) {
     if (!id) return NextResponse.json({ success: false, error: 'Missing ID' }, { status: 400 });
 
     const updatedProject = await Project.findByIdAndUpdate(id, updateData, { new: true });
+    
+    // Purge caches immediately
+    try {
+      revalidatePath('/reels');
+      revalidatePath('/photography');
+      revalidatePath('/digital-arts');
+      revalidatePath('/portafolio');
+      revalidatePath('/');
+    } catch (e) {
+      console.error('Revalidation error:', e);
+    }
+
     return NextResponse.json({ success: true, data: updatedProject });
   } catch (error) {
     console.error('API Error:', error);
@@ -76,6 +101,18 @@ export async function DELETE(req) {
     if (!id) return NextResponse.json({ success: false, error: 'Missing ID' }, { status: 400 });
 
     await Project.findByIdAndDelete(id);
+    
+    // Purge caches immediately
+    try {
+      revalidatePath('/reels');
+      revalidatePath('/photography');
+      revalidatePath('/digital-arts');
+      revalidatePath('/portafolio');
+      revalidatePath('/');
+    } catch (e) {
+      console.error('Revalidation error:', e);
+    }
+
     return NextResponse.json({ success: true, message: 'Deleted successfully' });
   } catch (error) {
     console.error('API Error:', error);

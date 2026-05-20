@@ -3,6 +3,7 @@ import connectToDatabase from '@/lib/mongodb';
 import ReelCategory from '@/models/ReelCategory';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
   try {
@@ -36,6 +37,14 @@ export async function POST(req) {
     }
 
     const category = await ReelCategory.create({ name: name.trim() });
+    
+    try {
+      revalidatePath('/reels');
+      revalidatePath('/portafolio');
+    } catch (e) {
+      console.error('Revalidation error:', e);
+    }
+
     return NextResponse.json({ success: true, data: category }, { status: 201 });
   } catch (error) {
     console.error('ReelCategory POST error:', error);
@@ -56,6 +65,14 @@ export async function DELETE(req) {
     if (!id) return NextResponse.json({ success: false, error: 'ID requerido' }, { status: 400 });
 
     await ReelCategory.findByIdAndDelete(id);
+
+    try {
+      revalidatePath('/reels');
+      revalidatePath('/portafolio');
+    } catch (e) {
+      console.error('Revalidation error:', e);
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('ReelCategory DELETE error:', error);
@@ -90,6 +107,14 @@ export async function PATCH(req) {
       { name: name.trim() }, 
       { new: true }
     );
+
+    try {
+      revalidatePath('/reels');
+      revalidatePath('/portafolio');
+    } catch (e) {
+      console.error('Revalidation error:', e);
+    }
+
     return NextResponse.json({ success: true, data: category });
   } catch (error) {
     console.error('ReelCategory PATCH error:', error);
