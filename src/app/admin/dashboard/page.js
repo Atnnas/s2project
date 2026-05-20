@@ -201,7 +201,11 @@ function DashboardContent() {
       } else {
         alert('Error al guardar banner: ' + (data.error || 'Error desconocido'));
       }
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+      console.error(e); 
+      alert('Error de conexión al guardar el banner. Por favor, verifica la conexión o el tamaño de la imagen.');
+      throw e;
+    }
   };
 
   const confirmDelete = async () => {

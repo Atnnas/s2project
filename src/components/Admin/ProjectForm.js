@@ -6,6 +6,45 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import ClientForm from './ClientForm';
 
+const compressImage = (file, maxWidth, maxHeight, quality = 0.82) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.onerror = (err) => reject(err);
+      img.src = event.target.result;
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function ProjectForm({ 
   embedded = false, 
   project = null, 
@@ -106,18 +145,20 @@ export default function ProjectForm({
     const files = Array.from(e.target.files);
     for (const file of files) {
       if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
+        try {
+          const compressed = await compressImage(file, 2048, 2048, 0.82);
           setFormData(prev => {
-            const newGallery = [...prev.gallery, { type: 'image', url: reader.result }];
+            const newGallery = [...prev.gallery, { type: 'image', url: compressed }];
             return {
               ...prev,
               gallery: newGallery,
               imageUrl: newGallery.find(m => m.type === 'image')?.url || newGallery[0]?.url || ''
             };
           });
-        };
-        reader.readAsDataURL(file);
+        } catch (err) {
+          console.error('Error compressing gallery image:', err);
+          alert('No se pudo procesar una de las imágenes.');
+        }
       }
     }
   };

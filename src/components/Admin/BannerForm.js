@@ -2,6 +2,45 @@
 
 import { useState, useEffect } from 'react';
 
+const compressImage = (file, maxWidth, maxHeight, quality = 0.8) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.onerror = (err) => reject(err);
+      img.src = event.target.result;
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function BannerForm({ onSubmit, initialData, onCancel }) {
   const [formData, setFormData] = useState({
     title: '',
@@ -119,14 +158,16 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
                     <input 
                       type="file" 
                       accept="image/*" 
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const file = e.target.files[0];
                         if (file) {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            setFormData({ ...formData, imageUrl: reader.result });
-                          };
-                          reader.readAsDataURL(file);
+                          try {
+                            const compressed = await compressImage(file, 1920, 1080, 0.8);
+                            setFormData({ ...formData, imageUrl: compressed });
+                          } catch (err) {
+                            console.error('Error compressing desktop image:', err);
+                            alert('No se pudo procesar la imagen.');
+                          }
                         }
                       }} 
                       className="hidden" 
@@ -163,14 +204,16 @@ export default function BannerForm({ onSubmit, initialData, onCancel }) {
                     <input 
                       type="file" 
                       accept="image/*" 
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const file = e.target.files[0];
                         if (file) {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            setFormData({ ...formData, mobileImageUrl: reader.result });
-                          };
-                          reader.readAsDataURL(file);
+                          try {
+                            const compressed = await compressImage(file, 1000, 1500, 0.8);
+                            setFormData({ ...formData, mobileImageUrl: compressed });
+                          } catch (err) {
+                            console.error('Error compressing mobile image:', err);
+                            alert('No se pudo procesar la imagen.');
+                          }
                         }
                       }} 
                       className="hidden" 
