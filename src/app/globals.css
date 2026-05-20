@@ -245,3 +245,14 @@ body.page-portafolio footer {
   z-index: 40 !important;
   margin-top: 0 !important;
 }
+
+/* Sobrescribir el tamaño de h2 en la página del portafolio (para REELS y ARTES) */
+body.page-portafolio h2 {
+  font-size: clamp(5.5rem, 16.5vw, 21rem) !important;
+}
+
+@media (min-width: 1600px) {
+  body.page-portafolio h2 {
+    font-size: clamp(7.5rem, 16.5vw, 21rem) !important;
+  }
+}

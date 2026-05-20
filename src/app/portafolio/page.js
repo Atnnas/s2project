@@ -155,10 +155,7 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
               style={{ backgroundColor: cat.aura }}
               className="absolute inset-0 blur-[120px] rounded-full -z-10 transition-all duration-[2s]"
             />
-            <h2 
-              style={{ fontSize: "clamp(5.5rem, 16.5vw, 21rem)" }}
-              className="font-display font-black text-[#f8f9fa] leading-none tracking-tighter drop-shadow-[0_20px_50px_rgba(0,0,0,1)] group-hover:text-primary transition-all duration-700"
-            >
+            <h2 className="font-display font-black text-[#f8f9fa] leading-none tracking-tighter drop-shadow-[0_20px_50px_rgba(0,0,0,1)] group-hover:text-primary transition-all duration-700">
               {cat.title}
             </h2>
             <motion.p 
