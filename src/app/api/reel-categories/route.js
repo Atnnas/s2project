@@ -46,7 +46,7 @@ export async function POST(req) {
 export async function DELETE(req) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'Admin') {
+    if (!session || (session.user.role !== 'Admin' && session.user.role !== 'Editor')) {
       return NextResponse.json({ success: false, error: 'No autorizado' }, { status: 401 });
     }
 
@@ -62,3 +62,38 @@ export async function DELETE(req) {
     return NextResponse.json({ success: false, error: 'Error al eliminar' }, { status: 500 });
   }
 }
+
+export async function PATCH(req) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || (session.user.role !== 'Admin' && session.user.role !== 'Editor')) {
+      return NextResponse.json({ success: false, error: 'No autorizado' }, { status: 401 });
+    }
+
+    await connectToDatabase();
+    const { id, name } = await req.json();
+
+    if (!id) return NextResponse.json({ success: false, error: 'ID requerido' }, { status: 400 });
+    if (!name?.trim()) return NextResponse.json({ success: false, error: 'El nombre es requerido' }, { status: 400 });
+
+    // Check if another exists with same name (case-insensitive)
+    const existing = await ReelCategory.findOne({ 
+      _id: { $ne: id }, 
+      name: { $regex: new RegExp(`^${name.trim()}$`, 'i') } 
+    });
+    if (existing) {
+      return NextResponse.json({ success: false, error: 'Ya existe otra categoría con este nombre' }, { status: 400 });
+    }
+
+    const category = await ReelCategory.findByIdAndUpdate(
+      id, 
+      { name: name.trim() }, 
+      { new: true }
+    );
+    return NextResponse.json({ success: true, data: category });
+  } catch (error) {
+    console.error('ReelCategory PATCH error:', error);
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
+  }
+}
+

@@ -81,6 +81,8 @@ export default function ProjectForm({
   const [newSubcatInput, setNewSubcatInput] = useState('');
   const [addingSubcat, setAddingSubcat] = useState(false);
   const [subcatSearch, setSubcatSearch] = useState('');
+  const [editingSubcatId, setEditingSubcatId] = useState(null);
+  const [editingSubcatName, setEditingSubcatName] = useState('');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -132,6 +134,60 @@ export default function ProjectForm({
       }
     } catch (e) { console.error(e); }
     setAddingSubcat(false);
+  };
+
+  const handleDeleteSubcat = async (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm('¿Estás seguro de que quieres eliminar esta categoría? Se borrará de la lista.')) return;
+    try {
+      const res = await fetch(`/api/reel-categories?id=${id}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (data.success) {
+        setReelCategories(prev => prev.filter(c => c._id !== id));
+        // If the current project has this subcategory selected, clear it
+        const deletedCat = reelCategories.find(c => c._id === id);
+        if (formData.subcategory === deletedCat?.name) {
+          setFormData(prev => ({ ...prev, subcategory: '' }));
+        }
+      } else {
+        alert(data.error || 'Error al eliminar la categoría');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error de red al intentar eliminar la categoría');
+    }
+  };
+
+  const handleRenameSubcat = async (id, e) => {
+    e.stopPropagation();
+    const name = editingSubcatName.trim();
+    if (!name) return;
+    try {
+      const res = await fetch('/api/reel-categories', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, name })
+      });
+      const data = await res.json();
+      if (data.success) {
+        const oldCat = reelCategories.find(c => c._id === id);
+        setReelCategories(prev => 
+          prev.map(c => c._id === id ? data.data : c).sort((a, b) => a.name.localeCompare(b.name))
+        );
+        // Update selected subcategory if it was renamed
+        if (formData.subcategory === oldCat?.name) {
+          setFormData(prev => ({ ...prev, subcategory: data.data.name }));
+        }
+        setEditingSubcatId(null);
+      } else {
+        alert(data.error || 'Error al renombrar la categoría');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error de red al intentar renombrar la categoría');
+    }
   };
 
   const filteredClients = clients.filter(c => 
@@ -488,21 +544,89 @@ export default function ProjectForm({
                     </button>
                     {reelCategories
                       .filter(c => c.name.toLowerCase().includes(subcatSearch.toLowerCase()))
-                      .map(cat => (
-                        <button
-                          key={cat._id}
-                          type="button"
-                          onClick={(e) => { e.stopPropagation(); setFormData(prev => ({ ...prev, subcategory: cat.name })); setShowSubcatDropdown(false); }}
-                          className={`w-full text-left px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors flex items-center justify-between ${
-                            formData.subcategory === cat.name ? 'bg-primary/5 text-primary' : 'text-slate-600'
-                          }`}
-                        >
-                          <span className="font-bold text-sm">{cat.name}</span>
-                          {formData.subcategory === cat.name && (
-                            <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
-                          )}
-                        </button>
-                      ))}
+                      .map(cat => {
+                        const isEditing = editingSubcatId === cat._id;
+                        return (
+                          <div 
+                            key={cat._id}
+                            className={`w-full rounded-xl transition-colors flex items-center justify-between group/item px-2 py-1.5 ${
+                              formData.subcategory === cat.name ? 'bg-primary/5' : 'hover:bg-slate-50'
+                            }`}
+                          >
+                            {isEditing ? (
+                              <div className="flex items-center gap-1.5 w-full" onClick={(e) => e.stopPropagation()}>
+                                <input
+                                  type="text"
+                                  autoFocus
+                                  value={editingSubcatName}
+                                  onChange={(e) => setEditingSubcatName(e.target.value)}
+                                  className="flex-1 px-3 py-1.5 rounded-lg border border-slate-200 text-sm outline-none focus:border-primary/50"
+                                  onKeyDown={(e) => { 
+                                    if (e.key === 'Enter') { e.preventDefault(); handleRenameSubcat(cat._id, e); }
+                                    if (e.key === 'Escape') { e.preventDefault(); setEditingSubcatId(null); }
+                                  }}
+                                />
+                                <button
+                                  type="button"
+                                  onClick={(e) => handleRenameSubcat(cat._id, e)}
+                                  className="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-100 transition-colors"
+                                  title="Guardar"
+                                >
+                                  <span className="material-symbols-outlined text-sm">check</span>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={(e) => { e.stopPropagation(); setEditingSubcatId(null); }}
+                                  className="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition-colors"
+                                  title="Cancelar"
+                                >
+                                  <span className="material-symbols-outlined text-sm">close</span>
+                                </button>
+                              </div>
+                            ) : (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    setFormData(prev => ({ ...prev, subcategory: cat.name })); 
+                                    setShowSubcatDropdown(false); 
+                                  }}
+                                  className="flex-1 text-left px-2 py-1.5 font-bold text-sm text-slate-700 flex items-center justify-between"
+                                >
+                                  <span>{cat.name}</span>
+                                  {formData.subcategory === cat.name && (
+                                    <span className="material-symbols-outlined text-primary text-sm mr-2">check_circle</span>
+                                  )}
+                                </button>
+                                
+                                <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 transition-opacity">
+                                  <button
+                                    type="button"
+                                    onClick={(e) => { 
+                                      e.stopPropagation(); 
+                                      setEditingSubcatId(cat._id); 
+                                      setEditingSubcatName(cat.name); 
+                                    }}
+                                    className="w-7 h-7 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors"
+                                    title="Editar"
+                                  >
+                                    <span className="material-symbols-outlined text-xs">edit</span>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => handleDeleteSubcat(cat._id, e)}
+                                    className="w-7 h-7 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors"
+                                    title="Eliminar"
+                                  >
+                                    <span className="material-symbols-outlined text-xs">delete</span>
+                                  </button>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
                     {reelCategories.filter(c => c.name.toLowerCase().includes(subcatSearch.toLowerCase())).length === 0 && subcatSearch && (
                       <p className="text-xs text-slate-400 text-center italic py-3">No encontrada — puedes crearla abajo</p>
                     )}
