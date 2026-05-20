@@ -74,8 +74,11 @@ export default function RootLayout({ children }) {
     <html lang="es" data-scroll-behavior="smooth">
       <head>
         <StructuredData />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" media="print" onload="this.media='all'" />
       </head>
       <body
         className={`${clashGrotesk.variable} ${roundo.variable} bg-[#cadedd] font-body text-slate-900 antialiased overflow-x-hidden`}

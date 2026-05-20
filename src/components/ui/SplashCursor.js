@@ -26,6 +26,13 @@ function SplashCursor({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Detect mobile or touch-enabled screen to disable fluid calculations
+    const isMobileDevice = window.innerWidth < 1024 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    if (isMobileDevice) {
+      canvas.style.display = 'none';
+      return;
+    }
+
     let isActive = true;
 
     function pointerPrototype() {
