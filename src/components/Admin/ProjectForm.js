@@ -436,14 +436,14 @@ export default function ProjectForm({
       {mode === 'reels' && (
         <div className="relative">
           <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
-            Subcategoría
+            Categoría <span className="text-[10px] text-slate-400 normal-case font-normal tracking-normal">(aparece en la ficha pública del reel)</span>
           </label>
           <div
             onClick={() => { setShowSubcatDropdown(!showSubcatDropdown); setSubcatSearch(''); }}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus-within:ring-2 focus-within:ring-primary transition-all text-slate-900 flex items-center justify-between cursor-pointer"
           >
             <span className={formData.subcategory ? 'text-slate-900' : 'text-slate-300'}>
-              {formData.subcategory || 'Seleccionar subcategoría...'}
+              {formData.subcategory || 'Ej. Cinematografía, Corporativo, Producto...'}
             </span>
             <span className={`material-symbols-outlined transition-transform ${showSubcatDropdown ? 'rotate-180' : ''}`}>expand_more</span>
           </div>
