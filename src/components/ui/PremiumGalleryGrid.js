@@ -117,10 +117,19 @@ function GalleryModal({ project, onClose }) {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[300] flex items-center justify-center p-4 md:p-10"
     >
-      <div className="absolute inset-0 bg-[#cadedd]/95 backdrop-blur-3xl" onClick={onClose} />
+      <div 
+        className={`absolute inset-0 transition-colors duration-500 backdrop-blur-3xl ${
+          project.videoUrl ? 'bg-black/95 md:bg-[#cadedd]/95' : 'bg-[#cadedd]/95'
+        }`} 
+        onClick={onClose} 
+      />
       
       <button
-        className="absolute top-6 right-6 z-[310] h-14 w-14 flex items-center justify-center rounded-full bg-white text-primary hover:bg-primary hover:text-white transition-all duration-500 shadow-2xl"
+        className={`absolute top-6 right-6 z-[310] h-12 w-12 md:h-14 md:w-14 flex items-center justify-center rounded-full transition-all duration-500 shadow-2xl ${
+          project.videoUrl 
+            ? 'bg-white/20 text-white md:bg-white md:text-primary hover:bg-white/30' 
+            : 'bg-white text-primary hover:bg-primary hover:text-white'
+        }`}
         onClick={onClose}
       >
         <span className="material-symbols-outlined text-2xl">close</span>
@@ -130,17 +139,19 @@ function GalleryModal({ project, onClose }) {
         initial={{ scale: 0.9, opacity: 0, y: 40 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 40 }}
-        className="relative z-[305] w-full max-w-7xl h-full max-h-[92vh] lg:max-h-[90vh] bg-white rounded-[2rem] md:rounded-[3rem] overflow-y-auto lg:overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row"
+        className={`relative z-[305] w-full max-w-7xl h-full max-h-[92vh] lg:max-h-[90vh] rounded-[2rem] md:rounded-[3rem] overflow-y-auto lg:overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row ${
+          project.videoUrl ? 'bg-black md:bg-white' : 'bg-white'
+        }`}
       >
-        <div className={`w-full shrink-0 bg-black relative flex items-center justify-center ${
+        <div className={`w-full shrink-0 bg-black relative flex items-center justify-center mx-auto ${
           project.videoUrl 
-            ? 'aspect-[9/16] max-h-[60vh] md:max-h-[65vh] lg:aspect-auto lg:h-full lg:flex-[1.5]' 
+            ? 'h-[65vh] max-w-[412px] md:max-w-none md:h-[70vh] lg:h-full lg:flex-[1.5]' 
             : 'aspect-[4/3] max-h-[50vh] lg:aspect-auto lg:h-full lg:flex-[1.5]'
         }`}>
           {project.videoUrl ? (
             <iframe
               src={getEmbedUrl(project.videoUrl)}
-              className="w-full h-full absolute inset-0"
+              className="w-full h-full absolute inset-0 border-0"
               allow="autoplay; fullscreen"
             />
           ) : (
@@ -148,30 +159,50 @@ function GalleryModal({ project, onClose }) {
           )}
         </div>
 
-        <div className="flex-1 p-6 md:p-16 flex flex-col justify-center bg-[#f8f9fa]">
+        <div className={`flex-1 p-6 md:p-16 flex flex-col justify-center transition-colors duration-500 ${
+          project.videoUrl 
+            ? 'bg-zinc-950 text-white md:bg-[#f8f9fa] md:text-slate-600' 
+            : 'bg-[#f8f9fa] text-slate-600'
+        }`}>
            <div className="space-y-6 md:space-y-8">
               <header>
                 <div className="flex items-center gap-3 md:gap-4 mb-2 md:mb-4">
                   <span className="w-8 md:w-10 h-[2px] bg-primary" />
-                  <span className="text-primary text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em]">Project Showcase</span>
+                  <span className={`text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] ${
+                    project.videoUrl ? 'text-zinc-400 md:text-primary' : 'text-primary'
+                  }`}>Project Showcase</span>
                 </div>
-                <h2 className="text-2xl md:text-5xl font-display font-black text-primary-dark uppercase tracking-tighter leading-none mb-4 md:mb-6">
+                <h2 className={`text-2xl md:text-5xl font-display font-black uppercase tracking-tighter leading-none mb-4 md:mb-6 ${
+                  project.videoUrl ? 'text-white md:text-primary-dark' : 'text-primary-dark'
+                }`}>
                   {project.title}
                 </h2>
               </header>
 
-              <p className="text-sm md:text-lg text-slate-600 font-body leading-relaxed font-light">
+              <p className={`text-sm md:text-lg font-body leading-relaxed font-light ${
+                project.videoUrl ? 'text-zinc-300 md:text-slate-600' : 'text-slate-600'
+              }`}>
                 {project.description || "Una visión artística ejecutada con precisión técnica para elevar el estándar de la marca."}
               </p>
 
-              <div className="grid grid-cols-2 gap-4 md:gap-8 py-4 md:py-8 border-y border-slate-200">
+              <div className={`grid grid-cols-2 gap-4 md:gap-8 py-4 md:py-8 border-y ${
+                project.videoUrl ? 'border-zinc-800 md:border-slate-200' : 'border-slate-200'
+              }`}>
                  <div className="space-y-1">
-                    <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Categoría</p>
-                    <p className="text-xs md:text-sm font-bold text-primary-dark uppercase tracking-tight">{project.videoUrl ? 'Cinematografía' : 'Diseño Digital'}</p>
+                    <p className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest ${
+                      project.videoUrl ? 'text-zinc-500 md:text-slate-400' : 'text-slate-400'
+                    }`}>Categoría</p>
+                    <p className={`text-xs md:text-sm font-bold uppercase tracking-tight ${
+                      project.videoUrl ? 'text-zinc-200 md:text-primary-dark' : 'text-primary-dark'
+                    }`}>{project.videoUrl ? 'Cinematografía' : 'Diseño Digital'}</p>
                  </div>
                  <div className="space-y-1">
-                    <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Año</p>
-                    <p className="text-xs md:text-sm font-bold text-primary-dark uppercase tracking-tight">2024</p>
+                    <p className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest ${
+                      project.videoUrl ? 'text-zinc-500 md:text-slate-400' : 'text-slate-400'
+                    }`}>Año</p>
+                    <p className={`text-xs md:text-sm font-bold uppercase tracking-tight ${
+                      project.videoUrl ? 'text-zinc-200 md:text-primary-dark' : 'text-primary-dark'
+                    }`}>2024</p>
                  </div>
               </div>
 
