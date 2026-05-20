@@ -62,7 +62,9 @@ export default function ProjectForm({
     gallery: project?.gallery || (project?.imageUrl ? [{ type: 'image', url: project.imageUrl }] : []),
     client: project?.client || '',
     description: project?.description || '',
-    metadata: project?.metadata || {}
+    metadata: project?.metadata || {},
+    subcategory: project?.subcategory || '',
+    date: project?.date || String(new Date().getFullYear()),
   });
   const [ytUrl, setYtUrl] = useState('');
   const [livePreview, setLivePreview] = useState(null);
@@ -73,6 +75,12 @@ export default function ProjectForm({
   const [loadingClients, setLoadingClients] = useState(false);
   const [showFullClientModal, setShowFullClientModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  // Reel subcategory state
+  const [reelCategories, setReelCategories] = useState([]);
+  const [showSubcatDropdown, setShowSubcatDropdown] = useState(false);
+  const [newSubcatInput, setNewSubcatInput] = useState('');
+  const [addingSubcat, setAddingSubcat] = useState(false);
+  const [subcatSearch, setSubcatSearch] = useState('');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -81,7 +89,6 @@ export default function ProjectForm({
         const res = await fetch('/api/clients');
         const data = await res.json();
         if (data.success) {
-          // Sort alphabetically by name
           const sorted = data.data.sort((a, b) => a.name.localeCompare(b.name));
           setClients(sorted);
         }
@@ -90,6 +97,42 @@ export default function ProjectForm({
     };
     fetchClients();
   }, []);
+
+  useEffect(() => {
+    if (mode !== 'reels') return;
+    const fetchReelCategories = async () => {
+      try {
+        const res = await fetch('/api/reel-categories');
+        const data = await res.json();
+        if (data.success) setReelCategories(data.data);
+      } catch (e) { console.error(e); }
+    };
+    fetchReelCategories();
+  }, [mode]);
+
+  const handleAddSubcat = async () => {
+    const name = newSubcatInput.trim();
+    if (!name) return;
+    setAddingSubcat(true);
+    try {
+      const res = await fetch('/api/reel-categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setReelCategories(prev => {
+          const exists = prev.find(c => c._id === data.data._id);
+          return exists ? prev : [...prev, data.data].sort((a, b) => a.name.localeCompare(b.name));
+        });
+        setFormData(prev => ({ ...prev, subcategory: data.data.name }));
+        setNewSubcatInput('');
+        setShowSubcatDropdown(false);
+      }
+    } catch (e) { console.error(e); }
+    setAddingSubcat(false);
+  };
 
   const filteredClients = clients.filter(c => 
     c.name.toLowerCase().includes(clientSearch.toLowerCase())
@@ -366,6 +409,138 @@ export default function ProjectForm({
           placeholder={mode === 'reels' ? 'Escribe aquí la descripción del reel...' : mode === 'art' ? 'Describe aquí los detalles de la obra...' : mode === 'photo' ? 'Escribe aquí los detalles de la fotografía...' : 'Describe los detalles del proyecto...'}
         />
       </div>
+
+      {/* Year + Subcategory row — only for reels */}
+      {mode === 'reels' && (
+        <div>
+          <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+            Año de Producción
+          </label>
+          <input
+            type="number"
+            min="2000"
+            max="2099"
+            value={formData.date}
+            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus:ring-2 focus:ring-primary transition-all text-slate-900 placeholder:text-slate-300"
+            placeholder={String(new Date().getFullYear())}
+          />
+          <p className="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-xs">info</span>
+            Este año aparecerá en la ficha pública del reel.
+          </p>
+        </div>
+      )}
+
+      {/* Subcategory dropdown — only for reels */}
+      {mode === 'reels' && (
+        <div className="relative">
+          <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+            Subcategoría
+          </label>
+          <div
+            onClick={() => { setShowSubcatDropdown(!showSubcatDropdown); setSubcatSearch(''); }}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-transparent outline-none focus-within:ring-2 focus-within:ring-primary transition-all text-slate-900 flex items-center justify-between cursor-pointer"
+          >
+            <span className={formData.subcategory ? 'text-slate-900' : 'text-slate-300'}>
+              {formData.subcategory || 'Seleccionar subcategoría...'}
+            </span>
+            <span className={`material-symbols-outlined transition-transform ${showSubcatDropdown ? 'rotate-180' : ''}`}>expand_more</span>
+          </div>
+
+          <AnimatePresence>
+            {showSubcatDropdown && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setShowSubcatDropdown(false)} />
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  className="absolute z-20 top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-2xl border border-primary/10 overflow-hidden"
+                >
+                  {/* Search filter */}
+                  <div className="p-3 border-b border-primary/5">
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm text-slate-400">search</span>
+                      <input
+                        type="text"
+                        autoFocus
+                        value={subcatSearch}
+                        onChange={(e) => setSubcatSearch(e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
+                        placeholder="Buscar o escribir nueva..."
+                        className="w-full pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-sm outline-none border border-transparent focus:border-primary/20 transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Existing categories list */}
+                  <div className="max-h-52 overflow-y-auto p-1">
+                    {/* Clear option */}
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); setFormData(prev => ({ ...prev, subcategory: '' })); setShowSubcatDropdown(false); }}
+                      className={`w-full text-left px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-colors ${
+                        !formData.subcategory ? 'bg-primary/5 text-primary' : 'text-slate-400 hover:bg-slate-50'
+                      }`}
+                    >
+                      Sin subcategoría
+                    </button>
+                    {reelCategories
+                      .filter(c => c.name.toLowerCase().includes(subcatSearch.toLowerCase()))
+                      .map(cat => (
+                        <button
+                          key={cat._id}
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); setFormData(prev => ({ ...prev, subcategory: cat.name })); setShowSubcatDropdown(false); }}
+                          className={`w-full text-left px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors flex items-center justify-between ${
+                            formData.subcategory === cat.name ? 'bg-primary/5 text-primary' : 'text-slate-600'
+                          }`}
+                        >
+                          <span className="font-bold text-sm">{cat.name}</span>
+                          {formData.subcategory === cat.name && (
+                            <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
+                          )}
+                        </button>
+                      ))}
+                    {reelCategories.filter(c => c.name.toLowerCase().includes(subcatSearch.toLowerCase())).length === 0 && subcatSearch && (
+                      <p className="text-xs text-slate-400 text-center italic py-3">No encontrada — puedes crearla abajo</p>
+                    )}
+                  </div>
+
+                  {/* Add new subcategory */}
+                  <div className="p-3 border-t border-primary/5 bg-slate-50/50">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={newSubcatInput || subcatSearch}
+                        onChange={(e) => { setNewSubcatInput(e.target.value); setSubcatSearch(e.target.value); }}
+                        onClick={(e) => e.stopPropagation()}
+                        placeholder="Nueva subcategoría..."
+                        className="flex-1 px-3 py-2 rounded-xl bg-white border border-slate-200 text-sm outline-none focus:border-primary/40 transition-all"
+                        onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddSubcat(); } }}
+                      />
+                      <button
+                        type="button"
+                        disabled={addingSubcat || !(newSubcatInput || subcatSearch).trim()}
+                        onClick={(e) => { e.stopPropagation(); setNewSubcatInput(newSubcatInput || subcatSearch); handleAddSubcat(); }}
+                        className="px-4 py-2 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary/90 transition-all disabled:opacity-40 flex items-center gap-1"
+                      >
+                        {addingSubcat ? (
+                          <svg className="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                        ) : (
+                          <span className="material-symbols-outlined text-sm">add</span>
+                        )}
+                        Crear
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
 
       <div>
         {mode !== 'reels' && (

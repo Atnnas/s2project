@@ -33,6 +33,11 @@ const ProjectSchema = new mongoose.Schema({
     type: Object,
     default: {},
   },
+  subcategory: {
+    type: String,
+    default: '',
+    trim: true,
+  },
 }, {
   timestamps: true,
 });

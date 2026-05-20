@@ -211,7 +211,7 @@ function GalleryModal({ project, onClose }) {
                     }`}>Categoría</p>
                     <p className={`text-xs md:text-sm font-bold uppercase tracking-tight ${
                       project.videoUrl ? 'text-zinc-200 md:text-primary-dark' : 'text-primary-dark'
-                    }`}>{project.videoUrl ? 'Cinematografía' : 'Diseño Digital'}</p>
+                    }`}>{project.subcategory || (project.videoUrl ? 'Cinematografía' : 'Diseño Digital')}</p>
                  </div>
                  <div className="space-y-1">
                     <p className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest ${
@@ -219,7 +219,7 @@ function GalleryModal({ project, onClose }) {
                     }`}>Año</p>
                     <p className={`text-xs md:text-sm font-bold uppercase tracking-tight ${
                       project.videoUrl ? 'text-zinc-200 md:text-primary-dark' : 'text-primary-dark'
-                    }`}>2024</p>
+                    }`}>{project.date || new Date().getFullYear()}</p>
                  </div>
               </div>
 

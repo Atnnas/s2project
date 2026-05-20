@@ -638,6 +638,11 @@ function DashboardContent() {
                                           <div>
                                             <p className="font-bold text-slate-800">{project.title}</p>
                                             <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">{project.client || 'S2 Project'}</p>
+                                            {project.subcategory && (
+                                              <span className="inline-block mt-1 px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 border border-blue-100 text-[9px] font-black uppercase tracking-widest">
+                                                {project.subcategory}
+                                              </span>
+                                            )}
                                           </div>
                                         </div>
                                       </td>
