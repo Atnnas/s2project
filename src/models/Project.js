@@ -10,6 +10,7 @@ const ProjectSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a category for this project.'],
     enum: ['Fotografía', 'Reels', 'Arte Digital', 'Todos'],
+    index: true,
   },
   imageUrl: {
     type: String,
@@ -35,6 +36,8 @@ const ProjectSchema = new mongoose.Schema({
 }, {
   timestamps: true,
 });
+
+ProjectSchema.index({ createdAt: -1 });
 
 if (mongoose.models.Project) {
   delete mongoose.models.Project;

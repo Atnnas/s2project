@@ -101,12 +101,29 @@ function GalleryModal({ project, onClose }) {
   const getEmbedUrl = (url) => {
     if (!url) return null;
     let embedUrl = url;
-    if (url.includes('youtube.com/watch?v=')) embedUrl = url.replace('watch?v=', 'embed/') + '?autoplay=1&rel=0';
+    if (url.includes('youtube.com/watch?v=')) {
+      embedUrl = url.replace('watch?v=', 'embed/') + '?autoplay=1&rel=0';
+    }
     else if (url.includes('youtu.be/')) {
       const id = url.split('/').pop().split('?')[0];
       embedUrl = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
     }
-    else if (url.includes('youtube.com/shorts/')) embedUrl = url.replace('shorts/', 'embed/') + '?autoplay=1&rel=0';
+    else if (url.includes('youtube.com/shorts/')) {
+      embedUrl = url.replace('shorts/', 'embed/') + '?autoplay=1&rel=0';
+    }
+    else if (url.includes('vimeo.com/')) {
+      if (url.includes('player.vimeo.com/video/')) {
+        embedUrl = url + (url.includes('?') ? '&' : '?') + 'autoplay=1';
+      } else {
+        const id = url.split('/').pop().split('?')[0];
+        embedUrl = `https://player.vimeo.com/video/${id}?autoplay=1`;
+      }
+    }
+    else if (url.includes('instagram.com/reel/') || url.includes('instagram.com/p/')) {
+      const basePath = url.split('?')[0];
+      const cleanPath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+      embedUrl = `${cleanPath}/embed/`;
+    }
     return embedUrl;
   };
 

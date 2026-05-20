@@ -22,6 +22,7 @@ const HomeBannerSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true,
+    index: true,
   },
   type: {
     type: String,
@@ -36,6 +37,7 @@ const HomeBannerSchema = new mongoose.Schema({
   order: {
     type: Number,
     default: 0,
+    index: true,
   },
 }, {
   timestamps: true,
