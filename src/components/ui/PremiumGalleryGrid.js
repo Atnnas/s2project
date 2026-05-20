@@ -23,8 +23,8 @@ export function PremiumGalleryGrid({ items = [] }) {
   const displayItems = shuffledItems.length > 0 ? shuffledItems : items;
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 auto-rows-fr">
+    <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-12">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-10 auto-rows-fr">
         {displayItems.map((item, index) => {
           // ALWAYS THE FIRST ONE IS BIG (ON THE LEFT)
           const isHero = index === 0;
@@ -54,19 +54,25 @@ export function PremiumGalleryGrid({ items = [] }) {
 }
 
 function GalleryCard({ item, index, isHero, onClick }) {
+  const isReel = !!item.videoUrl;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: (index % 4) * 0.1, duration: 0.8, ease: "easeOut" }}
-      className={`group cursor-pointer relative ${isHero ? 'md:col-span-2 md:row-span-2' : 'col-span-1'}`}
+      className={`group cursor-pointer relative ${isHero ? 'col-span-2 md:col-span-2 md:row-span-2' : 'col-span-1'}`}
       onClick={onClick}
     >
       {/* VIVID AURA */}
       <div className="absolute -inset-6 bg-gradient-to-tr from-primary/20 via-transparent to-accent-light/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
 
       {/* MAIN CONTAINER */}
-      <div className={`relative w-full h-full overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] group-hover:shadow-[0_40px_80px_-20px_rgba(57,101,66,0.25)] transition-all duration-700 group-hover:-translate-y-4 ${isHero ? 'aspect-square md:aspect-auto' : 'aspect-[4/5]'}`}>
+      <div className={`relative w-full h-full overflow-hidden rounded-[1.5rem] md:rounded-[3.5rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] group-hover:shadow-[0_40px_80px_-20px_rgba(57,101,66,0.25)] transition-all duration-700 group-hover:-translate-y-2 md:group-hover:-translate-y-4 ${
+        isHero 
+          ? 'aspect-square md:aspect-auto' 
+          : (isReel ? 'aspect-[9/16]' : 'aspect-[4/5]')
+      }`}>
         
         <div className="absolute inset-0">
           <img 
@@ -85,7 +91,7 @@ function GalleryCard({ item, index, isHero, onClick }) {
            </div>
         </div>
 
-        <div className="absolute inset-0 border border-white/5 rounded-[2.5rem] md:rounded-[3.5rem] group-hover:border-primary/30 transition-colors duration-500 pointer-events-none" />
+        <div className="absolute inset-0 border border-white/5 rounded-[1.5rem] md:rounded-[3.5rem] group-hover:border-primary/30 transition-colors duration-500 pointer-events-none" />
       </div>
     </motion.div>
   );
@@ -124,51 +130,55 @@ function GalleryModal({ project, onClose }) {
         initial={{ scale: 0.9, opacity: 0, y: 40 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 40 }}
-        className="relative z-[305] w-full max-w-7xl h-full max-h-[90vh] bg-white rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row"
+        className="relative z-[305] w-full max-w-7xl h-full max-h-[92vh] lg:max-h-[90vh] bg-white rounded-[2rem] md:rounded-[3rem] overflow-y-auto lg:overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row"
       >
-        <div className="flex-[1.5] bg-black relative flex items-center justify-center">
+        <div className={`w-full shrink-0 bg-black relative flex items-center justify-center ${
+          project.videoUrl 
+            ? 'aspect-[9/16] max-h-[60vh] md:max-h-[65vh] lg:aspect-auto lg:h-full lg:flex-[1.5]' 
+            : 'aspect-[4/3] max-h-[50vh] lg:aspect-auto lg:h-full lg:flex-[1.5]'
+        }`}>
           {project.videoUrl ? (
             <iframe
               src={getEmbedUrl(project.videoUrl)}
-              className="w-full h-full"
+              className="w-full h-full absolute inset-0"
               allow="autoplay; fullscreen"
             />
           ) : (
-            <img src={project.url} className="w-full h-full object-contain p-4" />
+            <img src={project.url} className="w-full h-full object-contain p-4 absolute inset-0" />
           )}
         </div>
 
-        <div className="flex-1 p-10 md:p-16 flex flex-col justify-center bg-[#f8f9fa]">
-           <div className="space-y-8">
+        <div className="flex-1 p-6 md:p-16 flex flex-col justify-center bg-[#f8f9fa]">
+           <div className="space-y-6 md:space-y-8">
               <header>
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="w-10 h-[2px] bg-primary" />
-                  <span className="text-primary text-[11px] font-black uppercase tracking-[0.4em]">Project Showcase</span>
+                <div className="flex items-center gap-3 md:gap-4 mb-2 md:mb-4">
+                  <span className="w-8 md:w-10 h-[2px] bg-primary" />
+                  <span className="text-primary text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em]">Project Showcase</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-display font-black text-primary-dark uppercase tracking-tighter leading-none mb-6">
+                <h2 className="text-2xl md:text-5xl font-display font-black text-primary-dark uppercase tracking-tighter leading-none mb-4 md:mb-6">
                   {project.title}
                 </h2>
               </header>
 
-              <p className="text-slate-600 font-body text-lg leading-relaxed font-light">
+              <p className="text-sm md:text-lg text-slate-600 font-body leading-relaxed font-light">
                 {project.description || "Una visión artística ejecutada con precisión técnica para elevar el estándar de la marca."}
               </p>
 
-              <div className="grid grid-cols-2 gap-8 py-8 border-y border-slate-200">
+              <div className="grid grid-cols-2 gap-4 md:gap-8 py-4 md:py-8 border-y border-slate-200">
                  <div className="space-y-1">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Categoría</p>
-                    <p className="text-sm font-bold text-primary-dark uppercase tracking-tight">{project.videoUrl ? 'Cinematografía' : 'Diseño Digital'}</p>
+                    <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Categoría</p>
+                    <p className="text-xs md:text-sm font-bold text-primary-dark uppercase tracking-tight">{project.videoUrl ? 'Cinematografía' : 'Diseño Digital'}</p>
                  </div>
                  <div className="space-y-1">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Año</p>
-                    <p className="text-sm font-bold text-primary-dark uppercase tracking-tight">2024</p>
+                    <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Año</p>
+                    <p className="text-xs md:text-sm font-bold text-primary-dark uppercase tracking-tight">2024</p>
                  </div>
               </div>
 
               <a
                 href="https://api.whatsapp.com/send?phone=50660060026"
                 target="_blank"
-                className="group/btn relative w-full bg-primary text-white px-8 py-6 rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs hover:bg-primary-dark transition-all duration-500 shadow-xl overflow-hidden flex items-center justify-center gap-4"
+                className="group/btn relative w-full bg-primary text-white px-6 py-4 md:px-8 md:py-6 rounded-2xl font-display font-black uppercase tracking-[0.2em] text-xs hover:bg-primary-dark transition-all duration-500 shadow-xl overflow-hidden flex items-center justify-center gap-4 mt-2"
               >
                 <span className="relative z-10">Agendar Consulta</span>
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
