@@ -41,6 +41,8 @@ export default async function PhotographyPage() {
     title: p.title,
     url: p.imageUrl,
     description: p.description,
+    subcategory: p.subcategory,
+    date: p.date,
     videoUrl: p.gallery?.find(m => m.type === 'video')?.url || null
   }));
 
