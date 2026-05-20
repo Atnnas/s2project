@@ -146,11 +146,6 @@ export default function ProjectForm({
       const data = await res.json();
       if (data.success) {
         setReelCategories(prev => prev.filter(c => c._id !== id));
-        // If the current project has this subcategory selected, clear it
-        const deletedCat = reelCategories.find(c => c._id === id);
-        if (formData.subcategory === deletedCat?.name) {
-          setFormData(prev => ({ ...prev, subcategory: '' }));
-        }
       } else {
         alert(data.error || 'Error al eliminar la categoría');
       }
