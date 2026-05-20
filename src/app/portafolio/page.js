@@ -156,7 +156,7 @@ function CategoryCard({ cat, currentImg, isHovered, onHover, onLeave }) {
               className="absolute inset-0 blur-[120px] rounded-full -z-10 transition-all duration-[2s]"
             />
             <div 
-              style={{ fontSize: "clamp(3.6rem, 12vw, 14.4rem)" }}
+              style={{ fontSize: "clamp(3.37rem, 11.25vw, 13.5rem)" }}
               className="font-display font-black text-[#f8f9fa] leading-none tracking-[-0.04em] uppercase drop-shadow-[0_20px_50px_rgba(0,0,0,1)] group-hover:text-primary transition-all duration-700"
             >
               {cat.title}

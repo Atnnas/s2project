@@ -274,86 +274,91 @@ export default function ProcesoPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative p-10 md:p-20 bg-gradient-to-br from-primary via-primary to-[#2a4d32] border border-white/10 rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] flex flex-col lg:flex-row items-center justify-between gap-16"
+            className="relative p-10 md:p-20 bg-gradient-to-br from-primary via-primary to-[#2a4d32] border border-white/10 rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] flex flex-col gap-16"
           >
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
             
-            <div className="relative z-10 flex flex-col space-y-8 max-w-2xl text-center lg:text-left">
-              <div className="flex flex-col gap-4">
-                <span className="inline-block text-[10px] font-black uppercase tracking-[0.5em] text-primary bg-[#fdf9e1] px-6 py-2.5 rounded-full w-fit mx-auto lg:mx-0 shadow-xl shadow-black/10">
-                  Impacto Mensurable
-                </span>
-                <h2 className="text-[#fdf9e1] text-4xl md:text-6xl font-display font-black uppercase leading-[0.9] tracking-tighter">
-                  Resultados <br />
-                  <span className="italic font-light opacity-60 tracking-normal block mt-2 text-2xl md:text-4xl">Lo que logramos para nuestras marcas.</span>
-                </h2>
-              </div>
-              
-              <p className="text-base md:text-lg text-[#fdf9e1]/80 font-body leading-relaxed font-light">
-                No creemos en la visibilidad vacía. Nuestro proceso está diseñado para generar <span className="text-[#fdf9e1] font-medium italic">retorno y posicionamiento real</span> de marca.
-              </p>
+            {/* Top row: left text + right metrics */}
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-16 w-full">
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="pt-6 relative z-10 w-full lg:w-auto flex justify-center lg:justify-start"
-              >
-                {/* Elegant Liquid Ripple Waves */}
-                <div className="absolute inset-0 pointer-events-none -z-10 overflow-visible">
-                  {[...Array(3)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      animate={{ 
-                        scale: [1, 1.8],
-                        opacity: [0, 0.3, 0]
-                      }}
-                      transition={{ 
-                        duration: 4, 
-                        repeat: Infinity, 
-                        delay: i * 1.3,
-                        ease: [0.25, 0.1, 0.25, 1] 
-                      }}
-                      className="absolute inset-0 bg-[#fdf9e1] rounded-full blur-2xl"
-                    />
-                  ))}
-                </div>
-
-                <motion.button
-                  onClick={() => setShowContactModal(true)}
-                  whileHover={{ scale: 1.05, rotateX: 5, rotateY: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="group relative inline-flex items-center justify-between gap-8 bg-[#fdf9e1] text-primary px-8 py-4 md:px-10 md:py-5 rounded-full font-body transition-all duration-500 hover:bg-white overflow-hidden w-full sm:w-auto border border-white/50 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_-10px_rgba(253,249,225,0.6),0_0_20px_rgba(253,249,225,0.2)]"
-                >
-                  {/* Glow Aura Layer */}
-                  <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500" />
-
-                  <span className="relative z-10 flex flex-col items-start text-left">
-                    <AnimatedButtonText 
-                      text="QUIERO EMPEZAR" 
-                      baseColor="#396542" 
-                      className="font-display font-black text-lg md:text-xl tracking-tight"
-                    />
+              {/* Left column */}
+              <div className="relative z-10 flex flex-col space-y-8 max-w-2xl text-center lg:text-left">
+                <div className="flex flex-col gap-4">
+                  <span className="inline-block text-[10px] font-black uppercase tracking-[0.5em] text-primary bg-[#fdf9e1] px-6 py-2.5 rounded-full w-fit mx-auto lg:mx-0 shadow-xl shadow-black/10">
+                    Impacto Mensurable
                   </span>
-                  
-                  <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-primary transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-primary/30 group-hover:rotate-[360deg]">
-                    <span className="material-symbols-outlined text-xl text-primary group-hover:text-[#fdf9e1] transition-colors">arrow_forward</span>
-                  </div>
-                  
-                  {/* Dynamic Glass Shimmer */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
-                </motion.button>
-              </motion.div>
-            </div>
+                  <h2 className="text-[#fdf9e1] text-4xl md:text-6xl font-display font-black uppercase leading-[0.9] tracking-tighter">
+                    Resultados <br />
+                    <span className="italic font-light opacity-60 tracking-normal block mt-2 text-2xl md:text-4xl">Lo que logramos para nuestras marcas.</span>
+                  </h2>
+                </div>
+                
+                <p className="text-base md:text-lg text-[#fdf9e1]/80 font-body leading-relaxed font-light">
+                  No creemos en la visibilidad vacía. Nuestro proceso está diseñado para generar <span className="text-[#fdf9e1] font-medium italic">retorno y posicionamiento real</span> de marca.
+                </p>
 
-            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-4xl">
-               {metrics.slice(0, 6).map((metric, idx) => (
-                 <motion.div 
-                   key={idx}
-                   whileHover={{ scale: 1.05, x: 5 }}
-                   className="flex items-center gap-4 pl-3 pr-8 py-3 bg-white/10 backdrop-blur-xl border border-white/10 rounded-full group transition-all duration-500 hover:bg-white/20 shadow-lg w-full"
-                 >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="pt-6 relative z-10 w-full lg:w-auto flex justify-center lg:justify-start"
+                >
+                  {/* Elegant Liquid Ripple Waves */}
+                  <div className="absolute inset-0 pointer-events-none -z-10 overflow-visible">
+                    {[...Array(3)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ 
+                          scale: [1, 1.8],
+                          opacity: [0, 0.3, 0]
+                        }}
+                        transition={{ 
+                          duration: 4, 
+                          repeat: Infinity, 
+                          delay: i * 1.3,
+                          ease: [0.25, 0.1, 0.25, 1] 
+                        }}
+                        className="absolute inset-0 bg-[#fdf9e1] rounded-full blur-2xl"
+                      />
+                    ))}
+                  </div>
+
+                  <motion.button
+                    onClick={() => setShowContactModal(true)}
+                    whileHover={{ scale: 1.05, rotateX: 5, rotateY: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group relative inline-flex items-center justify-between gap-8 bg-[#fdf9e1] text-primary px-8 py-4 md:px-10 md:py-5 rounded-full font-body transition-all duration-500 hover:bg-white overflow-hidden w-full sm:w-auto border border-white/50 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_-10px_rgba(253,249,225,0.6),0_0_20px_rgba(253,249,225,0.2)]"
+                  >
+                    {/* Glow Aura Layer */}
+                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500" />
+
+                    <span className="relative z-10 flex flex-col items-start text-left">
+                      <AnimatedButtonText 
+                        text="QUIERO EMPEZAR" 
+                        baseColor="#396542" 
+                        className="font-display font-black text-lg md:text-xl tracking-tight"
+                      />
+                    </span>
+                    
+                    <div className="relative z-10 w-10 h-10 md:w-12 md:h-12 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-primary transition-all duration-500 flex-shrink-0 shadow-lg group-hover:shadow-primary/30 group-hover:rotate-[360deg]">
+                      <span className="material-symbols-outlined text-xl text-primary group-hover:text-[#fdf9e1] transition-colors">arrow_forward</span>
+                    </div>
+
+                    {/* Dynamic Glass Shimmer */}
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+                  </motion.button>
+                </motion.div>
+              </div>
+
+              {/* Right column: metrics grid */}
+              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-4xl">
+                {metrics.slice(0, 6).map((metric, idx) => (
+                  <motion.div 
+                    key={idx}
+                    whileHover={{ scale: 1.05, x: 5 }}
+                    className="flex items-center gap-4 pl-3 pr-8 py-3 bg-white/10 backdrop-blur-xl border border-white/10 rounded-full group transition-all duration-500 hover:bg-white/20 shadow-lg w-full"
+                  >
                     <GlassIconButton 
                       icon={metric.icon} 
                       color="pastel" 
@@ -370,17 +375,20 @@ export default function ProcesoPage() {
                         {metric.label}
                       </p>
                     </div>
-                 </motion.div>
-               ))}
-               
-               {/* Disclaimer sutil */}
-               <div className="w-full mt-8 pt-6 border-t border-white/5">
-                 <p className="text-[10px] md:text-[11px] text-[#fdf9e1]/40 font-body leading-relaxed text-center lg:text-left max-w-2xl mx-auto lg:mx-0 uppercase tracking-widest">
-                   <span className="opacity-100 font-bold mr-1">*</span> MÉTRICAS PROMEDIO OBSERVADAS EN CUENTAS S2 PROJECT 2025.
-                 </p>
-               </div>
-             </div>
-           </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+
+            </div>{/* end top row */}
+
+            {/* Disclaimer full-width — below both columns */}
+            <div className="relative z-10 w-full pt-6 border-t border-white/10">
+              <p className="text-[11px] md:text-[12px] text-[#fdf9e1]/50 font-body leading-relaxed text-center w-full uppercase tracking-widest">
+                <span className="font-bold mr-1">*</span> Cifras aproximadas basadas en el crecimiento real de cuentas administradas por S2 Project entre 2022 y 2026. Los resultados varían según industria, presupuesto, antigüedad de la relación y otros factores específicos de cada marca. Resultados pasados no garantizan resultados futuros.
+              </p>
+            </div>
+
+          </motion.div>
         </div>
       </section>
 

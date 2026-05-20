@@ -88,7 +88,7 @@ export default function MainHeroCarousel() {
           </div>
 
           {/* Content */}
-          <div className="absolute inset-0 z-20 flex flex-col justify-center pt-[80px] px-[clamp(1.5rem,6vw,6rem)]">
+          <div className="absolute inset-0 z-20 flex flex-col justify-start md:justify-center pt-[120px] md:pt-[80px] px-[clamp(1.5rem,6vw,6rem)]">
             <div className="max-w-4xl">
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
