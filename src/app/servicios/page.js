@@ -104,6 +104,10 @@ export default function ServiciosPage() {
     handleInteraction();
   };
 
+  const pricingWords = String(pricingTag || "Planes desde $500/mes").trim().split(/\s+/);
+  const firstWord = pricingWords[0] || "PLANES";
+  const restOfPricing = pricingWords.slice(1).join(" ") || "desde $500/mes";
+
   return (
     <div className="flex-1 flex flex-col bg-[#cadedd] relative overflow-x-hidden min-h-screen w-full">
       {/* CINEMATIC GRAIN TEXTURE - ANIMATED & MORE VISIBLE */}
@@ -146,7 +150,7 @@ export default function ServiciosPage() {
               <div className="text-3xl md:text-6xl font-display font-black tracking-tighter uppercase relative flex flex-nowrap justify-center items-center gap-x-3 whitespace-nowrap px-8 py-2">
                 {/* TEXT: PLANES */}
                 <div className="flex text-primary-dark">
-                  {"PLANES".split("").map((char, i) => (
+                  {firstWord.toUpperCase().split("").map((char, i) => (
                     <motion.span
                       key={i}
                       animate={{ 
@@ -168,7 +172,7 @@ export default function ServiciosPage() {
 
                 {/* TEXT: DESDE $500/MES */}
                 <div className="flex text-primary italic font-medium lowercase tracking-tighter">
-                  {"desde $500/mes".split("").map((char, i) => (
+                  {restOfPricing.split("").map((char, i) => (
                     <motion.span
                       key={i}
                       animate={{ 
