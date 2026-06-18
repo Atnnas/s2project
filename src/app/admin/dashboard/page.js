@@ -977,7 +977,8 @@ function DashboardContent() {
 function SettingsView() {
   const [settings, setSettings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [savingKey, setSavingKey] = useState(null);
+  const [formValues, setFormValues] = useState({});
   const [status, setStatus] = useState({ type: '', message: '' });
 
   const fetchSettings = async () => {
@@ -985,7 +986,14 @@ function SettingsView() {
     try {
       const res = await fetch('/api/site-settings');
       const data = await res.json();
-      if (data.success) setSettings(data.data);
+      if (data.success) {
+        setSettings(data.data);
+        const vals = {};
+        data.data.forEach(s => {
+          vals[s.key] = s.value;
+        });
+        setFormValues(vals);
+      }
     } catch (e) { console.error(e); }
     setLoading(false);
   };
@@ -995,7 +1003,7 @@ function SettingsView() {
   }, []);
 
   const handleUpdate = async (key, value) => {
-    setSaving(true);
+    setSavingKey(key);
     setStatus({ type: '', message: '' });
     try {
       const res = await fetch('/api/site-settings', {
@@ -1013,7 +1021,7 @@ function SettingsView() {
     } catch (e) {
       setStatus({ type: 'error', message: 'Error de conexión' });
     } finally {
-      setSaving(false);
+      setSavingKey(null);
     }
   };
 
@@ -1027,28 +1035,48 @@ function SettingsView() {
       </h2>
 
       <div className="space-y-8 max-w-2xl">
-        {settings.map((s) => (
-          <div key={s.key} className="space-y-3">
-            <label className="text-xs font-black uppercase tracking-widest text-slate-400 block px-1">
-              {s.description || s.key}
-            </label>
-            <div className="flex gap-4 items-center">
-              <input 
-                type="text" 
-                defaultValue={s.value}
-                disabled={saving}
-                onBlur={(e) => handleUpdate(s.key, e.target.value)}
-                className="flex-1 px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 disabled:opacity-50"
-              />
-              {saving && (
-                <svg className="animate-spin h-5 w-5 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              )}
+        {settings.map((s) => {
+          const isSaving = savingKey === s.key;
+          const hasChanged = formValues[s.key] !== s.value;
+
+          return (
+            <div key={s.key} className="space-y-3">
+              <label className="text-xs font-black uppercase tracking-widest text-slate-400 block px-1">
+                {s.description || s.key}
+              </label>
+              <div className="flex gap-4 items-center">
+                <input 
+                  type="text" 
+                  value={formValues[s.key] !== undefined ? formValues[s.key] : ''}
+                  disabled={savingKey !== null}
+                  onChange={(e) => setFormValues(prev => ({ ...prev, [s.key]: e.target.value }))}
+                  className="flex-1 px-6 py-4 rounded-2xl bg-slate-50 border border-primary/10 focus:border-primary outline-none transition-all placeholder:text-slate-300 disabled:opacity-50"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleUpdate(s.key, formValues[s.key])}
+                  disabled={savingKey !== null || !hasChanged}
+                  className="px-6 py-4 rounded-2xl bg-primary text-white font-bold text-xs hover:bg-primary/90 active:scale-95 transition-all shadow-md shadow-primary/10 disabled:opacity-40 disabled:cursor-not-allowed shrink-0 flex items-center gap-2"
+                >
+                  {isSaving ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      <span>Guardando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="material-symbols-outlined text-sm">save</span>
+                      <span>Guardar</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {status.message && (
